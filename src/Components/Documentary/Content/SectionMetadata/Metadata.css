@@ -1,0 +1,21 @@
+.logs{
+    padding: 0.2rem 0.5rem 0 0.5rem; 
+    width: 280px;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    line-height: 1.6;
+    overflow: scroll;
+}
+
+.logs > p {
+    color:#F68A20;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.logs > span {
+    color: #958f8f;
+    font-size: 1rem;
+}

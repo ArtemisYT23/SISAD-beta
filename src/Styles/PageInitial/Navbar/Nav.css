@@ -1,0 +1,230 @@
+.FatherContent {
+  width: 100%;
+  height: 580px;
+  /* background-image: url("assets/images/fondoCentral.png"); */
+  object-fit: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.ContainerHeader {
+  background-color: rgb(252, 252, 252);
+  width: 100%;
+  height: auto;
+  padding: .5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ContainerHeader .hijo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.5rem 0 0.5rem;
+  width: 50px;
+  height: 50px;
+}
+
+.ContainerHeader .hijoNav {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .ContainerHeader .hijo {
+    display: none;
+  }
+  .ContainerHeader .hijoNav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem 0 0.5rem;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.hijo :hover {
+  background-color: #c4c4c4;
+  color: #f68a20;
+}
+
+.hijoNav :hover {
+  background-color: #c4c4c4;
+  color: #f68a20;
+}
+
+.ContainerHeader .hijo > img {
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+}
+
+.ContainerHeader .hijoNav > img {
+    object-fit: contain;
+    width: 450px;
+    height: 50px;
+    margin: 0 0 0 9rem;
+  }
+
+/*Menu Lateral*/
+.ContainerNavFlex {
+  width: 100%;
+  position: absolute;
+  display: none;
+}
+
+.ContainerNav {
+  width: 100%;
+  position: absolute;
+}
+
+@media screen and (min-width: 1024px) {
+  .ContainerNavFlex {
+    width: 88%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0.5rem;
+    left: 5rem;
+  }
+  .ContainerNav{
+    display: none;
+  }
+}
+
+.ContainerNav .Na {
+  background-color: #faf9f9;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ContainerNavFlex .Na{
+  background-color: #faf9f9;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .ContainerNav .Na {
+    margin: 0 5rem 0 1rem;
+  }
+  .ContainerNavFlex .Na {
+    margin: 0 5rem 0 1rem;
+  }
+}
+
+.ContainerNav .Na .Item {
+  padding: 0.9rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: rgba(7, 7, 7, 0.849);
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ContainerNavFlex .Na .Item {
+    padding: 0.9rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: rgba(7, 7, 7, 0.849);
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+.Item:hover {
+  background-color: #c4c4c4;
+  color: #f68a20;
+}
+
+/**/
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f68a20;
+  margin: 1.5rem 0 0 0.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media screen and (min-width: 1024px) {
+  .Content {
+    width: 30%;
+    border-radius: 1rem 1rem 1rem 1rem;
+  }
+}
+
+.Content .Banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(252, 252, 252);
+  flex-direction: column;
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.ContentBanner {
+  width: 95%;
+  margin: 1.9rem 0 0 0;
+}
+
+.ContentBanner .InfoContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fa9a3b;
+  padding: 0.4rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .ContentBanner .InfoContent {
+    display: flex;
+    flex-direction: row;
+    border-radius: 1rem;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.ContentText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+}
+
+.ContentText2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+}
+
+@media screen and (min-width: 1024px) {
+  .ContentText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.IconSMS {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  color: #fafafa;
+  font-weight: bold;
+}

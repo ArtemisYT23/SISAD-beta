@@ -1,0 +1,6 @@
+.Celda{
+    width: 100%;
+    height: 2.3rem;
+    overflow: hidden;
+    display: flex;
+}

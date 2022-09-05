@@ -1,0 +1,75 @@
+
+{
+    "data": [
+        {
+            "id": 1000,
+            "name": "James Butt",
+            "country": "Unilever",
+            "company": "Benton",
+            "date": "2015-09-13",
+            "status": "Activo",
+            "representative": "Ioni Bowcher",
+            "balance": "bodeguero"
+        },
+        {
+            "id": 1001,
+            "name": "Carlos Anzuarte",
+            "country": "Confiteca",
+            "company": "CentralFile",
+            "date": "2022-07-11",
+            "status": "Activo",
+            "representative": "Esteban Paz",
+            "balance": "Operador"
+        },
+        {
+            "id": 1002,
+            "name": "Angela Tenorio",
+            "country": "Toni",
+            "company": "CentralFile",
+            "date": "2022-08-10",
+            "status": "Inactivo",
+            "representative": "Juan Samaniego",
+            "balance": "ayudante de bodega"
+        },
+        {
+            "id": 1003,
+            "name": "Roberto Lopez",
+            "country": "Chiveria",
+            "company": "CentralFile",
+            "date": "2022-06-10",
+            "status": "Activo",
+            "representative": "Diego Lopez",
+            "balance": "Sistemas"
+        },
+        {
+            "id": 1004,
+            "name": "Angela Tenorio",
+            "country": "Toni",
+            "company": "CentralFile",
+            "date": "2022-08-10",
+            "status": "Activo",
+            "representative": "Juan Samaniego",
+            "balance":"ayudante de bodega"
+        },
+        {
+            "id": 1005,
+            "name": "Roberto Lopez",
+            "country": "Chiveria",
+            "company": "CentralFile",
+            "date": "2022-06-10",
+            "status": "Inactivo",
+            "representative": "Diego Lopez",
+            "balance": "Sistemas"
+        },
+        {
+            "id": 1006,
+            "name": "Roberto Lopez",
+            "country": "Chiveria",
+            "company": "CentralFile",
+            "date": "2022-06-10",
+            "status": "Activo",
+            "representative": "Diego Lopez",
+            "balance": "Sistemas"
+        }
+    ]
+}

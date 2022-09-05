@@ -1,0 +1,60 @@
+.card-container {
+    width: 10rem;
+    height: 10rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0.5rem;
+    background-color: rgba(256, 206, 100, 0.25);
+    border-radius: 1rem;
+    margin: 1rem;
+  }
+  
+  .card-container > div {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .dropdown {
+    width: 100%;
+    position: relative;
+  }
+  
+  .dropdown .dropdown-content {
+    position: absolute;
+    border-radius: 10%;
+    width: 120px;
+    top: 1rem;
+    left: 7rem;
+    color:#f68a20;
+    /* box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.26); */
+    border: 1px solid #f68a20;
+    background: white;
+  }
+  
+  .dropdown-content hr {
+    background-color: #f68a20;
+  }
+  
+  .dropdown .dropdown-content .dropdown-item{
+    padding: 0.3rem;
+    margin: 0.3rem;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.2;
+    padding-top: 0.5rem;
+    color: #FAAC1C;
+    font-weight: 600;
+  }
+  
+  
+  .dropdown .dropdown-content .dropdown-item hr{
+    width: 100%;
+    background: #F68A20;
+  }
+  

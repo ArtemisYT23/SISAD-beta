@@ -1,0 +1,134 @@
+.Container-Infomation{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #c4c4c4;
+    margin: 1.5rem 0 0 0;
+    padding: 0 0 3rem 0;
+}
+
+.Container-Text-info{
+    width: 95%;
+    background-color: #fb5d14;
+    align-items: center;
+    justify-content: center;
+    display:  flex;
+    flex-direction: column;
+    padding: .8rem;
+}
+
+.Title-info{
+    color: #fff;
+    font-size: 1.2rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: .5rem;
+    margin: 0 2.2rem 0 0;
+}
+
+
+
+.Title-info > span{
+    font-weight: bold;
+}
+
+.Subtitle-info{
+    color: #fff;
+    font-size: 2.4rem;
+    font-family: Roboto;
+    width: 80%;
+    overflow: hidden;
+    text-align:justify;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.Container-Text{
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+.Content-Icon-info{
+    width: 80%;
+    padding: 2rem 0 .6rem 0;
+}
+
+@media screen and (min-width: 1024px) {
+    .Content-Icon-info{
+        width: 5%;
+        justify-content: center;
+        align-items: center;
+    }
+  }
+
+.Context-Text-Icon{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    color: #fff;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 1rem 0 1.5rem 0;
+}
+
+@media screen and (min-width: 1024px) {
+    .Context-Text-Icon{
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+.Content-Text-Movil{
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    font-family: Roboto;
+    padding: 0 0 1rem 0;
+}
+
+.Imagen-ref{
+    width: 95%;
+    height: 290px;
+    /* background-image: url("assets/images/CentralPage.png"); */
+    background-repeat: no-repeat;
+    object-fit: contain;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.VideoRef{
+    background-color: #fb5d14;
+    width: 40%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.VideoRef:hover{
+    background-color: #fb5d14a9;
+}
+
+@media screen and (min-width: 1024px) {
+    .VideoRef{
+      width: 15%;
+      height: 35%;
+    }
+  }

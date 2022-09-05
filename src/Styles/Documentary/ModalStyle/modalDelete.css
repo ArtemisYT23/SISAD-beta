@@ -1,0 +1,116 @@
+.blag {
+  width: 100%;
+  background: #c4c4c4;
+  height: 1px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.titulo-modal {
+  color: #f68a20;
+  font-size: 1.4rem;
+}
+
+.btn-enviar {
+  color: #f68a20;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  font-size: 1.1rem;
+  margin: 0.5rem;
+  background: white;
+}
+
+.btn-cancelar {
+  color: #c4c4c4;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  font-size: 1.1rem;
+  margin: 0.5rem;
+  background: white;
+  cursor: pointer;
+}
+
+.cabin {
+  display: none;
+}
+
+.container-d {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-eliminar {
+  color: #f68a20;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border: 1px solid #f68a20;
+  margin: 0.5rem;
+  cursor: pointer;
+  background: none;
+}
+
+.btn-eliminar:hover {
+  border: 2px solid #f3810e;
+}
+
+.btn-eliminar:disabled {
+  background-color: #f68b2027;
+  border: 1px solid #f68b203f;
+  color: #f68b2075;
+}
+
+.btn-cancel {
+  color: #949494;
+  text-decoration: none;
+  border: 1px solid #f68a20;
+  outline: none;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  margin: 0.5rem;
+  background: none;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  color: #868585;
+  border: 2px solid #f3810e;
+}
+
+.Icon-Alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert-Delete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+  border: 2px solid var(--primaryColor);
+  color: var(--primaryColor);
+  padding: 0.3rem;
+  margin: 0.2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Acep-Delete {
+  border: 1px solid #f68a20;
+  margin: 0.5rem;
+  padding: 0.2rem;
+  width: 40%;
+  border-radius: 0.5rem;
+  color: #868585;
+}
+
+.Acep-Delete:hover {
+  background-color: #f68a20;
+  color: white;
+}

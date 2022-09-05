@@ -1,0 +1,311 @@
+.ContainerModal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: rgba(255, 255, 255, 0.007);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (min-width: 1024px) {
+  .ContainerModal {
+    width: 1060px;
+    height: 550px;
+    flex-direction: row;
+  }
+}
+
+.Carrusel {
+  width: 62%;
+  display: none;
+  /* background-color: rgb(214, 222, 230); */
+  border-radius: 1rem;
+  /* background-image: url("../../../assets/images/fondoCentral.png"); */
+}
+
+@media screen and (min-width: 1024px) {
+  .Carrusel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 62%;
+    height: 100%;
+    margin: 0 .5rem 0 0;
+  }
+}
+
+.FondoCF {
+  width: 100%;
+  height: 200px;
+  /* background-image: url("../../../assets/images/CentralNav.png"); */
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.FormData {
+  background: linear-gradient(
+    -10deg,
+    rgba(255, 179, 55, 1) 0%,
+    rgba(255, 145, 0, 1) 35%,
+    rgba(255, 89, 0, 1) 100%
+  );
+  width: 100%;
+  height: 100%;
+  border-radius: 0.8rem;
+  top: 0;
+  position: absolute;
+}
+
+@media screen and (min-width: 1024px) {
+  .FormData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
+  }
+}
+
+.FormData .IconsCF {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem 0 0.5rem 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .FormData .IconsCF {
+    width: 100%;
+    display: flex;
+  }
+}
+
+.IconsCF .IconContent {
+  width: 160px;
+  height: 160px;
+  /* background-image: url("../../../assets/images/iconoNew.png"); */
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media screen and (min-width: 350px) {
+  .IconsCF .IconContent {
+    width: 210px;
+    height: 210px;
+    margin: 0.5rem 0 1rem 0;
+  }
+}
+
+@media screen and (min-width: 300px) {
+  .IconsCF .IconContent {
+    width: 160px;
+    height: 160px;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .IconsCF .IconContent {
+    width: 140px;
+    height: 140px;
+    margin: 0;
+  }
+}
+
+.FormData .DataCF {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem 0 1rem 0;
+  align-items: center;
+  height: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .FormData .DataCF {
+    margin: 0;
+  }
+}
+
+.IngresoData {
+  border: none;
+  background: none;
+  width: 80%;
+  height: 3.5rem;
+  padding: 0.5rem 0 0.5rem 0;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0 0 1.5rem 0;
+}
+
+@media screen and (min-width: 350px) {
+  .IngresoData {
+    height: 4rem;
+    font-size: 1.3rem;
+    margin: 0 0 2rem 0;
+  }
+}
+
+@media screen and (min-width: 290px) {
+  .IngresoData {
+    margin: 1rem 0 0 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .IngresoData {
+    margin: 0.6rem 0 0.4rem 0;
+    width: 100%;
+    height: 3.3rem;
+    font-size: 1rem;
+  }
+}
+
+.IngresoData:focus {
+  outline: none;
+}
+
+.IngresoData::placeholder {
+  color: #fff;
+}
+
+.Content-Rec {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.Content-Rec .Recuperation {
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0 0 0 8rem;
+}
+
+@media screen and (min-width: 350px) {
+  .Content-Rec .Recuperation {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (min-width: 290px) {
+  .Content-Rec .Recuperation {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .Content-Rec .Recuperation {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin: 0 0 0 8rem;
+  }
+}
+
+.FormData .ButtonLogin {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 5.5rem 0 0 0;
+}
+
+@media screen and (min-width: 350px) {
+  .FormData .ButtonLogin {
+    margin: 2rem 0 0 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .FormData .ButtonLogin {
+    margin: 1.2rem 0 0 0;
+  }
+}
+
+.ButtonLogin > button {
+  border: none;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  color: #fa8108;
+  font-weight: bold;
+  width: 80%;
+  height: 4rem;
+  font-size: 1.1rem;
+  margin: 0 0 0.9rem 0;
+}
+
+.ButtonLogin > button:hover{
+  background-color: var(--lineColor);
+  color: var(--primaColor);
+}
+
+.ButtonLogin .LastChild {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  color: #fa8108;
+  font-weight: bold;
+  width: 80%;
+  height: 4rem;
+  font-size: 1.1rem;
+  margin: 0 0 0.9rem 0;
+}
+
+@media screen and (min-width: 350px) {
+  .ButtonLogin > button {
+    padding: 1.4rem;
+    width: 90%;
+    height: 4.5rem;
+    font-size: 1.4rem;
+    margin: 1.8rem 0 0 0;
+  }
+  .ButtonLogin .LastChild {
+    display: flex;
+    padding: 1.4rem;
+    width: 90%;
+    height: 4.5rem;
+    font-size: 1.4rem;
+    margin: 1.8rem 0 0 0;
+  }
+}
+
+@media screen and (min-width: 290px) {
+  .ButtonLogin > button {
+    padding: 1rem;
+    width: 85%;
+    height: 4.1rem;
+    font-size: 1.2rem;
+    margin: 1rem 0 0 0;
+  }
+  .ButtonLogin .LastChild {
+    display: flex;
+    padding: 1rem;
+    width: 85%;
+    height: 4.1rem;
+    font-size: 1.2rem;
+    margin: 1rem 0 0 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .ButtonLogin > button {
+    padding: 0.2rem;
+    width: 100%;
+    height: 3.2rem;
+    font-size: 1.2rem;
+    margin: 3rem 0 0 0;
+  }
+  .ButtonLogin .LastChild {
+    display: none;
+  }
+}
