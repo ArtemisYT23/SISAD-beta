@@ -1,25 +1,15 @@
-import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   setOpenModalUploadFile,
-  setOpenModalMetadataCreated,
+  setOpenModalUploaderUnirFile,
 } from "../../../../../Store/ModalDocumentary";
-import { setDocumentFileDocu } from "../../../../../Store/Upload";
-import {
-  setOpenMenuContextFile,
-  setOpenMenuContextDocument,
-} from "../../../../../Store/ModalCore";
-import { StyleDragArea } from "../../../../../Styles/Documentary/DragAreaFile";
 import "../../../../../Styles/Documentary/ModalStyle/modal.css";
 import "../../../../../Styles/Documentary/DragAreaFile/ModalUpload.css";
 import {
-  setGetNameFileDocu,
-  setGetDescriptionFileDocu,
-  setGetFileFileDocu,
-  sendFileDocumentaryDocu,
   setGetFileTypeFileDocu,
+  setGetNameTypeFileNameDocu,
 } from "../../../../../Store/Upload";
 import { useState, useEffect } from "react";
 import {
@@ -27,10 +17,18 @@ import {
   setCloseMenuContextOptionMeta,
   setCloseMenuContextFile,
 } from "../../../../../Store/ModalCore";
+import { setOpenModalUploadUpdateFile, setOpenModalDeleteFile } from "../../../../../Store/ModalDocumentary";
+import { setSelectedFileDocumentary } from "../../../../../Store/Core";
+import { getTypeFileByFolder } from "../../../../../Store/ConfigDocumentary";
+import FileUploaderUnit from "../FileUploaderUnit";
+import FileUploaderUpdate from "../FilesUpdate";
 import {
-  getTypeFileConfig,
-  getTypeFileByFolder,
-} from "../../../../../Store/ConfigDocumentary";
+  EditIconFile,
+  DeleteIconFile,
+} from "../../../TraditionaComponents/TableIndexTraditional/Icons";
+import 
+  FileUploaderDelete
+ from "../../../Modern/ModalesDocumentary/FileUploaderDelete";
 
 const useStyless = makeStyles((theme) => ({
   FileUpload: {
@@ -63,150 +61,186 @@ const FileUploaderCreated = ({ documentId }) => {
   const { FileUpload } = modalDocumentary;
   const { FilesFolders, TypeFile } = configDocument;
   const { MetaFolderSelected } = documentary;
-  const { SelectedFolder } = core;
+  const { SelectedFolder, files, SelectedFile } = core;
+  const [input, setInput] = useState({ ids_diets: [] });
+  const [cargados, setCargados] = useState(true);
+  const [pendiente, setPendientes] = useState(false);
 
-  const [identify, setIdentify] = useState({
-    id: uuidv4(),
-  });
+  useEffect(() => {
+    const Files = [];
+    const idFiless = files.map((ind, i) => Files.push(files[i].fileTypeId));
+    setInput({ ...input, ids_diets: Files });
+    console.log(input);
+  }, [files]);
 
-  // useEffect(()=> {
-  //   FilesFolders.length == 0 && dispatch(getTypeFileConfig());
-  // },[FilesFolders])
+  function handlerDiets(e) {
+    const checked = e.target.checked;
+    const value = e.target.value;
 
-  const setFile = (e) => {
-    const file = e.target.files[0];
-    dispatch(setGetFileFileDocu(file));
+    const new_ids_diets = checked
+      ? [...input.ids_diets, value]
+      : [...input.ids_diets.filter((id) => id !== value)];
+    console.log(new_ids_diets);
+    //bloquiar que pueda desabilitar y activar check
+    // setInput({ ...input, ids_diets: new_ids_diets });
+  }
+
+  const ActiveCargados = () => {
+    setCargados(true);
+    setPendientes(false);
   };
 
-  const handleChange = (e) => {
-    const FileType = e.target.value;
-    dispatch(setGetFileTypeFileDocu(FileType));
+  const ActivePendientes = () => {
+    setCargados(false);
+    setPendientes(true);
   };
 
-  //traer archivos por carpeta
-  const handleFolder = (id) => {
-    dispatch(getTypeFileByFolder(id));
+  const OpenModalFile = () => {
+    dispatch(setOpenModalUploaderUnirFile());
   };
 
-  const SaveFileDocumentary = (e) => {
-    e.preventDefault();
-    const formFile = new FormData();
-    identify.id && formFile.append("Id", identify.id);
-    uploader.Name && formFile.append("Name", uploader.Name);
-    uploader.Description &&
-      formFile.append("Description", uploader.Description);
-    uploader.File && formFile.append("File", uploader.File);
-    uploader.FileTypeId && formFile.append("FileTypeId", uploader.FileTypeId);
-    uploader.DocumentId && formFile.append("DocumentId", uploader.DocumentId);
-    dispatch(
-      sendFileDocumentaryDocu(formFile, uploader.DocumentId, MetaFolderSelected)
-    );
-    dispatch(setCloseMenuContextualDocument(false));
-    dispatch(setCloseMenuContextOptionMeta(false));
-    // dispatch(setOpenModalMetadataCreated());
-    // dispatch(setOpenMenuContextDocument());
-    OpenModalUploaderDocu();
-    dispatch(setCloseMenuContextFile(false));
-    setIdentify({
-      id: uuidv4(),
-    });
+  const OpenModalUpdateFile = (id) => {
+    dispatch(setOpenModalUploadUpdateFile());
+    dispatch(setSelectedFileDocumentary(id));
+  };
+
+  const OpenModalDeleteFile = (id) => {
+    dispatch(setOpenModalDeleteFile());
+    dispatch(setSelectedFileDocumentary(id));
   };
 
   const Uploader = (
     <div className={styless.FileUpload}>
-      <form onSubmit={SaveFileDocumentary}>
-        <h1 className="titles">Subir Archivos</h1>
-        <TextField
-          type="text"
-          className={styless.textfield}
-          // required={true}
-          label="Nombre"
-          onBlur={(e) => dispatch(setGetNameFileDocu(e.target.value))}
-        />
+      <div className="headersContainer">
+        <button
+          className={cargados ? "ButtonChange-on" : "ButtonChange-off"}
+          onClick={() => ActiveCargados()}
+        >
+          Archivos Cargados
+        </button>
+        <button
+          className={pendiente ? "ButtonChange-on" : "ButtonChange-off"}
+          onClick={() => ActivePendientes()}
+        >
+          Archivos Pendientes
+        </button>
+      </div>
+      <div className="ContainerFormData">
+        {cargados && (
+          <table>
+            <th>Tipo</th>
+            <th>Tipo de archivo</th>
+            <th>Nombre</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
 
-        <br />
+            {files ? (
+              files.map(
+                (
+                  {
+                    id,
+                    name,
+                    description,
+                    file,
+                    fileTypeId,
+                    documentId,
+                    fileTypeName,
+                    extension,
+                  },
+                  index
+                ) => (
+                  <tr key={id}>
+                    <td>
+                      <span>{extension}</span>
+                    </td>
 
-        <TextField
-          type="text"
-          className={styless.textfield}
-          // required={true}
-          label="Descripcion"
-          onBlur={(e) => dispatch(setGetDescriptionFileDocu(e.target.value))}
-        />
-        <br />
-        <br />
-
-        <div className="ContentFile">
-          <label>Tipo de Archivo: </label>
-
-          <select
-            onClick={() => handleFolder(SelectedFolder?.id)}
-            onChange={(e) => handleChange(e)}
-          >
-            {FilesFolders == "" && (
-              <>
-                <option
-                  className="defaultOption"
-                  value={null}
-                  hidden
-                  selected="selected"
-                >
-                  Seleccione Un Tipo
-                </option>
-                {TypeFile ? (
-                  TypeFile.map(({ id, name }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </>
+                    <td>
+                      <div className="CeldaFileType">
+                        <span>{fileTypeName}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span>{name}</span>
+                    </td>
+                    <td onClick={() => OpenModalUpdateFile(id)}>
+                      <EditIconFile x={25} y={25} />
+                    </td>
+                    <td onClick={() => OpenModalDeleteFile(id)}>
+                      <DeleteIconFile x={25} y={25} />
+                    </td>
+                  </tr>
+                )
+              )
+            ) : (
+              <></>
             )}
+          </table>
+        )}
 
-            {FilesFolders != "" && (
-              <>
-                <option
-                  className="defaultOption"
-                  value={null}
-                  hidden
-                  selected="selected"
-                >
-                  Seleccione Un Tipo
-                </option>
-                {FilesFolders ? (
-                  FilesFolders.map(({ fileTypeId, fileTypeName }) => (
-                    <option key={fileTypeId} value={fileTypeId}>
-                      {fileTypeName}
-                    </option>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </>
+        {SelectedFile && (
+          <FileUploaderUpdate
+            id={SelectedFile?.id}
+            name={SelectedFile?.name}
+            description={SelectedFile?.description}
+            file={SelectedFile?.file}
+            fileTypeId={SelectedFile?.fileTypeId}
+            documentId={SelectedFile?.documentId}
+            fileTypeName={SelectedFile?.fileTypeName}
+          />
+        )}
+
+        {SelectedFile && (
+          <FileUploaderDelete
+            id={SelectedFile?.id}
+            name={SelectedFile?.name}
+            documentId={SelectedFile?.documentId}
+          />
+        )}
+
+        {pendiente && (
+          <table>
+            <th>Cargados</th>
+            <th>Tipo de documento</th>
+            <th>Acciones</th>
+
+            {FilesFolders ? (
+              FilesFolders.map(({ fileTypeId, fileTypeName }, index) => (
+                <tr>
+                  <td>
+                    <div className="ContainerCheck">
+                      <input
+                        type="checkbox"
+                        checked={input.ids_diets.includes(fileTypeId)}
+                        value={fileTypeId}
+                        name={fileTypeName}
+                        onChange={handlerDiets}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <span key={fileTypeId}>{fileTypeName}</span>
+                  </td>
+                  <td>
+                    <button
+                      className="Agg-File"
+                      onClick={() => {
+                        OpenModalFile(),
+                          dispatch(setGetFileTypeFileDocu(fileTypeId)),
+                          dispatch(setGetNameTypeFileNameDocu(fileTypeName));
+                      }}
+                    >
+                      Agregar
+                    </button>
+                    <FileUploaderUnit />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <></>
             )}
-          </select>
-          <br />
-          <br />
-          <StyleDragArea>
-            <div className="image-upload-wrap">
-              <input
-                type="file"
-                className="file-upload-input"
-                accept=".pdf, .doc, .rar, .txt"
-                onInput={(e) => setFile(e)}
-              />
-            </div>
-          </StyleDragArea>
-        </div>
-        <div className="ContainerFluid">
-          <button className="can" onClick={() => OpenModalUploaderDocu()}>
-            CANCEL
-          </button>
-          <button className="enviar">EMPEZAR A CARGAR</button>
-        </div>
-      </form>
+          </table>
+        )}
+      </div>
     </div>
   );
 

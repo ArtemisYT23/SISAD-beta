@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
@@ -45,7 +45,13 @@ const DocumentCreated = ({ folderId }) => {
     folderId,
   });
 
+  useEffect(() => {
+    setNewDoc.folderId = folderId;
+  },[newDoc]);
+
   const handleSubmit = async (e) => {
+    console.log(newDoc);
+    console.log(folderId);
     dispatch(CreateDocumentNew(newDoc, folderId));
     OpenModalDocumentCreated();
     dispatch(getIndexAllCabinetConfigNotSelect(SelectedCabinet.id));

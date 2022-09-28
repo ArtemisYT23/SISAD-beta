@@ -14,31 +14,22 @@ import {
 } from "../../../../../Store/Core";
 import GridFiles from "../../../Modern/GridsContent/GridFiles";
 import GridFilesDefault from "../../../Modern/GridsContent/GridFilesDefault";
-import FileMenu from "../../MenuContext/FileMenu";
 import { Button } from "primereact/button";
 import "../../../../../Styles/Documentary/ModalStyle/modal.css";
 import toast, { Toaster } from "react-hot-toast";
+import FileUploaderCreated from "../../../Modern/ModalesDocumentary/FileUploaderCreated";
+import { setOpenModalUploadFile } from "../../../../../Store/ModalDocumentary";
 
 const FileContainer = () => {
   const dispatch = useDispatch();
   const [Open, setOpen] = useState(false);
   const [ActiveText, setActiveText] = useState("");
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
   const { core, modalCore, documentary } = useSelector((store) => store);
   const { selected, files, selectedView } = core;
-  const { ContextFile } = modalCore;
   const { SelectedDocument } = documentary;
 
   const handleClick = (e) => {
     dispatch(setOpenMenuContextFile());
-  };
-
-  const contextMenuRightClick = (e) => {
-    e.preventDefault();
-    setX(e.clientX - 50);
-    setY(e.clientY - 50);
-    ContextFile;
   };
 
   const OpenSearchFiles = () => {
@@ -53,9 +44,16 @@ const FileContainer = () => {
     dispatch(getFileAllDocument(index));
   };
 
+  const OpenModalFileUploader = () => {
+    dispatch(setOpenModalUploadFile());
+  };
+
   return (
     <>
       <ContainerSearchFiles>
+        <SpaceLine />
+        <SpaceLine />
+        <SpaceLine />
         <Button
           type="button"
           icon="pi pi-search"
@@ -102,15 +100,25 @@ const FileContainer = () => {
         ) : (
           <></>
         )}
+
+        <SpaceLine />
+
+        <Button
+          type="button"
+          icon="pi pi-plus"
+          className="p-button-rounded p-button-success"
+          title="AGREGAR"
+          onClick={() => OpenModalFileUploader()}
+        />
+
+        <FileUploaderCreated DocumentId={SelectedDocument?.id} />
       </ContainerSearchFiles>
       <DocumentContainer
-        onContextMenu={(e) => {
-          contextMenuRightClick(e), handleClick(e);
+        onContextMenu={(e) => { handleClick(e)
         }}
       >
-        {ContextFile ? <FileMenu x={x} y={y} /> : <></>}
 
-        {selected === "files" && selectedView != "list" ? (
+        {selectedView != "list" ? (
           files.map(
             (
               {
@@ -121,6 +129,7 @@ const FileContainer = () => {
                 fileTypeId,
                 documentId,
                 file,
+                fileTypeName
               },
               index
             ) => (
@@ -133,6 +142,7 @@ const FileContainer = () => {
                 name={name}
                 description={description}
                 file={file}
+                fileTypeName={fileTypeName}
                 element="archivos"
               />
             )
@@ -141,7 +151,7 @@ const FileContainer = () => {
           <></>
         )}
 
-        {selected === "files" && files == "" ? <GridFilesDefault /> : <></>}
+        {files == "" ? <GridFilesDefault /> : <></>}
 
         <Toaster
           position="top-right"

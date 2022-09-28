@@ -58,10 +58,23 @@ export const TableContainer = styled.div`
     overflow: x;
 `;
 
+export const TableNumber = styled.table`
+    font-family: Arial, Helvetica, sans-serif;
+    width: 5rem;
+`;
+
 export const TableRaid = styled.table`
     font-family: Arial, Helvetica, sans-serif;
     width: 14rem;
-    `;
+`;
+
+export const TH1 = styled.th`
+    width: 5rem;
+    height: 2.5rem;
+    border: 1px solid var(--whiteTrans);
+    background-color: var(--primaryColor);
+    color: var(--white);
+`;
 
 export const TH = styled.th`
     width: 12rem;
@@ -71,6 +84,19 @@ export const TH = styled.th`
     color: var(--white);
 `;
 
+export const TDnumber = styled.td`
+    display: flex;
+    width: 5rem;
+    height: 2rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--whiteTrans);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #979797;
+`;
 
 export const TD1 = styled.td`
     display: flex;

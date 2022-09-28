@@ -1,6 +1,7 @@
 import "../../../../Styles/Traditional/MetaConsult/TableIndex.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
+import toast, { Toaster } from "react-hot-toast";
 
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -14,15 +15,14 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
-import {
-  ChangeCabinetGetAll,
-  setIndexbyCabinetCore,
-} from "../../../../Store/Core";
+import { setIndexbyCabinetCore } from "../../../../Store/Core";
+import { ChangeCabinetGetAll } from "../../../../Store/ViewCore";
 import {
   getMetadataByFolder,
   FilterMetadataByDate,
   FilterMetadataByOnDay,
   getFilesByDocument,
+  setSaveDataValuebyMetadata,
 } from "../../../../Store/Documentary";
 import {
   ContainerSecond,
@@ -34,14 +34,23 @@ import FechaHoy from "../../../../../assets/images/Hoy.png";
 import axios from "axios";
 import { DocumentServer } from "../../../../config/axios";
 import ModalesFiles from "../../Modern/ModalesDocumentary/ModalesFiles";
-import { setOpenModalDocumentCreated, setOpenModalFilesMetadata } from "../../../../Store/ModalDocumentary";
+import {
+  setOpenModalDocumentCreated,
+  setOpenModalFilesMetadata,
+} from "../../../../Store/ModalDocumentary";
+import { getTypeFileByFolderFolder } from "../../../../Store/ConfigDocumentary";
 import DocumentCreated from "../../../../Components/Documentary/Modern/ModalesDocumentary/DocumentCreated";
+import { setOpenModalFileDownload } from "../../../../Store/FileDownload";
+import FileDownload from "../../Modern/ModalesDocumentary/FileDownload";
 
 const TableIndexTraditional = () => {
   const dispatch = useDispatch();
-  const { documentary, core, modalCore } = useSelector((store) => store);
+  const { documentary, core, modalCore, actionCore } = useSelector(
+    (store) => store
+  );
   const { MetadataFolder, MetaFolderSelected } = documentary;
-  const { IndexByCabinet, SelectedCabinet } = core;
+  const { IndexByCabinet } = core;
+  const { SelectedCabinet } = actionCore;
   const { ContextOptionMeta } = modalCore;
 
   const id = "de5d8cf4-69c2-4e49-bde4-a804e26cb55c";
@@ -57,10 +66,10 @@ const TableIndexTraditional = () => {
       .get(`${DocumentServer}exportalltoexcel/${MetaFolderSelected}`)
       .then(function (response) {
         const res = response.data;
-        console.log(res);
+        // console.log(res);
         const url =
           "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
-          res?.metaDataExcel;
+          res;
         saveAsExcelFile(url, "Metadata");
       })
       .catch(function (error) {
@@ -105,6 +114,7 @@ const TableIndexTraditional = () => {
 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
+  const [nameValue, setNameValue] = useState([]);
 
   const [cols, setCol] = useState([]);
 
@@ -149,12 +159,25 @@ const TableIndexTraditional = () => {
   const MetaActual = (folderId, cabinetId) => {
     console.log(folderId);
     const bool = true;
-    dispatch(FilterMetadataByOnDay(folderId, cabinetId ,bool));
+    dispatch(FilterMetadataByOnDay(folderId, cabinetId, bool));
   };
 
   const OpenModalCreatedDocument = () => {
     dispatch(setOpenModalDocumentCreated());
-  }
+  };
+
+  const AggMetadataForValues = () => {
+    MetadataFolder.forEach((meta, i) => {
+      const ob1 = {
+        docum: meta.documentId,
+        cod: meta.values[0],
+        value: meta.values[1]
+      };
+      nameValue.push(ob1);
+    })
+    dispatch(setSaveDataValuebyMetadata(nameValue));
+    setNameValue([]);
+  };
 
   const header = (
     <>
@@ -170,26 +193,28 @@ const TableIndexTraditional = () => {
           </span>
         </div>
         <div className="Espacio"></div>
-       
-        {/* {MetaFolderSelected && (
-        <Button
-          type="button"
-          icon="pi pi-plus"
-          className="p-button-warning mr-2"
-          title="AGREGAR"
-          onClick={() => OpenModalCreatedDocument()}
-        />
-        )} */}
-        
+
+        {MetaFolderSelected && (
+          <Button
+            type="button"
+            icon="pi pi-plus"
+            className="p-button-warning mr-2"
+            title="AGREGAR"
+            onClick={() => OpenModalCreatedDocument()}
+          />
+        )}
+        {MetaFolderSelected && (
+          <DocumentCreated folderId={MetaFolderSelected} />
+        )}
+
         <Button
           type="button"
           icon="pi pi-pencil"
           className="p-button-info mr-2"
           title="EDITAR"
         />
-        
 
-         {/* <Button
+        {/* <Button
           type="button"
           icon="pi pi-times"
           className="p-button-danger mr-2"
@@ -218,10 +243,29 @@ const TableIndexTraditional = () => {
             type="button"
             icon="pi pi-sync"
             className="p-button-success mr-2"
-            onClick={(e) => ActualizarMetadata(MetaFolderSelected, SelectedCabinet?.id)}
+            onClick={(e) =>
+              ActualizarMetadata(MetaFolderSelected, SelectedCabinet?.id)
+            }
             title="ACTUALIZAR"
           />
         )}
+
+        <Button
+          type="button"
+          icon="pi pi-download"
+          className="p-button-success mr-2"
+          title="DESCARGAR"
+          onClick={() => {
+            dispatch(setOpenModalFileDownload()),
+              dispatch(getTypeFileByFolderFolder(MetaFolderSelected)),
+              AggMetadataForValues()
+          }}
+        />
+
+        <FileDownload
+          folderId={MetaFolderSelected}
+          cabinetId={SelectedCabinet?.id}
+        />
 
         <ContainerSecond>
           {Active && MetaFolderSelected && (
@@ -237,7 +281,11 @@ const TableIndexTraditional = () => {
                 className="FechaFinal"
                 type="date"
                 onChange={(e) =>
-                  ObtenerFechaFinal(e.target.value, MetaFolderSelected, SelectedCabinet?.id)
+                  ObtenerFechaFinal(
+                    e.target.value,
+                    MetaFolderSelected,
+                    SelectedCabinet?.id
+                  )
                 }
               />
             </ContainerFilter>
@@ -247,7 +295,11 @@ const TableIndexTraditional = () => {
           </CabinetContainer>
 
           {MetaFolderSelected && (
-            <CabinetContainer onClick={(e) => MetaActual(MetaFolderSelected, SelectedCabinet?.id)}>
+            <CabinetContainer
+              onClick={(e) =>
+                MetaActual(MetaFolderSelected, SelectedCabinet?.id)
+              }
+            >
               <img src={FechaHoy} alt="cargando" title="FECHA ACTUAL" />
             </CabinetContainer>
           )}
@@ -267,17 +319,18 @@ const TableIndexTraditional = () => {
       <div className="Container-Principal">
         <div className="AperturaDocument">
           <div className="ContainerItemFile">
-          {MetadataFolder?.map((custo, index) => (
-            <div className="Item" onClick={() => SeleccionarCelda(custo.documentId)}>
-              {custo.id}
-            </div>
-          ))}
-          <ModalesFiles />
+            {MetadataFolder?.map((custo, index) => (
+              <div
+                className="Item"
+                onClick={() => SeleccionarCelda(custo.documentId)}
+              >
+                {custo.id}
+              </div>
+            ))}
+            <ModalesFiles />
           </div>
         </div>
-
         {/* <DocumentCreated folderId={MetaFolderSelected} /> */}
-
         <div className="datatable-doc-demo">
           <div className="card">
             <DataTable
@@ -321,11 +374,10 @@ const TableIndexTraditional = () => {
               showGridlines
             >
               {/* <Column expander style={{ width: "1rem" }} /> */}
-              
 
               {cols.map((col) => (
                 <Column
-                onClick={() => SeleccionarCelda(col)}
+                  onClick={() => SeleccionarCelda(col)}
                   field={col.field}
                   header={col.header}
                   sortable
@@ -341,6 +393,18 @@ const TableIndexTraditional = () => {
             </DataTable>
           </div>
         </div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className: "",
+            duration: 3000,
+            style: {
+              background: "#F68A20",
+              color: "#fff",
+            },
+          }}
+        />
+        ;
       </div>
     </>
   );

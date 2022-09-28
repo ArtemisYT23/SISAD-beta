@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenModalDeleteFile } from "../../../../../Store/ModalDocumentary";
 import { setDeleteFileDocumentary } from "../../../../../Store/Core";
+import { Alert } from "../../../../../Styles/PageInitial/Icons/ModalesCore/IndexDelete";
 import "../../../../../Styles/Documentary/ModalStyle/modalDelete.css";
 
 const useStyless = makeStyles((theme) => ({
@@ -34,30 +35,33 @@ const FileUploaderDelete = ({ id, name, documentId }) => {
   const dispatch = useDispatch();
   const styless = useStyless();
   const { modalDocumentary } = useSelector((store) => store);
-  const { FileDelete } = modalDocumentary; 
+  const { FileDelete } = modalDocumentary;
+  const [buttonActive, setButtonActive] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     OpenModalDeleteFile();
-    dispatch(setDeleteFileDocumentary(id, documentId ,file));
+    dispatch(setDeleteFileDocumentary(id, documentId, file));
   };
 
   const deleteFile = (
     <div className={styless.FileDelete}>
       <form onSubmit={handleSubmit}>
         <div align="center">
-          <h2 className="titulo-modal">Eliminar el Archivo {name}</h2>
+          <h2 className="titulo-modal">Eliminar</h2>
         </div>
-        <div className="container-d" align="right">
-          <button type="submit" className="btn-eliminar">
-            Eliminar
-          </button>
-          <button
-            className="btn-cancel"
-            onClick={() => OpenModalDeleteFile()}
-          >
-            Cancelar
-          </button>
+        <div className="Icon-Alert">
+          <Alert x={40} y={40} />
+        </div>
+        <div className="alert-Delete">
+          <label>Desea Eliminar el Archivo {name}</label>
+          <div className="Acep-Delete" onClick={() => setButtonActive(true)} disabled={!buttonActive}>
+          Aceptar
+          </div>
+          <div className="container-d" align="right">
+            <button type="submit" className="btn-eliminar" disabled={!buttonActive}>Eliminar</button>
+            <button className="btn-cancel" onClick={() => OpenModalDeleteFile()}>Cancelar</button>
+          </div>
         </div>
       </form>
     </div>
@@ -65,6 +69,7 @@ const FileUploaderDelete = ({ id, name, documentId }) => {
 
   const OpenModalDeleteFile = () => {
     dispatch(setOpenModalDeleteFile());
+    setButtonActive(false);
   };
 
   return (

@@ -8,21 +8,25 @@ import {
 } from "../../../../../Styles/Documentary/Modern/SearchTree";
 import { GabiIcons } from "../../Search/Item/Icon";
 import {
-  setSelectedCabinetCore,
-  setFilterFoldersCore,
   setIndexbyCabinetCore,
 } from "../../../../../Store/Core";
+import {
+  setSelectedCabinetCore,
+  setFilterFoldersCore,
+} from "../../../../../Store/ActionCore";
 import ItemFolders from "./ItemFolders";
+import { getNameGlobalChange } from "../../../../../Store/ModalCore";
 
 const ItemTree = ({ id, name }) => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedCabinet, FoldersCabinet } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedCabinet, FoldersCabinet } = actionCore;
 
-  const selectGab = (index) => {
+  const selectGab = (index, name) => {
     dispatch(setSelectedCabinetCore(index));
     dispatch(setFilterFoldersCore(index));
     dispatch(setIndexbyCabinetCore(index));
+    dispatch(getNameGlobalChange(name));
   };
 
   const selectedCabinet = (index) => {
@@ -39,7 +43,7 @@ const ItemTree = ({ id, name }) => {
 
   return (
     <ContainerItemTree>
-      <ContentItem id={id} className="Celda" onClick={() => {selectGab(id), selectedCabinet(id)}}>
+      <ContentItem id={id} className="Celda" onClick={() => {selectGab(id, name), selectedCabinet(id)}}>
         <ContainerIcons>
           <GabiIcons x={20} y={20} />
         </ContainerIcons>
@@ -52,8 +56,8 @@ const ItemTree = ({ id, name }) => {
       {SelectedCabinet?.id === id && (
         <>
           {FoldersCabinet ? (
-            FoldersCabinet.map(({ id, name }) => (
-              <ItemFolders id={id} name={name} key={id} />
+            FoldersCabinet.map(({ id, name, cabinetId }) => (
+              <ItemFolders id={id} name={name} key={id} cabinetId={cabinetId}/>
             ))
           ) : (
             <></>

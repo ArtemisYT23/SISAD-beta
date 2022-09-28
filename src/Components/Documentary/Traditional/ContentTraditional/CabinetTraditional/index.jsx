@@ -4,8 +4,10 @@ import CabinetDefault from "../../ContainerTraditional/CabinetDefault";
 import toast, { Toaster } from 'react-hot-toast';
 
 const CabinetTraditional = () => {
-  const { core } = useSelector((store) => store);
-  const { cabinets, selected, selectedView } = core;
+  const { core, viewCore } = useSelector((store) => store);
+  const { cabinets,  } = core;
+  const { selected, selectedView } = viewCore;
+
 
   return (
     <ContainerView>
@@ -28,7 +30,7 @@ const CabinetTraditional = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

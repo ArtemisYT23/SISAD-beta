@@ -3,6 +3,7 @@ const initialState = {
     DocumentCreated: false,
     DocumentDelete: false,
     FileUpload: false,
+    FileUploadUnit: false,
     FileUpdate: false,
     FileDelete: false,
     MetadataCreated: false,
@@ -15,12 +16,14 @@ const initialState = {
 const OPEN_MODAL_CREATED_DOCUMENT_DOCU = "OPEN_MODAL_CREATED_DOCUMENT_DOCU";
 const OPEN_MODAL_DELETE_DOCUMENT_DOCU = "OPEN_MODAL_DELETE_DOCUMENT_DOCU";
 const OPEN_MODAL_UPLOAD_FILE_DOCU = "OPEN_MODAL_UPLOAD_FILE_DOCU";
+const OPEN_MODAL_UPLOADUNIT_FILE_DOCU = "OPEN_MODAL_UPLOADUNIT_FILE_DOCU";
 const OPEN_MODAL_METADATA_CREATED_DOCU = 
 "OPEN_MODAL_METADATA_CREATED_DOCU";
 const SET_OPEN_DETALLE_MODAL_DOCU = "SET_OPEN_DETALLE_MODAL_DOCU";
 const SET_OPEN_MODALFILES_METADATA_DOCU = "SET_OPEN_MODALFILES_METADATA_DOCU";
 const SET_CLOSE_PREVIEW_DETALLE_DOCU = "SET_CLOSE_PREVIEW_DETALLE_DOCU";
 const OPEN_MODAL_UPLOADER_FILE_DELETE_DOCU = "OPEN_MODAL_UPLOADER_FILE_DELETE_DOCU";
+const OPEN_MODAL_UPDATE_FILE_DOCU = "OPEN_MODAL_UPDATE_FILE_DOCU";
 
 
 //payload de tag de acciones 
@@ -30,11 +33,13 @@ export default function ModalDocumentaryReducer(state = initialState, action) {
         case OPEN_MODAL_CREATED_DOCUMENT_DOCU:
         case OPEN_MODAL_DELETE_DOCUMENT_DOCU:
         case OPEN_MODAL_UPLOAD_FILE_DOCU:
+        case OPEN_MODAL_UPLOADUNIT_FILE_DOCU:
         case OPEN_MODAL_METADATA_CREATED_DOCU:
         case SET_OPEN_DETALLE_MODAL_DOCU:
         case SET_OPEN_MODALFILES_METADATA_DOCU:
         case SET_CLOSE_PREVIEW_DETALLE_DOCU:
         case OPEN_MODAL_UPLOADER_FILE_DELETE_DOCU:
+        case OPEN_MODAL_UPDATE_FILE_DOCU:
             return action.payload;
         default:
             return state;
@@ -71,6 +76,24 @@ export const setOpenModalUploadFile = () => async(dispatch, getState) => {
         payload: { ...modalDocumentary, FileUpload:!modalDocumentary.FileUpload }
     });
 };
+
+//Modal Actualiza un file 
+export const setOpenModalUploadUpdateFile = () => async(dispatch, getState) => {
+    const { modalDocumentary } = getState();
+    dispatch({
+        type: OPEN_MODAL_UPDATE_FILE_DOCU,
+        payload: { ...modalDocumentary, FileUpdate:!modalDocumentary.FileUpdate }
+    })
+}
+
+//Modal subir archivo uno a uno
+export const setOpenModalUploaderUnirFile = () => async(dispatch, getState) => {
+    const { modalDocumentary } = getState();
+    dispatch({
+        type: OPEN_MODAL_UPLOADUNIT_FILE_DOCU,
+        payload: { ...modalDocumentary, FileUploadUnit:!modalDocumentary.FileUploadUnit }      
+    })
+}
 
 //Modal Eliminar Archivo 
 export const setOpenModalDeleteFile = () => async(dispatch, getState) => {

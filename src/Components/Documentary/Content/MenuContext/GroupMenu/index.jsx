@@ -1,9 +1,8 @@
 import { Line } from "../../../../../Styles/Documentary/MenuContext";
 import { useDispatch } from "react-redux";
-import { setOpenModalCabinetCreated } from "../../../../../Store/ModalCore";
+import { setOpenModalCabinetCreated, setOpenModalGroupCreated  } from "../../../../../Store/ModalCore";
 import CabinetCreated from "../../../Modern/ModalesCore/CabinetCreated";
 import GroupCreated from "../../../Modern/ModalesCore/GroupCreated";
-import { setOpenModalGroupCreated } from "../../../../../Store/ModalCore";
 
 const GroupMenu = ({ x, y }) => {
   const dispatch = useDispatch();

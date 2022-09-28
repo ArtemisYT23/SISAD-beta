@@ -1,12 +1,12 @@
 import { ContainerView } from "../../../../../Styles/Traditional";
 import { useSelector } from "react-redux";
 import CabinetDefault from "../../ContainerTraditional/CabinetDefault";
-import GridDefaultGroup from "../../../Modern/GridsContent/GridDefaultGroup";
 import toast, { Toaster } from 'react-hot-toast';
 
 const GroupTraditional = () => {
-  const { core } = useSelector((store) => store);
-  const { selected, GroupsCabinet, selectedView } = core;
+  const { actionCore, viewCore } = useSelector((store) => store);
+  const { GroupsCabinet } = actionCore;
+  const { selected, selectedView } = viewCore;
 
   return (
     <ContainerView>
@@ -28,7 +28,7 @@ const GroupTraditional = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

@@ -19,12 +19,12 @@ import CabinetUpdate from "../../../Modern/ModalesCore/CabinetUpdate";
 import CabinetDelete from "../../../Modern/ModalesCore/CabinetDelete";
 import GroupCabi from "../../../../../../assets/images/Group.png";
 
-import { ChangeGroupGetAll } from "../../../../../Store/Core";
+import { ChangeGroupGetAll } from "../../../../../Store/ViewCore";
 
 const CabinetHeaders = () => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedTraditional } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedTraditional } = actionCore;
 
   const OpenCabinetCreated = () => {
     dispatch(setOpenModalCabinetCreated());

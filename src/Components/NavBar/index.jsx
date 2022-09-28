@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedNullCore } from "../../Store/Core";
+import { setSelectedNullCore, setSelectedSearchNullCore,  } from "../../Store/ViewCore";
 import {
     NavBarContainer,
     LogoContainer,
@@ -10,16 +10,14 @@ import {
 import NavBarIcon from "./Icons";
 import logotipo from "../../../assets/images/CentralFile.png";
 import isotipo from "../../../assets/images/icon.png";
-import { setSelectedSearchNullCore } from "../../Store/Core";
 import { setCloseDetalleModal } from "../../Store/ModalDocumentary";
+import { getNameGlobalChangeCleaner } from "../../Store/ModalCore";
 
 const NavBar = () => {
 
     const dispatch = useDispatch();
 
     const [isActive, setIsActive] = useState(false);
-    // const logotipo = "assets/images/CentralFile.png";
-    // const isotipo = "assets/images/icon.png";
 
     const [dashboard, setDashboard] = useState("#c4c4c4");
     const [configData, setConfigData] = useState("#c4c4c4");
@@ -43,6 +41,7 @@ const NavBar = () => {
       dispatch(setSelectedNullCore());
       dispatch(setSelectedSearchNullCore());
       dispatch(setCloseDetalleModal(false));
+      dispatch(getNameGlobalChangeCleaner());
       setDashboard("#c4c4c4");
       setConfigData("#c4c4c4");
       setDocumentary("#F68A20");

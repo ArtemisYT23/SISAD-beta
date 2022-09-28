@@ -1,10 +1,10 @@
 import { ContainerDescription, ContainerIcon, ContainerOptions, ContainerTitle, ContainerTraditional, Title, TitleCabinet } from "../../../../../Styles/Traditional/CabinetTraditional";
 import { CabinetTraditional, OptionsTraditional } from "../../../../../Styles/Traditional/CabinetTraditional/Icon";
 import { useDispatch } from "react-redux";
-import { setSelectedGroupNotSelectedCore } from "../../../../../Store/Core";
+import { setSelectedGroupNotSelectedCore } from "../../../../../Store/ActionCore";
 import "./GroupDefault.css";
 
-const GroupDefault = ({ key, index, id, name, description }) => {
+const GroupDefault = ({ index, id, name, description }) => {
 
     const dispatch = useDispatch();
 

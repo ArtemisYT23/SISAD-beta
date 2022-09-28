@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import {
   setSelectedCabinetCore,
   setFilterFoldersCore,
-} from "../../../Store/Core";
+} from "../../../Store/ActionCore";
 import { useNavigate } from "react-router-dom";
 
 const Cabinets = ({ id, name, element }) => {

@@ -1,4 +1,4 @@
-import { setSelectedGroupCore, setFilterGroupsCore } from "../../../../../Store/Core";
+import { setSelectedGroupCore, setFilterGroupsCore } from "../../../../../Store/ActionCore";
 import { Icons, Name } from "../../../../../Styles/Documentary/Modern/Search";
 import { GroupIcon } from "../Item/Icon";
 import  IconSearch from "./Icons";

@@ -30,9 +30,10 @@ const CabinetUpdate = ({ id, name, description, groupId }) => {
 
     const styless = useStyless();
     const dispatch = useDispatch();
-    const { modalCore, core } = useSelector((store) => store);
+    const { modalCore, core, actionCore } = useSelector((store) => store);
     const { CabinetUpdate } = modalCore;
-    const { SelectedGroup, groups } = core;
+    const { groups } = core;
+    const { SelectedGroup } = actionCore;
 
     useEffect(() => {
       groups.length == 0 && dispatch(getAllGroupsCore());

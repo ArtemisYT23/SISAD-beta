@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { HeaderContainer } from "../../../../Styles/Documentary";
 import {
@@ -10,73 +10,67 @@ import {
   Route,
   TextName,
   Log,
-  InputName,
   Perfiles,
+  TextUser,
 } from "../../../../Styles/Documentary/Header";
 import { EditIcon, OptionsIcon } from "./Icons";
 import avatar from "./avatar.png";
 import logo from "./descarga.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [isEditable, setIsEditable] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+  const { modalCore } = useSelector((store) => store);
+  const { NameGlobalSelected } = modalCore;
 
-  const [parentName, setParentName] = useState("SISAD CLOUD");
-
-  const { core } = useSelector((store) => store);
-  const { SelectedCabinet, SelectedFolder, SelectedGroup } = core;
-
-  //Revisar solo hace un recorrido pero no de abajo para arriba
-
-  useEffect(() => {
-    if(SelectedGroup!= null && SelectedGroup.id) {
-      setParentName(SelectedGroup.name);
-    }if (SelectedCabinet != null && SelectedCabinet.id ) {
-      setParentName(SelectedCabinet.name);
-    }if ( SelectedFolder != null && SelectedFolder.id) {
-      setParentName(SelectedFolder.name);
-    }
-  }, [SelectedCabinet, SelectedFolder, SelectedGroup]);
-
-  const editParentName = (value) => {
-    setParentName(value);
+  const ActiveMenu = () => {
+    setShowMenu(!showMenu);
   };
-  
-  useEffect(() => {
-    document.body.addEventListener(
-      "click",
-      (e) =>
-        e.target.id !== "inputName" &&
-        e.target.id !== "editIcon" &&
-        setIsEditable(false)
-    );
-  }, []);
 
-  
+  const CerrarSesion = () => {
+    navigate("/");
+  };
+
   return (
     <HeaderContainer>
+      {showMenu && (
+        <div className="dropdown">
+          <div className="dropdown-content-second">
+            <div className="dropdown-item">Configuracion</div>
+            <hr></hr>
+            <div className="dropdown-item" onClick={() => CerrarSesion()}>Cerrar Sesion</div>
+          </div>
+        </div>
+      )}
       <HeaderUP>
         <NameContainer>
-          {!isEditable ? (
-            <TextName>{parentName}<EditIcon /></TextName>
+          {NameGlobalSelected ? (
+            <TextName>
+              {NameGlobalSelected}
+              <EditIcon />
+            </TextName>
           ) : (
-            <InputName
-              id="inputName"
-              value={parentName}
-            />
+            <TextName>
+              SISAD CLOUD
+              <EditIcon />
+            </TextName>
           )}
-          {/* <EditIcon onClick={setIsEditable} /> */}
         </NameContainer>
         <OptionContainer>
           <Perfiles>
-          <Avatar src={avatar}/>
-          <Avatar src={logo}/>
+            <Avatar src={avatar} />
+            <Avatar src={logo} />
           </Perfiles>
-          <OptionsIcon />
+          <TextUser>ASALAZAR</TextUser>
+          <div onClick={() => ActiveMenu()}>
+            <OptionsIcon />
+          </div>
         </OptionContainer>
       </HeaderUP>
       <HeaderDOWN>
         <form>
-        <Route placeholder="... / Contratos" label="... / Contratos" />
+          <Route placeholder="... / Contratos" label="... / Contratos" />
         </form>
         <Log>Se creó una carpeta: hace 1 hora</Log>
       </HeaderDOWN>

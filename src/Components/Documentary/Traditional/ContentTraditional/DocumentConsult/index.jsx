@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import toast, { Toaster } from 'react-hot-toast';
 
 const DocumentConsult = () => {
-  const { core } = useSelector((store) => store);
-  const { selectedView } = core;
+  const { viewCore } = useSelector((store) => store);
+  const { selectedView } = viewCore;
 
   return (
     <ContainerDocuView>
@@ -19,7 +19,7 @@ const DocumentConsult = () => {
   position="top-right"
   toastOptions={{
     className: "",
-    duration: 4000,
+    duration: 3000,
     style: {
       background: "#F68A20",
       color: "#fff",

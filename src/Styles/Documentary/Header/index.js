@@ -24,6 +24,12 @@ export const OptionContainer = styled.div`
   align-items: center;
 `;
 
+export const TextUser = styled.h1`
+  font-size: 1.5rem;
+  margin: 0 0 0 .7rem;
+  color: var(--primaryColor);
+`;
+
 export const TextName = styled.h1`
   font-size: 1.5rem;
   margin: .5rem 0 1.5rem 0;

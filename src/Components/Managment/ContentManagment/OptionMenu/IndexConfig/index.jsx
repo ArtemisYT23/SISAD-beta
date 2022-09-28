@@ -2,17 +2,22 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCabinetsCore,
-  setSelectedCabinetCoreNotTraditionalName,
   getIndexAllCabinetConfig,
   getIndexCabinetGetAllConfig,
 } from "../../../../../Store/Core";
+import {
+  setSelectedCabinetCoreNotTraditionalName,
+} from "../../../../../Store/ActionCore";
 import { setOpenModalConfigCreated } from "../../../../../Store/ModalConfig";
 import { SelectedIndexConfig } from "../../../../../Store/ConfigDocumentary";
 import {
   ContainerIndex,
   TableRaid,
+  TableNumber,
   TH,
+  TH1,
   TD1,
+  TDnumber,
   Title,
   HeadersContainer,
   TableContainer,
@@ -36,18 +41,16 @@ import toast, { Toaster } from "react-hot-toast";
 
 const IndexConfig = () => {
   const dispatch = useDispatch();
-  const { core, configDocument } = useSelector((store) => store);
+  const { core, configDocument, actionCore } = useSelector((store) => store);
   const {
     cabinets,
-    SelectedCabinet,
     IndexAllCabinet,
-    SelectedTraditional,
     IndexCabinetGetAllName,
   } = core;
-  const { IndexSelected } = configDocument;
+  const { SelectedTraditional } = actionCore;
+  const { IndexSelected, SelectedCabinet } = configDocument;
 
   useEffect(() => {
-    cabinets.length == 0 && dispatch(getAllCabinetsCore());
     IndexCabinetGetAllName.length == 0 &&
       dispatch(getIndexCabinetGetAllConfig());
   }, []);
@@ -90,7 +93,7 @@ const IndexConfig = () => {
       collection[i].style.backgroundColor = "white";
       collection[i].style.color = "#808080";
       if (index === index) {
-        document.getElementById(index).style.backgroundColor = "#f68b20d1";
+        document.getElementById(index).style.backgroundColor = "#fc8208";
         document.getElementById(index).style.color = "#fcfbf9";
       }
     }
@@ -124,6 +127,30 @@ const IndexConfig = () => {
       </HeadersContainer>
       <br />
       <TableContainer>
+        <TableNumber>
+          <tr>
+            <TH1>N</TH1>
+          </tr>
+
+          {IndexAllCabinet ? (
+            IndexAllCabinet.map((Ind, index) => (
+              <tr>
+                <TDnumber
+                  id={Ind.id}
+                  className="Celda"
+                  onClick={(e) => {
+                    SelectedIndexCabinet(Ind.id), SelectedCabinetColor(Ind.id);
+                  }}
+                >
+                  <Title>{index+1}</Title>
+                </TDnumber>
+              </tr>
+            ))
+          ) : (
+            <></>
+          )}
+        </TableNumber>
+
         <TableRaid>
           <tr>
             <TH>Nombre</TH>

@@ -5,8 +5,9 @@ import GridDefaultFolder from "../../../../Documentary/Modern/GridsContent/GridD
 import toast, { Toaster } from "react-hot-toast";
 
 const FoldeTraditional = () => {
-  const { core } = useSelector((store) => store);
-  const { FoldersCabinet, selected, selectedView } = core;
+  const { actionCore, viewCore } = useSelector((store) => store);
+  const { selected, selectedView } = viewCore;
+  const { FoldersCabinet } = actionCore;
 
   return (
     <ContainerView>
@@ -32,7 +33,7 @@ const FoldeTraditional = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

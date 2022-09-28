@@ -12,6 +12,12 @@ import ConfigDocumentReducer from "./ConfigDocumentary";
 import FileReducer from "./Upload";
 import MetadataReducer from "./Metadata";
 import ModalSecurity from "./ModalSecurity";
+import DownloadReducer from "./FileDownload";
+import ActionReducer from "./ActionCore";
+import ViewReducer from "./ViewCore";
+import SaveReducer from "./SaveCore";
+import SesionReducer from "./SecurityLogin";
+import UserCreatedReducer from "./CreatedUserNew";
 
 const rootReducer = combineReducers({
     core: CoreReducer,
@@ -23,7 +29,13 @@ const rootReducer = combineReducers({
     configDocument: ConfigDocumentReducer,
     uploader: FileReducer,
     Meta: MetadataReducer,
-    modalSecurity: ModalSecurity
+    modalSecurity: ModalSecurity,
+    download:DownloadReducer,
+    actionCore: ActionReducer,
+    viewCore: ViewReducer,
+    saveCore: SaveReducer,
+    sesion: SesionReducer,
+    changeUser: UserCreatedReducer,
 });
 
 export default function generateStore(){

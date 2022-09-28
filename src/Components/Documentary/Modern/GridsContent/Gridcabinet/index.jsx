@@ -6,26 +6,28 @@ import {
   ContainerIcon,
 } from "../../../../../Styles/Documentary/Modern/GridElement";
 import ElementIcon from "../../../../../Styles/Documentary/Modern/GridContentIcon/Icons";
-import OptionFolderMenu from "../../../Content/MenuContext/OptionFolderMenu";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setSelectedFolderCore,
-  setSelectedSearchMetadataCore,
   setIndexbyCabinetCore,
 } from "../../../../../Store/Core";
+import {
+  setSelectedFolderCore,
+} from "../../../../../Store/ActionCore";
+import {
+  setSelectedSearchMetadataCore,
+} from "../../../../../Store/ViewCore";
 import {
   setFilterDocumentDocu,
   AggFolderMetadataSelected,
   getMetadataByFolder,
 } from "../../../../../Store/Documentary";
 import {
-  setOpenContextFolder,
-  setOpenContextNewEdit,
   setCloseContextFolder,
   setOpenModalFolderUpdate,
-  setOpenModalFolderDelete
+  setOpenModalFolderDelete,
+  getNameGlobalChange,
 } from "../../../../../Store/ModalCore";
-import { getTypeFileByFolderNoSelected } from "../../../../../Store/ConfigDocumentary";
+import { getTypeFileByFolderNoSelected, getTypeFileByFolderFolder } from "../../../../../Store/ConfigDocumentary";
 import { Options } from "../../GridsContent/Gridgroup/Icons";
 import FolderUpdate from "../../ModalesCore/FolderUpdate";
 import FolderDelete from "../../ModalesCore/FolderDelete";
@@ -34,29 +36,7 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
-  // useEffect(() => {
-  //   localStorage.setItem("showFolder", showFolder);
-  //   if (instance.length != 0) {
-  //     setShowFolder(false);
-  //     dispatch(setOpenContextNewEdit());
-  //   }
-  // }, [instance, showFolder]);
-
-  // const save = localStorage.getItem("showFolder");
-
-  // const handleClick = (e) => {
-  //   showFolder && setShowFolder(false);
-  //   dispatch(setOpenContextFolder());
-  // };
-
-  // const contextMenuRightClick = (e) => {
-  //   e.preventDefault();
-  //   setX(e.clientX - 50);
-  //   setY(e.clientY - 50);
-  //   setShowFolder(save);
-  // };
-
-  const entrar = (index, cabinetId) => {
+  const entrar = (index, cabinetId, name) => {
     dispatch(setSelectedFolderCore(index));
     dispatch(setFilterDocumentDocu(index));
     dispatch(setSelectedSearchMetadataCore());
@@ -64,6 +44,7 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
     dispatch(getMetadataByFolder(index, cabinetId));
     dispatch(setIndexbyCabinetCore(cabinetId));
     dispatch(setCloseContextFolder(false));
+    dispatch(getNameGlobalChange(name));
   };
 
   const dropdownCabinet = (index) => {
@@ -79,8 +60,10 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
   };
 
   const AbrirModalUpdateFolder = (id) => {
-    dispatch(setOpenModalFolderUpdate());
+    dispatch(getTypeFileByFolderFolder(id));
     dispatch(getTypeFileByFolderNoSelected(id));
+    dispatch(setOpenModalFolderUpdate());
+    
   };
 
   const AbrirModalDeleteFolder = () => {
@@ -89,12 +72,7 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
 
   return (
     <>
-      <GridElemmentContainer
-        onDoubleClick={() => entrar(id, cabinetId)}
-        // onContextMenu={(e) => {
-        //   contextMenuRightClick(e), handleClick(e);
-        // }}
-      >
+      <GridElemmentContainer onDoubleClick={() => entrar(id, cabinetId, name)}>
         {showMenu && (
           <div className="dropdown">
             <div className="dropdown-content">
@@ -125,22 +103,12 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
           </div>
         )}
 
-        {/* {showFolder ? (
-          <OptionFolderMenu
-            x={x}
-            y={y}
-            id={id}
-            name={name}
-            description={description}
-            cabinetId={cabinetId}
-          />
-        ) : (
-          <></>
-        )} */}
         <ContainerIcon onClick={() => dropdownCabinet(id)}>
           <Options x={20} y={20} fill={"#F68A20"} />
         </ContainerIcon>
+
         <ElementIcon element={element} />
+
         <NumberOfElementChild>3 documentos</NumberOfElementChild>
         <ElementName>{name}</ElementName>
       </GridElemmentContainer>

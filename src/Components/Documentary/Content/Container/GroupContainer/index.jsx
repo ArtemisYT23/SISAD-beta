@@ -11,8 +11,10 @@ const GroupContainer = () => {
   const dispatch = useDispatch();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const { core, modalCore } = useSelector((store) => store);
-  const { cabinets, selected, GroupsCabinet, selectedView } = core;
+  const { core, modalCore, viewCore, actionCore } = useSelector((store) => store);
+  const { cabinets } = core;
+  const { GroupsCabinet } = actionCore;
+  const { selected, selectedView } = viewCore;
   const { ContextGroup } = modalCore;
 
   const handleClick = (e) => {
@@ -73,7 +75,7 @@ const GroupContainer = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

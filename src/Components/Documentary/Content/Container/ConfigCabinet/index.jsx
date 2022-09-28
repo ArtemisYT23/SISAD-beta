@@ -5,8 +5,9 @@ import IndexContainer from "../../../Modern/ConfigIndex/IndexContainer";
 
 const ConfigCabinet = () => {
 
-    const { core } = useSelector((store) => store);
-    const { IndexAllCabinet, selected } = core;
+    const { core, viewCore } = useSelector((store) => store);
+    const { IndexAllCabinet } = core;
+    const { selected } = viewCore;
 
     return (
         <>

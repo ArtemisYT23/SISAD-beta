@@ -3,6 +3,8 @@ import HeadersManagment from "../../Managment/ContentManagment/HeaderManagment";
 import ActionsManagment from "../../Managment/ContentManagment/ActionsManagment";
 import { useDispatch, useSelector } from "react-redux";
 import PanelConfigUser from "./OptionsSecurity/PanelConfigUser";
+import PanelConfigPermision from "./OptionsSecurity/PanelConfigPermision";
+import PanelGestionSecurity from "./OptionsSecurity/PanelGestionSecurity";
 
 const ContentDasboard = () => {
     
@@ -11,13 +13,12 @@ const ContentDasboard = () => {
 
     return (
     <DashboardContentContainer>
-        {/* <InfoContainer>
-            <HeadersManagment />
-            <ActionsManagment />
-        </InfoContainer> */}
         
         {SelectedOptionSecurity?.name == "Panel de usuario" || SelectedOptionSecurity == "" ? <PanelConfigUser /> : <></>}
 
+        {SelectedOptionSecurity?.name == "Panel de permisos" ? <PanelConfigPermision /> : <></>}
+
+        {SelectedOptionSecurity?.name == "Gestion de Seguridad" ? <PanelGestionSecurity /> : <></>}
 
     </DashboardContentContainer>
   );

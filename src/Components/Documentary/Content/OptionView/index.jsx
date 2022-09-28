@@ -1,3 +1,4 @@
+import { setCloseModalContextGlobal } from "../../../../Store/ModalCore";
 import { useState } from "react";
 import {
   ViewsTypeContainerCabinet,
@@ -9,7 +10,7 @@ import {
 import {
   getAllViewListAndTraditional,
   getAllViewGridAndTraditional,
-} from "../../../../Store/Core";
+} from "../../../../Store/ViewCore";
 import { setCloseDetalleModal } from "../../../../Store/ModalDocumentary";
 import { setCloseContextFolder } from "../../../../Store/ModalCore";
 import { useDispatch } from "react-redux";
@@ -20,10 +21,12 @@ const OptionView = () => {
 
   const ChangeOptionViewList = () => {
     dispatch(getAllViewListAndTraditional());
+    dispatch(setCloseModalContextGlobal());
   };
 
   const ChangeOptionViewGrid = () => {
     dispatch(getAllViewGridAndTraditional());
+    dispatch(setCloseModalContextGlobal());
   };
 
   const [push, setPush] = useState("GridViewInactive");

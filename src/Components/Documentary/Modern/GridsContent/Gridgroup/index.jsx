@@ -8,19 +8,19 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ElementIcon from "../../../../../Styles/Documentary/Modern/GridContentIcon/Icons";
 import {
+  getIndexCabinetGetAllConfigFilter,
+} from "../../../../../Store/Core";
+import {
   setSelectedCabinetCore,
   setFilterFoldersCore,
   setSelectedCabinetCoreNotSelected,
-  getIndexCabinetGetAllConfigFilter,
-} from "../../../../../Store/Core";
+} from "../../../../../Store/ActionCore";
 import { SelectedIndexConfig } from "../../../../../Store/ModalConfig";
 import {
-  setOpenMenuContextGroup,
-  setOpenContextNewEdit,
   setOpenModalCabinetUpdate,
-  setOpenModalCabinetDelete
+  setOpenModalCabinetDelete, 
+  getNameGlobalChange,
 } from "../../../../../Store/ModalCore";
-import CabinetMenu from "../../../Content/MenuContext/CabinetMenu";
 
 import { Options } from "./Icons";
 import "./CabinetDropdown.css";
@@ -28,40 +28,14 @@ import CabinetUpdate from "../../ModalesCore/CabinetUpdate";
 import CabinetDelete from "../../ModalesCore/CabinetDelete";
 
 const Gridgroup = ({ element, name, description, groupId, id }) => {
-  // const { modalCore } = useSelector((store) => store);
-  // const { instance } = modalCore;
   const dispatch = useDispatch();
-  // const [x, setX] = useState(0);
-  // const [y, setY] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
 
-  // useEffect(() => {
-  //   localStorage.setItem("showMenu", showMenu);
-  //   if (instance.length != 0) {
-  //     setShowMenu(false);
-  //     dispatch(setOpenContextNewEdit());
-  //   }
-  // }, [showMenu, instance]);
-
-  // const saved = localStorage.getItem("showMenu");
-
-  // const handleClick = (e) => {
-  //   showMenu && setShowMenu(false);
-  //   dispatch(setOpenMenuContextGroup());
-  // };
-
-  // const contextMenuRightClick = (e) => {
-  //   console.log(saved);
-  //   e.preventDefault();
-  //   setX(e.clientX - 50);
-  //   setY(e.clientY - 50);
-  //   setShowMenu(saved);
-  // };
-
-  const envio = (index) => {
+  const envio = (index, name) => {
     setShowMenu(false);
     dispatch(setSelectedCabinetCore(index));
     dispatch(setFilterFoldersCore(index));
+    dispatch(getNameGlobalChange(name));
   };
 
   const dropdownCabinet = (index) => {
@@ -94,7 +68,7 @@ const Gridgroup = ({ element, name, description, groupId, id }) => {
   };
 
   return (
-    <GridElemmentContainer id={id} onDoubleClick={() => envio(id)}>
+    <GridElemmentContainer id={id} onDoubleClick={() => envio(id, name)}>
       {showMenu && (
         <div className="dropdown">
           <div className="dropdown-content">
@@ -126,18 +100,6 @@ const Gridgroup = ({ element, name, description, groupId, id }) => {
       <NumberOfElementChild>3 carpetas</NumberOfElementChild>
       <ElementName>{name}</ElementName>
     </GridElemmentContainer>
-    // <GridElemmentContainer
-    //   onDoubleClick={() => envio(id)}
-    //   onContextMenu={(e) => {
-    //     contextMenuRightClick(e), handleClick(e);
-    //   }}
-    // >
-    // {showMenu ? <CabinetMenu x={x} y={y} id={id} name={name} description={description} groupId={groupId} /> : <></>}
-
-    //   <ElementIcon element={element} />
-    //   <NumberOfElementChild>3 documentos</NumberOfElementChild>
-    //   <ElementName>{name}</ElementName>
-    // </GridElemmentContainer>
   );
 };
 

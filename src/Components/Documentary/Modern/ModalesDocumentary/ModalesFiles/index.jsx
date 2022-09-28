@@ -56,16 +56,12 @@ const ModalesFilesGetAll = () => {
               <th>Ver/Grabar</th>
             </thead>
             {FileByDocument.map((file, index) => (
-              <ItemModalFile id={file.id} name={file.name} description={file.description} extension={file.extension} file={file.file} index={index+1} documentId={file.documentId} fileTypeId={file.fileTypeId}/>
+              <ItemModalFile id={file.id} name={file.name} description={file.description} extension={file.extension} file={file.file} index={index+1} documentId={file.documentId} fileTypeName={file.fileTypeName} fileTypeId={file.fileTypeId}/>
             ))}
           </table>
         </div>
         <br />
         <div align="right">
-          {/* <button className="btn-enviar">Crear</button> */}
-          {/* <button className="btn-cancelar" onClick={() => abrirCerrarModal()}>
-            Cancelar
-          </button> */}
         </div>
       </form>
     </div>

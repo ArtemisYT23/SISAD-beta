@@ -19,8 +19,8 @@ import GroupDelete from "../../../Modern/ModalesCore/GroupDelete";
 
 const GroupHeaders = () => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedGroup } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedGroup } = actionCore;
 
   const OpenGroupCreated = () => {
     dispatch(setOpenModalGroupCreated());

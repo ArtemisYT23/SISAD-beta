@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDocumentDocu,
-  getIndexByCabinetConfig,
-  getMetadataByDocumentDOCU,
 } from "../../../../Store/Documentary";
 import { ContainerConsul, TableConsul, TD, TH, Title, TR } from "./ConsulIndex";
 import TitleCabinet from "./CeldaConsul";

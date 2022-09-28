@@ -1,4 +1,4 @@
-import { SearchContainer } from "../../../../Styles/Documentary/Modern/Search";
+import { SearchContainer, SearchInput } from "../../../../Styles/Documentary/Modern/Search";
 import {
   ContainerList,
   UL,
@@ -6,26 +6,34 @@ import {
 } from "../../../../Styles/Documentary/Modern/SearchTree";
 import ItemTree from "./ItemTree";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getAllCabinetsCore, getAllFoldersCore } from "../../../../Store/Core";
+import { useState } from "react";
 import PrimaryItem from "./PrimaryItem";
+import { setFilterCabinetsByName } from "../../../../Store/Core";
+import { setFilterFoldersByName } from "../../../../Store/Documentary";
 
 const SearchTree = () => {
   const dispatch = useDispatch();
   const { core } = useSelector((store) => store);
   const { cabinets, foldersCore, groups } = core;
 
-  useEffect(() => {
+  const [Search, setSearch] = useState("");
 
-      cabinets.length == 0 && dispatch(getAllCabinetsCore());
+  const BusquedaGlobal = (name) => {
+    setSearch(name);
+  };
 
-      foldersCore.length === 0 && dispatch(getAllFoldersCore());
-
-      groups.length === 0 && dispatch(getAllGroupsCore());
-  })
+  const Submit = (e) => {
+    e.preventDefault();
+    dispatch(setFilterCabinetsByName(Search));
+    dispatch(setFilterFoldersByName(Search));
+  }
 
   return (
     <SearchContainer>
+      <form onSubmit={Submit}>
+        <SearchInput placeholder="Buscar" onChange={(e) => BusquedaGlobal(e.target.value)}/>
+      </form>
+      <br />
         <ContainerList>
           <UL>
             <LI>Grupos</LI>

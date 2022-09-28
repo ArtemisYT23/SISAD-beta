@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ContainerSearch = () => {
 
-    const { core } = useSelector((store) => store);
-    const { selectedSearch } = core;
+    const { viewCore } = useSelector((store) => store);
+    const { selectedSearch } = viewCore;
 
     return(
         <>

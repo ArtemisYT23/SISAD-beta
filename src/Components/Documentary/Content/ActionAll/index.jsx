@@ -11,8 +11,8 @@ import ActionsCabinet from "../Actions";
 import ActionsFolder from "../ActionsFolder";
 
 const ActionsAll = () => {
-  const { core } = useSelector((store) => store);
-  const { selected, selectedView } = core;
+  const { viewCore } = useSelector((store) => store);
+  const { selected, selectedView } = viewCore;
 
   return (
     <ActionsContainer>

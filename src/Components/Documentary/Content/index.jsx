@@ -10,8 +10,8 @@ import Traditional from "../Traditional";
 
 
 const DocumentaryContent = () => {
-  const { core, modalConfig } = useSelector((store) => store);
-  const { selected, selectedView } = core;
+  const { viewCore } = useSelector((store) => store);
+  const { selectedView } = viewCore;
 
   return (
     <DocumentaryContentContainer>

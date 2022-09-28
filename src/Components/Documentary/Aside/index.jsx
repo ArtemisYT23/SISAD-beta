@@ -6,8 +6,8 @@ import ContainerSearch from "../Traditional/ContainerSearch";
 
 const DocumentaryAside = () => {
 
-  const { core } = useSelector((store) => store);
-  const { selectedView } = core;
+  const { viewCore } = useSelector((store) => store);
+  const { selectedView } = viewCore;
 
   return (
     <DocumentaryAsideContainer>

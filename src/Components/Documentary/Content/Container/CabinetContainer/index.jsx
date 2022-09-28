@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { DocumentContainer } from "../../../../../Styles/Documentary";
 import {
   setOpenContextFolder,
-  setCloseContextFolder,
 } from "../../../../../Store/ModalCore";
 import Gridcabinet from "../../../Modern/GridsContent/Gridcabinet";
 import GridDefaultFolder from "../../../Modern/GridsContent/GridDefaultFolder";
@@ -14,8 +13,9 @@ const CabinetContainer = () => {
   const dispatch = useDispatch();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const { core, modalCore } = useSelector((store) => store);
-  const { selected, FoldersCabinet, SelectedCabinet, selectedView } = core;
+  const { modalCore, actionCore, viewCore } = useSelector((store) => store);
+  const { FoldersCabinet, SelectedCabinet } = actionCore;
+  const { selected, selectedView } = viewCore;
   const { ContextFolder } = modalCore;
 
   const handleClick = (e) => {
@@ -66,7 +66,7 @@ const CabinetContainer = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

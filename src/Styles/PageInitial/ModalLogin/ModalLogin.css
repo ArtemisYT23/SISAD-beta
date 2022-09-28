@@ -184,6 +184,7 @@
   color: #fff;
   font-size: 1.1rem;
   margin: 0 0 0 8rem;
+  opacity: 0;
 }
 
 @media screen and (min-width: 350px) {
@@ -308,4 +309,14 @@
   .ButtonLogin .LastChild {
     display: none;
   }
+}
+
+.ErrorLoginMessage{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: fantasy;
+  color: #fff;
+  font-size: 1.3rem;
+  opacity: .8;
 }

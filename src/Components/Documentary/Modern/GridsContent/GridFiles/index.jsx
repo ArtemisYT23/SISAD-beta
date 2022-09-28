@@ -7,6 +7,7 @@ import {
   DistintivoPDF,
   TypeFile,
   ContainerIcon,
+  ContainerDistint,
 } from "../../../../../Styles/Documentary/Modern/GridElement";
 import ElementIcon from "../../../../../Styles/Documentary/Modern/GridContentIcon/Icons";
 import {
@@ -32,11 +33,12 @@ const GridFiles = ({
   fileTypeId,
   documentId,
   file,
+  fileTypeName
 }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const { core } = useSelector((store) => store);
-  const { SelectedCabinet } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedCabinet } = actionCore;
 
   const EntrarDetalle = (id, cabinetId, documentId, file) => {
     dispatch(setCloseDetalleModal(true));
@@ -70,8 +72,6 @@ const GridFiles = ({
       {showMenu && (
         <div className="dropdown">
           <div className="dropdown-content">
-            {/* <div className="dropdown-item">Editar</div>
-            <hr></hr> */}
             <div className="dropdown-item" onClick={() => DeleteFile()}>Eliminar</div>
           </div>
           <FileUploaderDelete id={id} name={name} documentId={documentId}/>
@@ -80,11 +80,19 @@ const GridFiles = ({
       <ContainerIcon onClick={() => dropdownCabinet(id)}>
         <Options x={20} y={20} fill={"#F68A20"}/>
       </ContainerIcon>
+
       <ElementIcon element={element} />
-      <DistintivoPDF />
+      
+      <ContainerDistint>
+      <DistintivoPDF>
       <TypeFile>{extension}</TypeFile>
-      <NumberOfElementChild>{description}</NumberOfElementChild>
+      </DistintivoPDF>
+      </ContainerDistint>
+      
+      <NumberOfElementChild>{fileTypeName}</NumberOfElementChild>
+
       <ElementNameDoc>{name}</ElementNameDoc>
+
     </GridDocContainer>
     </>
   );

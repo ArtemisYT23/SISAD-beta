@@ -4,11 +4,12 @@ import CabinetContainer from "../Container/CabinetContainer";
 import FolderContainer from "../Container/FolderContainer";
 import FileContainer from "../Container/FileContainer";
 import ConfigCabinet from "../Container/ConfigCabinet";
+import SearchContainer from "../Container/SearchContainer";
 import AllCabinetContainer from "../Container/AllContainerCabinet";
 
 const ContentGrid = () => {
-  const { core, modalConfig } = useSelector((store) => store);
-  const { selected, selectedView } = core;
+  const { modalConfig, viewCore } = useSelector((store) => store);
+  const { selected, selectedView } = viewCore;
   const { selectedConfig } = modalConfig;
 
   return (
@@ -21,7 +22,7 @@ const ContentGrid = () => {
 
       {selected === "folder" && selectedView === "grid" ? <FolderContainer /> : <></>}
 
-      {selected === "files" && selectedView === "grid" ? <FileContainer /> : <></>}
+      {selected === "search" && selectedView === "grid" ? <SearchContainer /> : <></>}
 
       {selectedConfig === "ConfigCabinet" ? <ConfigCabinet /> : <></>}
     </>

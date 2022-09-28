@@ -5,6 +5,9 @@ const initialState = {
     TelefonoEditing: false,
     CompañiaEditing: false,
     NombreEditing: false,
+    UserCreated: false,
+    UserUpdate: false,
+    UserDelete: false,
 
 };
 
@@ -15,6 +18,11 @@ const OPEN_MODALSECURITY_TELEFONO_DOCU = "OPEN_MODALSECURITY_TELEFONO_DOCU";
 const OPEN_MODALSECURITY_COMPAÑIA_DOCU = "OPEN_MODALSECURITY_COMPAÑIA_DOCU";
 const OPEN_MODALSECURITY_NOMBRE_DOCU = "OPEN_MODALSECURITY_NOMBRE_DOCU";
 
+//crud usuarios
+const OPEN_MODAL_CREATED_USER_DOCU = "OPEN_MODAL_CREATED_USER_DOCU";
+const OPEN_MODAL_UPDATE_USER_DOCU = "OPEN_MODAL_UPDATE_USER_DOCU";
+const OPEN_MODAL_DELETE_USER_DOCU = "OPEN_MODAL_DELETE_USER_DOCU";
+
 //payload de tag de acciones
 export default function ModalSecurityReducer(state = initialState, action) {
     switch (action.type) {
@@ -23,6 +31,11 @@ export default function ModalSecurityReducer(state = initialState, action) {
         case OPEN_MODALSECURITY_TELEFONO_DOCU:
         case OPEN_MODALSECURITY_COMPAÑIA_DOCU:
         case OPEN_MODALSECURITY_NOMBRE_DOCU:
+        
+        //crud de usuarios
+        case OPEN_MODAL_CREATED_USER_DOCU:
+        case OPEN_MODAL_UPDATE_USER_DOCU:
+        case OPEN_MODAL_DELETE_USER_DOCU:
             return action.payload;
         default:
             return state;
@@ -76,4 +89,32 @@ export const setOpenModalNombreSecurity = () => async(dispatch, getState) => {
         type: OPEN_MODALSECURITY_NOMBRE_DOCU,
         payload: { ...modalSecurity, NombreEditing:!modalSecurity.NombreEditing }
     });
+}
+
+/*<-------------CRUD DE USUARIOS--------------->*/
+//creacion de usuarios 
+export const setOpenModalCreatedUser = () => async(dispatch, getState) => {
+    const { modalSecurity } = getState();
+    dispatch({
+        type: OPEN_MODAL_CREATED_USER_DOCU,
+        payload: { ...modalSecurity, UserCreated:!modalSecurity.UserCreated}
+    })
+}
+
+//actualizacion de usuarios
+export const setOpenModalUpdateUser = () => async(dispatch, getState) => {
+    const { modalSecurity } = getState();
+    dispatch({
+        type: OPEN_MODAL_UPDATE_USER_DOCU,
+        payload: { ...modalSecurity, UserUpdate:!modalSecurity.UserUpdate}
+    })
+}
+
+//eliminacion de usuarios
+export const setOpenModalDeleteUser = () => async(dispatch, getState) => {
+    const { modalSecurity } = getState();
+    dispatch({
+        type: OPEN_MODAL_DELETE_USER_DOCU,
+        payload: { ...modalSecurity, UserDelete:!modalSecurity.UserDelete}
+    })
 }

@@ -1,17 +1,12 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContainer } from "../../../../Styles/Documentary/Modern/Search";
 import {
-  getAllCabinetsCore,
-  getFoldersAllCabinet,
   setSelectedCabinetCoreNoSelected,
-  setIndexbyCabinetCore,
   setFilterFoldersCore
-} from "../../../../Store/Core";
+} from "../../../../Store/ActionCore";
 
 import {
   ContainerTitle,
-  TituloSelect,
   OptionsSelect,
   ContainerList,
   IdentifyName,
@@ -23,8 +18,9 @@ import ItemMetadata from "./ItemMetadata";
 
 const SearchMetadata = () => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { cabinets, FoldersCabinet } = core;
+  const { core, actionCore } = useSelector((store) => store);
+  const { cabinets } = core;
+  const { FoldersCabinet } = actionCore;
 
   const handleChange = (index) => {
     dispatch(setFilterFoldersCore(index));
@@ -44,6 +40,7 @@ const SearchMetadata = () => {
           name="id"
           onChange={(e) => {handleChange(e.target.value), handleSelected(e.target.value)}}
         >
+          <option hidden>Seleccionar Gabinete</option>
           {cabinets ? (
             cabinets.map(({ id, name }, index) => (
               <OptionsSelect value={id}>{name}</OptionsSelect>

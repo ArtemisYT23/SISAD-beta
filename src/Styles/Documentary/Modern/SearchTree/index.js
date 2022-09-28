@@ -29,17 +29,13 @@ export const ContainerItemTree = styled.div`
     flex-direction: column;
     display: flex;
     justify-content: center;
-    padding: 0.3rem;
+    
 `;
 
 export const ContentItem = styled.div`
     display: flex;
     width: 100%;
     color: var(--lineColor);
-    &:hover{
-        background-color: #F1F1F1;
-        color: var(--primaryColor);
-    }
 `;
 
 export const ContainerIcons = styled.div`

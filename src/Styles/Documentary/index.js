@@ -73,7 +73,7 @@ export const DocumentContainer = styled.div`
   padding-bottom: 2rem; 
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 
 export const ComponentsAction = styled.div`
@@ -82,6 +82,7 @@ export const ComponentsAction = styled.div`
 
 export const ContainerSearchFiles = styled.div`
   width: 100%;
+  height: 4rem;
   display: flex;
   align-items: center;
 `;
@@ -103,4 +104,42 @@ export const ButtonClearSearch = styled.button`
   margin: 0 .2rem 0 0;
   background-color: none;
   color: var(--primaryColor);
+`;
+
+export const ContainerSearchCabinet = styled.div`
+  width: 100%;
+  margin: 0 0 1rem 0;
+  /* background-color: red; */
+  border: 1px solid #c4c4c4;
+  padding: 1rem;
+`;
+
+export const ContainerSearchFolder = styled.div`
+  width: 100%;
+  /* background-color: yellow; */
+  margin: 0 0 1rem 0;
+  border: 1px solid #c4c4c4;
+  padding: 1rem;
+`;
+
+export const ContainerFiles = styled.div`
+  width: 100%;
+  /* background-color: green; */
+  border: 1px solid #c4c4c4;
+  padding: 1rem;
+`;
+
+export const TextTitle = styled.span`
+  color: var(--primaryColor);
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+export const ContainerText = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem;
+  border: 1px solid #c4c4c4;
 `;

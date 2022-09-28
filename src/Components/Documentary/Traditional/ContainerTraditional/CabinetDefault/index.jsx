@@ -1,10 +1,10 @@
 import { ContainerDescription, ContainerIcon, ContainerOptions, ContainerTitle, ContainerTraditional, Title, TitleCabinet } from "../../../../../Styles/Traditional/CabinetTraditional";
 import { CabinetTraditional, OptionsTraditional } from "../../../../../Styles/Traditional/CabinetTraditional/Icon";
 import { useDispatch } from "react-redux";
-import { setSelectedCabinetCoreNotTraditional } from "../../../../../Store/Core";
+import { setSelectedCabinetCoreNotTraditional } from "../../../../../Store/ActionCore";
 import "./CabinetDefault.css";
 
-const CabinetDefault = ({ index, key, id, name, description }) => {
+const CabinetDefault = ({ id, name, description }) => {
     
     const dispatch = useDispatch();
 

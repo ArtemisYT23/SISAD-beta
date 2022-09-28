@@ -32,8 +32,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const IndexContainer = () => {
   const dispatch = useDispatch();
-  const { core, configDocument } = useSelector((store) => store);
-  const { SelectedCabinet, IndexAllCabinet } = core;
+  const { core, configDocument, actionCore } = useSelector((store) => store);
+  const { SelectedCabinet } = actionCore;
+  const { IndexAllCabinet } = core;
   const { IndexSelected } = configDocument;
 
   const OpenModalIndexCreatedConfig = () => {
@@ -219,7 +220,7 @@ const IndexContainer = () => {
         position="top-right"
         toastOptions={{
           className: "",
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#F68A20",
             color: "#fff",

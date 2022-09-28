@@ -11,6 +11,9 @@ import {
   getMetadataByFolder,
   AggFolderMetadataSelected,
 } from "../../../../../Store/Documentary";
+import { getTypeFileByFolder } from "../../../../../Store/ConfigDocumentary";
+import { getNameGlobalChange } from "../../../../../Store/ModalCore";
+import { getMetadataLogbyFolder } from "../../../../../Store/Documentary";
 
 
 const ItemMetadata = ({ id, name, key, cabinetId }) => {
@@ -20,13 +23,16 @@ const ItemMetadata = ({ id, name, key, cabinetId }) => {
     dispatch(getMetadataByFolder(index, cabinetId));
   };
 
-  const SelectedFolder = (index) => {
+  const SelectedFolder = (index, name) => {
+    dispatch(getNameGlobalChange(name));
     dispatch(AggFolderMetadataSelected(index));
+    dispatch(getTypeFileByFolder(index));
+    dispatch(getMetadataLogbyFolder(index));
   };
 
   return (
     <ContainerItemTree onClick={(e) => SelectedFolderMeta(id, cabinetId)}>
-      <ContentItem onClick={(e) => SelectedFolder(id)}>
+      <ContentItem onClick={(e) => SelectedFolder(id, name)}>
         <ContainerIcons>
           <CarpIcons x={24} y={24} />
         </ContainerIcons>

@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const ContainerTraditional = styled.div`
     width: 100%;
     height: 2.3rem;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
+    border: 1px solid var(--lineColor);
 `;
 
 export const ContainerIcon = styled.div`
@@ -13,7 +14,7 @@ export const ContainerIcon = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    border: 1px solid var(--lineColor);
+    /* border: 1px solid var(--lineColor); */
 `;
 
 export const ContainerTitle = styled.div`
@@ -23,7 +24,7 @@ export const ContainerTitle = styled.div`
     justify-content: flex-start;
     align-items: center;
     height: 100%;
-    border: 1px solid var(--lineColor);
+    /* border: 1px solid var(--lineColor); */
 `;
 
 export const TitleCabinet = styled.h1`
@@ -42,7 +43,7 @@ export const ContainerDescription = styled.div`
     justify-content: flex-start;
     align-items: center;
     height: 100%;
-    border: 1px solid var(--lineColor);
+    /* border: 1px solid var(--lineColor); */
 `;
 
 export const ContainerOptions = styled.div`
@@ -51,7 +52,7 @@ export const ContainerOptions = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    border: 1px solid var(--lineColor);
+    /* border: 1px solid var(--lineColor); */
 `;
 
 export const Title = styled.h1`
@@ -61,4 +62,11 @@ export const Title = styled.h1`
     text-overflow: ellipsis;
     margin: 0 0 0 0.5rem;
     color: var(--primaryColor);
+`;
+
+
+export const ContentText = styled.div`
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    padding: 1rem;
 `;

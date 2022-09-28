@@ -1,0 +1,25 @@
+.ContainerAgg{
+    padding: .5rem;
+}
+
+.ButtonNew{
+    border: none;
+    width: 8rem;
+    height: 2rem;
+    color: #fff;
+    background-color: #f69330;
+}
+
+.ButtonNew:hover{
+    background-color: #ff8000;
+    color:rgb(255, 243, 243);
+}
+
+.CeldaIconContainer{
+    display: flex;
+    margin: 0 0 0 0;
+}
+
+.IconButton{
+    margin: 0 1.2rem 0 1rem;
+}

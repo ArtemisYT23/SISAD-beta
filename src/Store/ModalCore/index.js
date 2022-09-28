@@ -17,7 +17,9 @@ const initialState = {
     ContextOptionMeta: false,
     ModalLogin: false,
     instance: "",
-    Selection: "SUCCESS_LOGIN",
+    Selection: "",
+    NameGlobalSelected: "",
+    NameManagmentSelected: "",
 };
 
 // tag de acciones
@@ -44,6 +46,10 @@ const SET_CLOSE_MENUCONTEXT_FOLDER = "SET_CLOSE_MENUCONTEXT_FOLDER";
 const SET_CLOSE_MENUCONTEXT_DOCUMENT = "SET_CLOSE_MENUCONTEXT_DOCUMENT";
 const SET_CLOSE_MENUCONTEXT_OPTIONS_META = "SET_CLOSE_MENUCONTEXT_OPTIONS_META";
 const SET_CLOSE_MENUCONTEXT_FILE = "SET_CLOSE_MENUCONTEXT_FILE";
+const GET_NAME_ELEMENT_GLOBAL_CHANGE = "GET_NAME_ELEMENT_GLOBAL_CHANGE";
+const GET_CLEANER_NAME_ELEMENT_GLOBAL_CHANGE = "GET_CLEANER_NAME_ELEMENT_GLOBAL_CHANGE";
+const GET_NAME_ELEMENT_MANAGMENT_CHANGE = "GET_NAME_ELEMENT_MANAGMENT_CHANGE";
+const CLOSE_MENUCONTEXT_GLOBAL_CORE = "CLOSE_MENUCONTEXT_GLOBAL_CORE";
 
 //payload de tag de acciones
 export default function ModalCoreReducer(state = initialState, action) {
@@ -71,6 +77,10 @@ export default function ModalCoreReducer(state = initialState, action) {
         case SET_CLOSE_MENUCONTEXT_DOCUMENT:
         case SET_CLOSE_MENUCONTEXT_OPTIONS_META:
         case SET_CLOSE_MENUCONTEXT_FILE:
+        case GET_NAME_ELEMENT_GLOBAL_CHANGE:
+        case GET_CLEANER_NAME_ELEMENT_GLOBAL_CHANGE:
+        case GET_NAME_ELEMENT_MANAGMENT_CHANGE:
+        case CLOSE_MENUCONTEXT_GLOBAL_CORE:
             return action.payload;
         default:
             return state;
@@ -78,6 +88,35 @@ export default function ModalCoreReducer(state = initialState, action) {
 };
 
 //acciones
+//name global
+/*<--------------Guardar nombre de todo para presentar de titulo documentary--------------->*/
+export const getNameGlobalChange = (name) => async (dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: GET_NAME_ELEMENT_GLOBAL_CHANGE,
+        payload: { ...modalCore, NameGlobalSelected: name}
+    })
+};
+
+export const getNameGlobalChangeCleaner = () =>  async (dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: GET_CLEANER_NAME_ELEMENT_GLOBAL_CHANGE,
+        payload: { ...modalCore, NameGlobalSelected: "" }
+    })
+};
+
+
+//name config documentary
+/*<------------------Guardar nombre de la seleccion de menun de managament----------------->*/
+export const getNameManagmentChange = (name) => async(dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: GET_NAME_ELEMENT_MANAGMENT_CHANGE,
+        payload: { ...modalCore, NameManagmentSelected: name }
+    })
+}
+
 
 /*<-----------GABINETES-------------->*/
 //Modal para guardar nuevo Gabinete 
@@ -212,6 +251,8 @@ export const setOpenContextNewEdit = () => async(dispatch, getState) => {
     });
 }
 
+
+
 //Menu Contextual para carpetas  
 export const setOpenContextFolder = () => async (dispatch, getState) => {
     const { modalCore } = getState();
@@ -298,4 +339,19 @@ export const LoginSuccessCore = () => (dispatch, getState) => {
         type: LOGIN_SUCCESS_SYSTEM,
         payload: { ...modalCore, Selection: "SUCCESS_LOGIN" }
     });
+}
+
+//cerrar todo los menu contextuales (cambio de vista)
+
+export const setCloseModalContextGlobal = () => async(dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: CLOSE_MENUCONTEXT_GLOBAL_CORE,
+        payload: { ...modalCore, 
+            ContextGroup: false,
+            ContextFolder: false,
+            ContextDocument: false,
+            ContextFile: false,
+        }
+    })
 }

@@ -104,6 +104,7 @@ const FolderCreated = ({ cabinetId }) => {
         <br />
         <h2 className="Title-Archive">Tipo de Archivo</h2>
         <div className="ContainerSelectedChech">
+          
           <div className="ContainerNameCheck">
             {TypeFile ? (
               TypeFile.map(({ id, name }, index) => (
@@ -122,6 +123,7 @@ const FolderCreated = ({ cabinetId }) => {
               <></>
             )}
           </div>
+
         </div>
         <br />
         <div align="right">

@@ -1,0 +1,81 @@
+.Container-Table {
+  width: 100%;
+  height: 260px;
+  overflow-y: scroll;
+  display: flex;
+  margin: 1rem 0 0 0;
+}
+
+.Container-Table::-webkit-scrollbar {
+  /* width: 10px;
+    background-color: rgb(245, 122, 14);
+    display: none; */
+}
+
+.ContainerOne {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.NumberSelect {
+  border: 1px solid #c4c4c4;
+  height: 1.5rem;
+  justify-content: center;
+  display: flex;
+}
+
+.ContainerTwo {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.Celda-Table {
+  border: 1px solid #c4c4c4;
+  height: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  align-items: initial;
+  padding: 0.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.Celda-TableIndex {
+    border: 1px solid #c4c4c4;
+    height: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    align-items: initial;
+    padding: 0.2rem;
+  }
+
+
+.Title-Doc {
+  color: #f68a20;
+}
+
+.ContainerChange {
+  width: 100%;
+  display: flex;
+}
+
+.ChangeButton {
+  border: none;
+  width: 105px;
+  height: 1.5rem;
+  background-color: #f68a20;
+  margin: 0 0 0.8rem 0;
+  color: white;
+}
+
+.InputBusqueda{
+    outline: none;
+    border: none;
+}

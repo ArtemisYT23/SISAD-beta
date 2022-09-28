@@ -4,10 +4,11 @@ import DocumentConsult from "./ContentTraditional/DocumentConsult";
 import FolderTraditional from "../Traditional/ContentTraditional/FoldeTraditional";
 import CabinetTraditional from "../Traditional/ContentTraditional/CabinetTraditional";
 import GroupMantentTraditional from "./ContentTraditional/GroupMantentTraditional";
+import SearchTraditionalContainer from "./ContentTraditional/SearchTraditionalContainer";
 
 const DocumentaryTraditional = () => {
-  const { core } = useSelector((store) => store);
-  const { selected, selectedSearch, selectedView } = core;
+  const { viewCore } = useSelector((store) => store);
+  const { selected, selectedSearch, selectedView } = viewCore;
 
   return (
     <>
@@ -41,8 +42,18 @@ const DocumentaryTraditional = () => {
         <></>
       )}
 
-      {selected === "folder" && selectedView === "list" && selectedSearch === "TraditionalTree" ? (
+      {selected === "folder" &&
+      selectedView === "list" &&
+      selectedSearch === "TraditionalTree" ? (
         <DocumentConsult />
+      ) : (
+        <></>
+      )}
+
+      {selected === "search" &&
+      selectedView === "list" &&
+      selectedSearch === "TraditionalTree" ? (
+        <SearchTraditionalContainer />
       ) : (
         <></>
       )}

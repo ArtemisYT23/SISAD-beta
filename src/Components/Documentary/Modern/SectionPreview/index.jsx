@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCloseDetalleModal } from "../../../../Store/ModalDocumentary";
-import pdfFile from "./pdf/curriculum.pdf";
 import "./Container.css";
 
 const SectionPreview = () => {
   const dispatch = useDispatch();
-  const [defaultPdfFile] = useState(pdfFile);
+
 
   const { core, documentary } = useSelector((store) => store);
   const { SelectedFile, IndexByCabinet, SelectedUrlFile } = core;
@@ -38,15 +37,13 @@ const SectionPreview = () => {
       <br />
       {SelectedUrlFile != "" && (
         <div className="contenedor">
-          {defaultPdfFile && (
             <iframe
               frameBorder={10}
               className="ContentPdf"
               src={SelectedUrlFile}
             />
-          )}
         </div>
-      )}
+        )} 
 
       <div className="footer">
         <h1>Índices</h1>

@@ -7,17 +7,19 @@ import {
   ContentItem,
 } from "../../../../../Styles/Documentary/Modern/SearchTree";
 import { GroupIcon } from "../../Search/Item/Icon";
-import { setSelectedGroupCore, setFilterGroupsCore } from "../../../../../Store/Core"; 
+import { setSelectedGroupCore, setFilterGroupsCore } from "../../../../../Store/ActionCore"; 
 import ItemGroups from "./ItemGroups";
+import { getNameGlobalChange } from "../../../../../Store/ModalCore";
 
 const PrimaryItem = ({ id, name }) => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedGroup, GroupsCabinet } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedGroup, GroupsCabinet } = actionCore;
 
-  const selectGroup = (index) => {
+  const selectGroup = (index, name) => {
     dispatch(setSelectedGroupCore(index));
     dispatch(setFilterGroupsCore(index));
+    dispatch(getNameGlobalChange(name));
   };
 
   const SelectedGroupColor = (index) => {
@@ -34,7 +36,7 @@ const PrimaryItem = ({ id, name }) => {
 
   return (
     <ContainerItemTree>
-      <ContentItem id={id} className="Celda" onClick={() => {selectGroup(id), SelectedGroupColor(id)}}>
+      <ContentItem id={id} className="Celda" onClick={() => {selectGroup(id,name), SelectedGroupColor(id)}}>
         <ContainerIcons>
           <GroupIcon x={20} y={20} />
         </ContainerIcons>

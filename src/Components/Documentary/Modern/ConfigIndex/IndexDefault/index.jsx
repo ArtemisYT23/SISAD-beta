@@ -14,8 +14,8 @@ import toast, { Toaster } from "react-hot-toast";
 
 const IndexDefault = () => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedCabinet } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedCabinet } = actionCore;
 
   const OpenConfigModalIndex = () => {
     dispatch(setOpenModalConfigCreated());

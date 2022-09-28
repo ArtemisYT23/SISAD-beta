@@ -5,8 +5,12 @@ import { v4 as uuidv4 } from "uuid";
 import { setOpenModalCabinetCreated } from "../../../../../Store/ModalCore";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../../../Styles/Documentary/ModalStyle/modal.css";
-import { CreateCabinetNew, getAllGroupsCore } from "../../../../../Store/Core";
+import { CreateCabinetNew } from "../../../../../Store/Core";
 import { setOpenMenuContextGroup } from "../../../../../Store/modalCore";
+import {
+  getTypeFileConfig,
+  getTypeFileDefault,
+} from "../../../../../Store/ConfigDocumentary";
 
 const useStyless = makeStyles((theme) => ({
   CabinetCreated: {
@@ -32,20 +36,22 @@ const CabinetCreatedModal = () => {
   const dispatch = useDispatch();
   const styless = useStyless();
 
-  const { modalCore, core } = useSelector((store) => store);
-  const { CabinetCreated, RespuestaServer } = modalCore;
+  const { modalCore, core, configDocument } = useSelector((store) => store);
+  const { CabinetCreated } = modalCore;
   const { groups } = core;
+  const { TypeFile, TypeFileDefault } = configDocument;
 
   useEffect(() => {
-    groups.length == 0 && dispatch(getAllGroupsCore());
+    TypeFile.length === 0 && dispatch(getTypeFileConfig());
+    TypeFileDefault.length === 0 && dispatch(getTypeFileDefault());
   }, []);
 
   const [gabinetes, setGabinetes] = useState({
     id: uuidv4(),
     name: "",
     description: "",
-    path: "../Root",
     groupId: null,
+    fileTypes: [],
   });
 
   const handleChange = (e) => {
@@ -55,9 +61,22 @@ const CabinetCreatedModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    abrirCerrarModal();
+    ObtenerSelection();
     console.log(gabinetes);
+    abrirCerrarModal();
     dispatch(CreateCabinetNew(gabinetes));
+  };
+
+  const ObtenerSelection = () => {
+    const checkboxes = document.querySelectorAll(
+      'input[name="fileOptions"]:checked'
+    );
+
+    const SelectedTypes = [];
+    checkboxes.forEach((checkbox) => {
+      SelectedTypes.push(checkbox.value);
+    });
+    gabinetes.fileTypes = SelectedTypes;
   };
 
   const cabinet = (
@@ -105,6 +124,47 @@ const CabinetCreatedModal = () => {
             <></>
           )}
         </select>
+        <br />
+        <h2 className="Title-Archive">Tipo de Por defecto</h2>
+          <div className="ContainerNameCheck">
+            {TypeFileDefault && (
+              <div className="NameCeldaCheck">
+                <input
+                  className="InputCheck"
+                  type="checkbox"
+                  name="fileOptions"
+                  checked={true}
+                  value={TypeFileDefault?.id}
+                  id={TypeFileDefault?.id}
+                />
+                {TypeFileDefault?.name}
+              </div>
+            )}
+          </div>
+  
+
+        <h2 className="Title-Archive">Tipo de Archivo</h2>
+        <div className="ContainerSelectedChech">
+          <div className="ContainerNameCheck">
+            {TypeFile ? (
+              TypeFile.map(({ id, name }, index) => (
+                <div className="NameCeldaCheck">
+                  <input
+                    className="InputCheck"
+                    type="checkbox"
+                    name="fileOptions"
+                    value={id}
+                    id={id}
+                  />
+                  {name}
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+
         <br />
         <br />
         <div align="right">
