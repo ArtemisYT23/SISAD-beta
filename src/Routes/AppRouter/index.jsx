@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "../../Components/NavBar";
 import Dashboard from "../../Views/Dashboard";
 import Documentary from "../../Views/Documentary";
@@ -10,25 +10,23 @@ import Resumen from "../../Views/Resumen";
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
-    
-    const { modalCore} = useSelector((store) => store);
-    const { Selection } = modalCore;
+  const { modalCore, sesion } = useSelector((store) => store);
+  const { Selection } = modalCore;
+  const { TockenUser } = sesion;
 
-    return(
-        <BrowserRouter>
-        {Selection.length != 0 &&(
-        <NavBar />
-        )}
-        <Routes>
-            <Route exact path='/' element={<PageInitial />} />
-            <Route path='dashboard' element={<Dashboard />} />
-            <Route path="managment" element={<Managment />} />
-            <Route path='documentary' element={<Documentary />} />
-            <Route path='facturation' element={<Facturation />} />
-            <Route path='resumen' element={<Resumen />} />
-        </Routes>        
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      {Selection.length != 0 && <NavBar />}
+      <Routes>
+        <Route exact path="/" element={<PageInitial />} />
+        <Route exact path="dashboard" element={<Dashboard />} />
+        <Route exact path="managment" element={<Managment />} />
+        <Route exact path="documentary" element={<Documentary />} />
+        <Route exact path="facturation" element={<Facturation />} />
+        <Route exact path="resumen" element={<Resumen />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default AppRouter;

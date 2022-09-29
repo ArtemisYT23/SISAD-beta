@@ -104,7 +104,7 @@ const FolderUpdate = ({ id, name, description, cabinetId }) => {
         <h2 className="Title-Archive">Tipo de Archivo Existente</h2>
         ):<h2 className="Title-Archive">No tiene Archivos Configurados</h2>}
 
-        <div className="ContainerSelectedCheck">
+        <div className="ContainerSelectedChech">
         {FilesFolders != "" ? (
           <div className="ContainerNameCheck">
             {FilesFolders ? (

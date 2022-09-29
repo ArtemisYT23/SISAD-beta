@@ -1,4 +1,5 @@
 import axios from "axios";
+import { LoginSuccessCore } from "../../Store/ModalCore";
 import { SecurityServer } from "../../config/axios";
 import toast, { Toaster } from "react-hot-toast";
 import jwt_decode from "jwt-decode";
@@ -8,7 +9,7 @@ const initialState = {
     TockenUser: { token: "" },
     Route: "",
     TockenError: "",
-    RolSesion: "",
+    RolSesion: {},
 };
 
 const TOCKEN_USER_LOGIN_SUCCESS = "TOCKEN_USER_LOGIN_SUCCESS";
@@ -17,6 +18,7 @@ const GET_ALL_USER_LIST_SECURITY = "GET_ALL_USER_LIST_SECURITY";
 const GET_ALL_USER_LIST_SECURITY_ERROR = "GET_ALL_USER_LIST_SECURITY_ERROR";
 const SAVE_TOCKEN_ROL_USERS = "SAVE_TOCKEN_ROL_USERS";
 const SAVE_ROLL_USER_SECURITY = "SAVE_ROLL_USER_SECURITY";
+const CLEAR_TOCKEN_SESION_CLOSE_SECURITY = "CLEAR_TOCKEN_SESION_CLOSE_SECURITY";
 
 export default function SesionReducer(state = initialState, action) {
     switch (action.type) {
@@ -26,6 +28,7 @@ export default function SesionReducer(state = initialState, action) {
         case GET_ALL_USER_LIST_SECURITY_ERROR:
         case SAVE_TOCKEN_ROL_USERS:
         case SAVE_ROLL_USER_SECURITY:
+        case CLEAR_TOCKEN_SESION_CLOSE_SECURITY:
             return action.payload;
         default:
             return state;
@@ -41,10 +44,11 @@ export const setLoginUserTocken = (DataLogin) => async (dispatch, getState) => {
         data: DataLogin,
         headers: {
             'Content-Type': "Application/json",
+            'Access-Control-Allow-Origin': '*',
+
         },
     }).then(function (response) {
         console.log(response.status);
-
         if (response.status == 401) {
             dispatch({
                 type: TOCKEN_USER_LOGIN_SUCCESS,
@@ -58,6 +62,7 @@ export const setLoginUserTocken = (DataLogin) => async (dispatch, getState) => {
                 payload: { ...sesion, TockenUser: response.data, TockenError: "", Route: response.status }
             });
             toast.success("Acceso Exitoso");
+            dispatch(LoginSuccessCore());
             dispatch(saveAllRolUserSecurity());
         }
     }).catch(function (error) {
@@ -76,11 +81,22 @@ export const saveAllRolUserSecurity = () => async (dispatch, getState) => {
     const { TockenUser } = sesion;
     const token = TockenUser.token;
     const decoded = jwt_decode(token);
-    console.log(decoded);
-    console.log(decoded.UserId);
+    // console.log(decoded);
+    // console.log(decoded.UserId);
+    // console.log(decoded.Role);
+    // console.log(decoded.UserName);
     dispatch({
         type: SAVE_ROLL_USER_SECURITY,
         payload: { ...sesion, RolSesion: decoded }
+    })
+}
+
+//Limpiar tocken cierre de sesion 
+export const setClearTockenInvalidate = () => async (dispatch, getState) => {
+    const { sesion } = getState();
+    dispatch({
+        type: CLEAR_TOCKEN_SESION_CLOSE_SECURITY,
+        payload: { sesion, TockenUser: {} },
     })
 }
 

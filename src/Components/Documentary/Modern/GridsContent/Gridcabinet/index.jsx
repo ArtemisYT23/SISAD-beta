@@ -61,7 +61,6 @@ const Gridcabinet = ({ element, name, description, id, cabinetId }) => {
 
   const AbrirModalUpdateFolder = (id) => {
     dispatch(getTypeFileByFolderFolder(id));
-    dispatch(getTypeFileByFolderNoSelected(id));
     dispatch(setOpenModalFolderUpdate());
     
   };

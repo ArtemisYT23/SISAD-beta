@@ -333,6 +333,15 @@ export const setOpenModalLoginCore = () => (dispatch, getState) => {
     
 }
 
+export const setCloseModalLoginCore = (bool) => (dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: OPEN_MODAL_LOGIN_USER_CORE,
+        payload: { ...modalCore, ModalLogin: bool }
+    });
+    
+}
+
 export const LoginSuccessCore = () => (dispatch, getState) => {
     const { modalCore } = getState();
     dispatch({
@@ -340,6 +349,7 @@ export const LoginSuccessCore = () => (dispatch, getState) => {
         payload: { ...modalCore, Selection: "SUCCESS_LOGIN" }
     });
 }
+
 
 //cerrar todo los menu contextuales (cambio de vista)
 
@@ -352,6 +362,7 @@ export const setCloseModalContextGlobal = () => async(dispatch, getState) => {
             ContextFolder: false,
             ContextDocument: false,
             ContextFile: false,
+            Selection: ""
         }
     })
 }

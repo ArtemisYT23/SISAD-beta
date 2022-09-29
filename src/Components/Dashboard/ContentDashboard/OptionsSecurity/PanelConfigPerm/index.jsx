@@ -1,0 +1,1 @@
+// import { PanelConfigCrudPermision } from ".././../../../../Styles/Dashboard/ContentDashboard/PanelConfigPerm"; 

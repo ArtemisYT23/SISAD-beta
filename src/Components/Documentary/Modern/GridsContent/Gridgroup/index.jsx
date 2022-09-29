@@ -21,13 +21,14 @@ import {
   setOpenModalCabinetDelete, 
   getNameGlobalChange,
 } from "../../../../../Store/ModalCore";
+import { getTypeFileByCabinetNoSelected, getTypeFileByCabinet } from "../../../../../Store/ConfigDocumentary";
 
 import { Options } from "./Icons";
 import "./CabinetDropdown.css";
 import CabinetUpdate from "../../ModalesCore/CabinetUpdate";
 import CabinetDelete from "../../ModalesCore/CabinetDelete";
 
-const Gridgroup = ({ element, name, description, groupId, id }) => {
+const Gridgroup = ({ element, name, description, groupId, id, fileTypes }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -50,7 +51,8 @@ const Gridgroup = ({ element, name, description, groupId, id }) => {
     }
   };
 
-  const AbrirModalActualizarCabinet = () => {
+  const AbrirModalActualizarCabinet = (id) => {
+    dispatch(getTypeFileByCabinet(id));
     dispatch(setOpenModalCabinetUpdate());
   };
 
@@ -76,7 +78,7 @@ const Gridgroup = ({ element, name, description, groupId, id }) => {
             <hr></hr>
             <div
               className="dropdown-item"
-              onClick={() => AbrirModalActualizarCabinet()}
+              onClick={() => AbrirModalActualizarCabinet(id)}
             >
               Renombrar
             </div>
@@ -85,6 +87,7 @@ const Gridgroup = ({ element, name, description, groupId, id }) => {
               name={name}
               description={description}
               groupId={groupId}
+              fileTypes={fileTypes}
             />
             <hr></hr>
             <div className="dropdown-item" onClick={() =>AbrirModalEliminarCabinet()}>eliminar</div>

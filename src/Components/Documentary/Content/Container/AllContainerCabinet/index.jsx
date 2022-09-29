@@ -35,12 +35,13 @@ const AllCabinetContainer = () => {
       {ContextGroup ? <GroupMenu x={x} y={y} /> : <></>}
 
       {selected === "CabinetAll" && selectedView != "list" ? (
-        cabinets.map(({ id, name, description }, index) => (
+        cabinets.map(({ id, name, description, fileTypes }, index) => (
           <Gridgroup
             key={index}
             id={id}
             name={name}
             description={description}
+            fileTypes={fileTypes}
             element="cabinet"
           />
         ))

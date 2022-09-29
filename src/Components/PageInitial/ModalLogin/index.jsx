@@ -48,7 +48,6 @@ const ModalLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(LoginSuccessCore());
     dispatch(setLoginUserTocken(user));
   };
 

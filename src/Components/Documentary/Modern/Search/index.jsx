@@ -112,9 +112,8 @@ const Search = () => {
           <Titulo>Grupos</Titulo>
           {groups ? (
             groups.map(({ id, name }) => (
-              <div onClick={() => selectGroup(id, name)}>
+              <div key={id} onClick={() => selectGroup(id, name)}>
                 <ItemCelda
-                  key={id}
                   index={id}
                   id={id}
                   name={name}
@@ -133,9 +132,8 @@ const Search = () => {
           <Titulo>Gabinetes</Titulo>
           {cabinets ? (
             cabinets.map(({ id, name }) => (
-              <div onClick={() => selectGab(id, name)}>
+              <div key={id} onClick={() => selectGab(id, name)}>
                 <ItemCelda
-                  key={id}
                   index={id}
                   id={id}
                   name={name}
@@ -154,9 +152,8 @@ const Search = () => {
           <Titulo>Carpetas</Titulo>
           {FoldersCabinet ? (
             FoldersCabinet.map(({ id, name, cabinetId }) => (
-              <div onClick={() => selectFol(id, cabinetId, name)}>
+              <div key={id} onClick={() => selectFol(id, cabinetId, name)}>
                 <ItemCelda
-                  key={id}
                   index={id}
                   id={id}
                   name={name}

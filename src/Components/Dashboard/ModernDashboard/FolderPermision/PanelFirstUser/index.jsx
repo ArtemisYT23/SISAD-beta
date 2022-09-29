@@ -42,9 +42,6 @@ const PanelFirstUser = () => {
           <option value="3b54b36c-2d62-4f65-b03a-50d5adcba4b3">RW</option>
           <option value="b08a660f-dcde-4602-8456-7a44a9ef6904">Reader</option>
         </select>
-        {/* <select className="Selected">
-          <option hidden>Grupos</option>
-        </select> */}
       </ContainerSelection>
       <ContainerSelection>
         <ContainerRecientes>

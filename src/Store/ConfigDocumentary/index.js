@@ -46,6 +46,8 @@ const initialState = {
     IndexSelected: [],
     FilesFolders: [],
     FilesNoSelected: [],
+    FilesCabinets: [],
+    FilesNoCabinets: [],
 
     //filtro de 1 a 1
     SelectedOption: "",
@@ -55,6 +57,7 @@ const initialState = {
     selectedElement: [],
     SelectedTypeFile: null,
     TypeFileDefault: [],
+
     //filtro 1 a muchos
     ElementFilterList: [],
     ItemListMetadata: [],
@@ -117,6 +120,8 @@ const GET_FILETYPE_ALL_FOLDER_CONFIG = "GET_FILETYPE_ALL_FOLDER_CONFIG"
 const GET_FILETYPE_ALL_FOLDER_ERRORS_CONFIG = "GET_FILETYPE_ALL_FOLDER_ERRORS_CONFIG";
 const GET_FILETYPE_ALL_FOLDER_NO_SELECTED_CONFIG = "GET_FILETYPE_ALL_FOLDER_NO_SELECTED_CONFIG";
 const GET_FILETYPE_ALL_FOLDER_NO_SELECTED_ERRORS_CONFIG = "GET_FILETYPE_ALL_FOLDER_NO_SELECTED_ERRORS_CONFIG";
+const GET_ALL_TYPEFILE_BY_CABINET_SELECTED_CONFIG = "GET_ALL_TYPEFILE_BY_CABINET_SELECTED_CONFIG";
+const GET_ALL_TYPEFILE_BY_CABINET_NOT_SELECTED_CONFIG = "GET_ALL_TYPEFILE_BY_CABINET_NOT_SELECTED_CONFIG";
 
 //indice
 
@@ -171,6 +176,8 @@ export default function ConfigDocumentReducer(state = initialState, action) {
         case GET_FILETYPE_ALL_FOLDER_ERRORS_CONFIG:
         case GET_FILETYPE_ALL_FOLDER_NO_SELECTED_CONFIG:
         case GET_FILETYPE_ALL_FOLDER_NO_SELECTED_ERRORS_CONFIG:
+        case GET_ALL_TYPEFILE_BY_CABINET_SELECTED_CONFIG:
+        case GET_ALL_TYPEFILE_BY_CABINET_NOT_SELECTED_CONFIG:
         //indices
         case INDEXCABINET_CREATED_CONFIG:
         //indice seleccionado
@@ -520,6 +527,54 @@ export const getTypeFileByFolder = (id) => async (dispatch, getState) => {
     }
 }
 
+//traer los tipos de archivos seleccionado para gabinete
+export const getTypeFileByCabinet = (id) => async (dispatch, getState) => {
+    const { configDocument, sesion } = getState();
+    const { TockenUser } = sesion;
+    try {
+        const res = await axios({
+            url: `${CoreServer}CabinetFileType/GetAllBydCabinet/${id}`,
+            headers: {
+                Authorization: `Bearer ${TockenUser?.token}`
+            }
+        });
+        if (res.status == 200) {
+            dispatch({
+                type: GET_ALL_TYPEFILE_BY_CABINET_SELECTED_CONFIG,
+                payload: { ...configDocument, FilesCabinets: res.data }
+            })
+            dispatch(getTypeFileByCabinetNoSelected(id));
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+//traer los tipos de archivos no seleccionados para gabinetas
+
+export const getTypeFileByCabinetNoSelected = (id) => async (dispatch, getState) => {
+    console.log(id);
+    const { configDocument, sesion } = getState();
+    const { TockenUser } = sesion;
+    try {
+        const res = await axios({
+            url: `${CoreServer}getcabinetfiletypetoadd/${id}`,
+            headers: {
+                Authorization: `Bearer ${TockenUser?.token}`
+            }
+        });
+        if (res.status == 200) {
+            dispatch({
+                type: GET_ALL_TYPEFILE_BY_CABINET_NOT_SELECTED_CONFIG,
+                payload: { ...configDocument, FilesNoCabinets: res.data }
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //tipos de archivos por el nombre
 export const getTypeFileByFolderFolder = (id) => async (dispatch, getState) => {
     const { configDocument, sesion } = getState();
@@ -536,6 +591,7 @@ export const getTypeFileByFolderFolder = (id) => async (dispatch, getState) => {
                 type: GET_FILETYPE_ALL_FOLDER_CONFIG,
                 payload: { ...configDocument, FilesFolders: res.data }
             });
+            dispatch(getTypeFileByFolderNoSelected(id));
         }
     } catch (error) {
         dispatch({
@@ -562,11 +618,9 @@ export const getTypeFileByFolderNoSelected = (id) => async (dispatch, getState) 
                 type: GET_FILETYPE_ALL_FOLDER_NO_SELECTED_CONFIG,
                 payload: { ...configDocument, FilesNoSelected: res.data }
             })
-            dispatch(getTypeFileByFolderFolder(id))
         }
     } catch (error) {
         console.log(error);
-        dispatch(getTypeFileByFolderFolder(id));
         dispatch({
             type: GET_FILETYPE_ALL_FOLDER_NO_SELECTED_ERRORS_CONFIG,
             payload: { ...configDocument, FilesNoSelected: [] }
@@ -602,7 +656,7 @@ export const SelectedIndexConfig = (id) => async (dispatch, getState) => {
     const { TockenUser } = sesion;
     try {
         const response = await axios({
-            url: `${CoreServer}index/${id}`,
+            url: `${CoreServer}index / ${id}`,
             headers: {
                 Authorization: `Bearer ${TockenUser?.token}`
             }
@@ -655,7 +709,7 @@ export const UpdateTypeDataConfig = (UpdateData, id) => async (dispatch, getStat
     const { configDocument, sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}datatype/${id}`,
+        url: `${CoreServer}datatype / ${id}`,
         method: "PUT",
         data: UpdateData,
         headers: {
@@ -679,7 +733,7 @@ export const DeleteTypeDataConfig = (DeleteData, id) => async (dispatch, getStat
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}datatype/${id}`,
+        url: `${CoreServer}datatype / ${id}`,
         method: "DELETE",
         data: DeleteData,
         headers: {
@@ -726,7 +780,7 @@ export const UpdateTypeFileConfig = (update, id) => async (dispatch, getState) =
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}filetype/${id}`,
+        url: `${CoreServer}filetype / ${id}`,
         method: "PUT",
         data: update,
         headers: {
@@ -749,7 +803,7 @@ export const DeleteTypeFileConfig = (update, id) => async (dispatch, getState) =
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}filetype/${id}`,
+        url: `${CoreServer}filetype / ${id}`,
         method: "DELETE",
         data: update,
         headers: {
@@ -797,7 +851,7 @@ export const UpdateElementConfig = (UpdateList, id) => async (dispatch, getState
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreInstance}list/${id}`,
+        url: `${CoreInstance}list / ${id}`,
         method: "PUT",
         data: UpdateList,
         headers: {
@@ -845,7 +899,7 @@ export const UpdateElementListConfig = (UpdateElement, id, listId) => async (dis
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}listelement/${id}`,
+        url: `${CoreServer}listelement / ${id}`,
         method: "PUT",
         data: UpdateElement,
         headers: {
@@ -869,7 +923,7 @@ export const DeleteElementListConfig = (DeleteEle, id, listId) => async (dispatc
     const { sesion } = getState();
     const { TockenUser } = sesion;
     axios({
-        url: `${CoreServer}listelement/${id}`,
+        url: `${CoreServer}listelement / ${id}`,
         method: "DELETE",
         data: DeleteEle,
         headers: {
@@ -894,8 +948,10 @@ export const setFilterFileByName = (name) => async (dispatch, getState) => {
     const { TockenUser } = sesion;
     try {
         const response = await axios({
-            url: `${DocumentServer}filebytext/${name}`,
-            Authorization: `Bearer ${TockenUser?.token}`
+            url: `${DocumentServer}filebytext / ${name}`,
+            headers: {
+                Authorization: `Bearer ${TockenUser?.token}`
+            }
         });
         if (response.status == 200) {
             dispatch({

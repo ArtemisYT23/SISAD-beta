@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { HeaderContainer } from "../../../../Styles/Documentary";
+import { setClearTockenInvalidate } from "../../../../Store/SecurityLogin";
+import { setCloseModalLoginCore, setCloseModalContextGlobal } from "../../../../Store/ModalCore";
 import {
   Avatar,
   HeaderDOWN,
@@ -16,11 +17,13 @@ import {
 import { EditIcon, OptionsIcon } from "./Icons";
 import avatar from "./avatar.png";
 import logo from "./descarga.png";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { modalCore } = useSelector((store) => store);
   const { NameGlobalSelected } = modalCore;
 
@@ -29,6 +32,9 @@ const Header = () => {
   };
 
   const CerrarSesion = () => {
+    dispatch(setClearTockenInvalidate());
+    dispatch(setCloseModalLoginCore(false));
+    dispatch(setCloseModalContextGlobal(false));
     navigate("/");
   };
 

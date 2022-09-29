@@ -50,7 +50,7 @@ const CabinetMenu = ({ x, y, id, name, description, groupId }) => {
           onClick={() => AbrirModalActualizarCabinet()}
           style={{ ...styles.div, ...styles.margin }}
         >
-          Renombrar
+          Actualizars
         </div>
         
         <CabinetUpdate id={id} name={name} description={description} groupId={groupId} />

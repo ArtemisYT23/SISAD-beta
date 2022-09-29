@@ -105,6 +105,7 @@ const UserUpdate = () => {
         <br />
         <label className="Name">Tipo de Perfil</label>
         <select className="Selected" onChange={(e) => dispatch(setPerfilChargedUser(e.target.value))}>
+          <option hidden>Modificar Rol</option>
           <option value="e4b558f3-bdab-4248-8fd2-357457090347">
             Administrador
           </option>
@@ -114,7 +115,7 @@ const UserUpdate = () => {
         </select>
         <br />
         <div align="right">
-          <button className="btn-enviar">Crear</button>
+          <button className="btn-enviar">Actualizar</button>
           <button
             className="btn-cancelar"
             onClick={() => AbrirModalUpdateUser()}
