@@ -12,8 +12,9 @@ import { setSelectedOptionsSecurityConfig } from "../../../../Store/ConfigDocume
 
 const MenuDashboard = () => {
   const dispatch = useDispatch();
-  const { configDocument } = useSelector((store) => store);
-  const { optionsSecurity } = configDocument;
+  const { configDocument, sesion } = useSelector((store) => store);
+  const { optionsSecurity, optionsSecurityRead } = configDocument;
+  const { RolSesion } = sesion;
 
   const selectOptions = (index) => {
     dispatch(setSelectedOptionsSecurityConfig(index));
@@ -23,18 +24,39 @@ const MenuDashboard = () => {
     <SearchContainer>
       <ul>
         <List>
-          <Titulo>Gabinetes</Titulo>
-          {optionsSecurity ? (
-            optionsSecurity.map(({ id, name }, index) => (
-              <Items onClick={() => selectOptions(id)}>
-                <Icons>
-                  <ListIcon />
-                </Icons>
-                <Name key={index}>{name}</Name>
-              </Items>
-            ))
-          ) : (
-            <></>
+          <Titulo>Seguridades</Titulo>
+          {RolSesion[2] == "Administrator" && (
+            <>
+              {optionsSecurity ? (
+                optionsSecurity.map(({ id, name }, index) => (
+                  <Items onClick={() => selectOptions(id)}>
+                    <Icons>
+                      <ListIcon />
+                    </Icons>
+                    <Name key={index}>{name}</Name>
+                  </Items>
+                ))
+              ) : (
+                <></>
+              )}
+            </>
+          )}
+
+          {RolSesion[2] != "Administrator" && (
+            <>
+              {optionsSecurityRead ? (
+                optionsSecurityRead.map(({ id, name }, index) => (
+                  <Items onClick={() => selectOptions(id)}>
+                    <Icons>
+                      <ListIcon />
+                    </Icons>
+                    <Name key={index}>{name}</Name>
+                  </Items>
+                ))
+              ) : (
+                <></>
+              )}
+            </>
           )}
         </List>
       </ul>

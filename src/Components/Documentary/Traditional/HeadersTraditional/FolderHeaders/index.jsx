@@ -19,8 +19,8 @@ import FolderDelete from "../../../Modern/ModalesCore/FolderDelete";
 
 const FolderHeaders = () => {
   const dispatch = useDispatch();
-  const { core } = useSelector((store) => store);
-  const { SelectedCabinet, SelectedFolderTraditional } = core;
+  const { actionCore } = useSelector((store) => store);
+  const { SelectedCabinet, SelectedFolderTraditional } = actionCore;
 
   const OpenFolderCreated = () => {
     dispatch(setOpenModalFolderCreated());

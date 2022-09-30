@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   UserPanelContainer,
   UserHeaderContainer,
@@ -37,13 +38,61 @@ import {
   setOpenModalNombreSecurity,
   setOpenModalTelefonoSecurity,
   setOpenModalCompañiaSecurity,
-  setOpenModalFotoSecurity
+  setOpenModalFotoSecurity,
 } from "../../../../Store/ModalSecurity";
+import { OptionsIcon } from "../../../Documentary/Content/Header/Icons";
+import { setClearTockenInvalidate } from "../../../../Store/SecurityLogin";
+import {
+  setCloseModalLoginCore,
+  setCloseModalContextGlobal,
+  CloseSesionCore
+} from "../../../../Store/ModalCore";
+import { setCleanerMemoryDataCore } from "../../../../Store/Core";
+import { setClearDataMemoryDocu } from "../../../../Store/Documentary";
+import { setClearMemoryDataViewCore } from "../../../../Store/ViewCore";
+import { useNavigate } from "react-router-dom"; 
 
 const UserPanel = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  const { sesion } = useSelector((store) => store);
+  const { RolSesion, SesionUser, DataUser } = sesion;
+
+  const ActiveMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const CerrarSesion = () => {
+    dispatch(setClearTockenInvalidate());
+    dispatch(setCloseModalLoginCore(false));
+    dispatch(setCloseModalContextGlobal(false));
+    dispatch(setClearDataMemoryDocu());
+    dispatch(setCleanerMemoryDataCore());
+    dispatch(setClearMemoryDataViewCore());
+    dispatch(CloseSesionCore());
+    navigate("/");
+  };
+
+  const changeStateDrop = () => {
+    if (showMenu == true) {
+      setShowMenu(false);
+    }
+  };
+
   return (
-    <UserPanelContainer>
+    <UserPanelContainer onClick={() => changeStateDrop()}>
+      {showMenu && (
+        <div className="dropdown-Security">
+          <div className="dropdown-content-security">
+            <div className="dropdown-item">Configuracion</div>
+            <hr></hr>
+            <div className="dropdown-item" onClick={() => CerrarSesion()}>
+              Cerrar Sesion
+            </div>
+          </div>
+        </div>
+      )}
       <UserHeaderContainer>
         <ContainerTextInfo>
           <TitlePanel>Panel de usuario</TitlePanel>
@@ -55,7 +104,10 @@ const UserPanel = () => {
           <AvatarInfo src={infoSecurity} />
         </ContainerAvatar>
         <ContainerAvatar>
-          <Avatar src={avatar} />
+          {DataUser && (<Avatar src={DataUser?.photoUrl} />)}
+        </ContainerAvatar>
+        <ContainerAvatar onClick={() => ActiveMenu()}>
+          <OptionsIcon />
         </ContainerAvatar>
       </UserHeaderContainer>
       <ContainerInfoBody>
@@ -83,7 +135,9 @@ const UserPanel = () => {
         <ContainerTitleInfoBasic>
           <TitleBodyText>Informacion Basica</TitleBodyText>
         </ContainerTitleInfoBasic>
-        <ContainerCeldaChange onClick={() => dispatch(setOpenModalFotoSecurity())}>
+        <ContainerCeldaChange
+          onClick={() => dispatch(setOpenModalFotoSecurity())}
+        >
           <CeldaText>
             <SubTitleBodyText>Foto</SubTitleBodyText>
           </CeldaText>
@@ -91,23 +145,27 @@ const UserPanel = () => {
             Agregar una foto para personalizar tu cuenta
           </CeldaChangeAvatar>
           <AvatarChange>
-            <Avatar src={avatar} />
+          {DataUser && (<Avatar src={DataUser?.photoUrl} />)}
           </AvatarChange>
         </ContainerCeldaChange>
-        <ContainerCeldaChange onClick={() => dispatch(setOpenModalNombreSecurity())}>
+        <ContainerCeldaChange
+          onClick={() => dispatch(setOpenModalNombreSecurity())}
+        >
           <CeldaText>
             <SubTitleBodyText>Nombre</SubTitleBodyText>
           </CeldaText>
-          <CeldaChangeText>NVG Lian YT</CeldaChangeText>
+          {DataUser && <CeldaChangeText>{DataUser?.fullName}</CeldaChangeText>}
           <AvatarChangeText>
             <AvatarIcon src={iconFlechaDerecha} />
           </AvatarChangeText>
         </ContainerCeldaChange>
-        <ContainerCeldaChange onClick={() => dispatch(setOpenModalCompañiaSecurity())}>
+        <ContainerCeldaChange
+          onClick={() => dispatch(setOpenModalCompañiaSecurity())}
+        >
           <CeldaText>
             <SubTitleBodyText>Compañia</SubTitleBodyText>
           </CeldaText>
-          <CeldaChangeText>MEGADATOS SA</CeldaChangeText>
+          {DataUser && <CeldaChangeText>{DataUser?.company}</CeldaChangeText>}
           <AvatarChangeText>
             <AvatarIcon src={iconFlechaDerecha} />
           </AvatarChangeText>
@@ -132,12 +190,14 @@ const UserPanel = () => {
           <CeldaText>
             <SubTitleBodyText>Correo Electronico</SubTitleBodyText>
           </CeldaText>
-          <CeldaChangeText>desarrollo1@centralfile.com.ec</CeldaChangeText>
+          {DataUser && <CeldaChangeText>{DataUser?.email}</CeldaChangeText>}
           <AvatarChangeText>
             <AvatarIcon src={iconFlechaDerecha} />
           </AvatarChangeText>
         </ContainerCeldaChange>
-        <ContainerCeldaChange onClick={() => dispatch(setOpenModalTelefonoSecurity())}>
+        <ContainerCeldaChange
+          onClick={() => dispatch(setOpenModalTelefonoSecurity())}
+        >
           <CeldaText>
             <SubTitleBodyText>Telefono</SubTitleBodyText>
           </CeldaText>

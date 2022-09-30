@@ -24,7 +24,7 @@ const initialState = {
     ],
     optionsSecurity: [{
         "id": "423d4c69-0109-43eb-8c32-9f8872b917c2",
-        "name": "Panel de usuario"
+        "name": "Información de Usuario"
     },
     {
         "id": "5674b607-2230-4700-b68e-d11c22f2c59c",
@@ -39,6 +39,10 @@ const initialState = {
         "name": "Gestion de Archivos"
     }
     ],
+    optionsSecurityRead: [{
+        "id": "423d4c69-0109-43eb-8c32-9f8872b917c2",
+        "name": "Información de Usuario"
+    }],
     ListData: [],
     TypeData: [],
     ElementList: [],
@@ -948,7 +952,7 @@ export const setFilterFileByName = (name) => async (dispatch, getState) => {
     const { TockenUser } = sesion;
     try {
         const response = await axios({
-            url: `${DocumentServer}filebytext / ${name}`,
+            url: `${DocumentServer}filebytext/${name}`,
             headers: {
                 Authorization: `Bearer ${TockenUser?.token}`
             }

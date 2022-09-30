@@ -22,6 +22,7 @@ const VIEW_GROUP_MANTENIMIENT_TRADITIONAL = "VIEW_GROUP_MANTENIMIENT_TRADITIONAL
 //limpieza de estados a vacio
 const SELECTED_INITIAL_CORE = "SELECTED_INITIAL_CORE";
 const SELECTED_SEARCH_SELECTED_CORE = "SELECTED_SEARCH_SELECTED_CORE";
+const SET_CLEAR_MEMORY_DATA_VIEWCORE = "SET_CLEAR_MEMORY_DATA_VIEWCORE";
 
 
 //payload de acciones
@@ -40,6 +41,7 @@ export default function ViewReducer(state = initialState, action) {
         //limpieza de estados a vacio
         case SELECTED_INITIAL_CORE:
         case SELECTED_SEARCH_SELECTED_CORE:
+        case SET_CLEAR_MEMORY_DATA_VIEWCORE:
             return action.payload;
         default:
             return state;
@@ -131,5 +133,19 @@ export const setSelectedSearchNullCore = () => async (dispatch, getState) => {
     })
 };
 
+
+//limpiar estado del viewcore cierre de sesion 
+export const setClearMemoryDataViewCore = () => async (dispatch, getState) => {
+    const { viewCore } = getState();
+    dispatch({
+        type: SET_CLEAR_MEMORY_DATA_VIEWCORE,
+        payload: {
+            ...viewCore,
+            selected: "",
+            selectedView: "grid",
+            selectedSearch: "",
+        }
+    })
+}
 
 

@@ -16,7 +16,7 @@ const AppRouter = () => {
 
   return (
     <BrowserRouter>
-      {Selection.length != 0 && <NavBar />}
+      {Selection.length != "" && <NavBar />}
       <Routes>
         <Route exact path="/" element={<PageInitial />} />
         <Route exact path="dashboard" element={<Dashboard />} />

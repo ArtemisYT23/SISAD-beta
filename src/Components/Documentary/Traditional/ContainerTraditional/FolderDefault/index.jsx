@@ -4,7 +4,7 @@ import { FolderTraditional, OptionsTraditional } from "../../../../../Styles/Tra
 import { 
     setSelectedFolderTraditionalCore,
  } from "../../../../../Store/ActionCore"; 
- import {getTypeFileByFolderNoSelected } from "../../../../../Store/ConfigDocumentary";
+ import {getTypeFileByFolderFolder } from "../../../../../Store/ConfigDocumentary";
 import "./FolderDefault.css";
 
 const FolderDefault = ({ id, name, description }) => {
@@ -13,7 +13,7 @@ const FolderDefault = ({ id, name, description }) => {
 
     const OptionsUpdateFolder = (id) => {
         dispatch(setSelectedFolderTraditionalCore(id));
-        dispatch(getTypeFileByFolderNoSelected(id));
+        dispatch(getTypeFileByFolderFolder(id));
     }
 
     const SelectedFolderTraditional = (index) => {

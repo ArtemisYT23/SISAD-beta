@@ -9,7 +9,9 @@ const initialState = {
     TockenUser: { token: "" },
     Route: "",
     TockenError: "",
-    RolSesion: {},
+    RolSesion: [],
+    SesionUser: {},
+    DataUser: {}
 };
 
 const TOCKEN_USER_LOGIN_SUCCESS = "TOCKEN_USER_LOGIN_SUCCESS";
@@ -19,6 +21,8 @@ const GET_ALL_USER_LIST_SECURITY_ERROR = "GET_ALL_USER_LIST_SECURITY_ERROR";
 const SAVE_TOCKEN_ROL_USERS = "SAVE_TOCKEN_ROL_USERS";
 const SAVE_ROLL_USER_SECURITY = "SAVE_ROLL_USER_SECURITY";
 const CLEAR_TOCKEN_SESION_CLOSE_SECURITY = "CLEAR_TOCKEN_SESION_CLOSE_SECURITY";
+const GET_USER_SESION_SECURITY = "GET_USER_SESION_SECURITY";
+const  GET_USER_INFO_DATA_SECURITY = "GET_USER_INFO_DATA_SECURITY";
 
 export default function SesionReducer(state = initialState, action) {
     switch (action.type) {
@@ -29,6 +33,8 @@ export default function SesionReducer(state = initialState, action) {
         case SAVE_TOCKEN_ROL_USERS:
         case SAVE_ROLL_USER_SECURITY:
         case CLEAR_TOCKEN_SESION_CLOSE_SECURITY:
+        case GET_USER_SESION_SECURITY:
+        case GET_USER_INFO_DATA_SECURITY: 
             return action.payload;
         default:
             return state;
@@ -82,12 +88,11 @@ export const saveAllRolUserSecurity = () => async (dispatch, getState) => {
     const token = TockenUser.token;
     const decoded = jwt_decode(token);
     // console.log(decoded);
-    // console.log(decoded.UserId);
-    // console.log(decoded.Role);
-    // console.log(decoded.UserName);
+    const TockenData = Object.values(decoded);
+    // console.log(TockenData);
     dispatch({
         type: SAVE_ROLL_USER_SECURITY,
-        payload: { ...sesion, RolSesion: decoded }
+        payload: { ...sesion, RolSesion: TockenData }
     })
 }
 
@@ -128,4 +133,50 @@ export const getAllUserListSecurity = () => async (dispatch, getState) => {
             payload: { ...sesion, UserList: [] }
         })
     });
+}
+
+//obtener usuario por sesion
+export const getUserSesionSecurity = (id) => async (dispatch, getState) => {
+    console.log(id);
+    const { sesion } = getState();
+    const { TockenUser } = sesion;
+    try {
+        const res = await axios({
+            url: `${SecurityServer}user/${id}`,
+            headers: {
+                Authorization: `Bearer ${TockenUser?.token}`,
+            }
+        })
+        if (res.status == 200) {
+            dispatch({
+                type: GET_USER_SESION_SECURITY,
+                payload: { ...sesion, SesionUser: res.data }
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Obtener Informacion del usuario logeado 
+export const getUserInformationSecurity = (id) => async (dispatch, getState) => {
+    console.log(id);
+    const { sesion } = getState();
+    const { TockenUser } = sesion;
+    try {
+        const res = await axios({
+            url: `${SecurityServer}user/info/${id}`,
+            headers: {
+                Authorization: `Bearer ${TockenUser?.token}`,
+            }
+        })
+        if (res.status == 200){
+            dispatch({
+                type: GET_USER_INFO_DATA_SECURITY,
+                payload: { ...sesion, DataUser: res.data}
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }   
 }

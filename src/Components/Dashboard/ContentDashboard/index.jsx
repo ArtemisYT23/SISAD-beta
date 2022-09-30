@@ -14,7 +14,7 @@ const ContentDasboard = () => {
     return (
     <DashboardContentContainer>
         
-        {SelectedOptionSecurity?.name == "Panel de usuario" || SelectedOptionSecurity == "" ? <PanelConfigUser /> : <></>}
+        {SelectedOptionSecurity?.name == "Información de Usuario" || SelectedOptionSecurity == "" ? <PanelConfigUser /> : <></>}
 
         {SelectedOptionSecurity?.name == "Panel de permisos" ? <PanelConfigPermision /> : <></>}
 

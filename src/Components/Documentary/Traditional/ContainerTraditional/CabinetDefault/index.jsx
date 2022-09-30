@@ -2,6 +2,7 @@ import { ContainerDescription, ContainerIcon, ContainerOptions, ContainerTitle, 
 import { CabinetTraditional, OptionsTraditional } from "../../../../../Styles/Traditional/CabinetTraditional/Icon";
 import { useDispatch } from "react-redux";
 import { setSelectedCabinetCoreNotTraditional } from "../../../../../Store/ActionCore";
+import { getTypeFileByCabinet } from "../../../../../Store/ConfigDocumentary";
 import "./CabinetDefault.css";
 
 const CabinetDefault = ({ id, name, description }) => {
@@ -10,6 +11,7 @@ const CabinetDefault = ({ id, name, description }) => {
 
     const SelectedCabinet = (index) => {
         dispatch(setSelectedCabinetCoreNotTraditional(index));
+        dispatch(getTypeFileByCabinet(id));
         const collection = document.getElementsByClassName("Celda");
         for (let i = 0; i < collection.length; i++){
             collection[i].style.backgroundColor = "white";

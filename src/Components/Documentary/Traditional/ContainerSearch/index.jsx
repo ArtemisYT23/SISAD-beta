@@ -9,7 +9,7 @@ const ContainerSearch = () => {
 
     return(
         <>
-            { selectedSearch === "" || selectedSearch === "MetadataSearch" ? <SearchMetadata /> : <></>}
+            {selectedSearch === "" || selectedSearch === "MetadataSearch" ? <SearchMetadata /> : <></>}
 
             {selectedSearch === "TraditionalTree" ? <SearchTree /> : <></>}
 

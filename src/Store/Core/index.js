@@ -89,6 +89,7 @@ const CLEARNER_FILES_ALL_DOCUMENT = "CLEARNER_FILES_ALL_DOCUMENT";
 const GET_ALL_CABINET_NAME_DATA_CORE = "GET_ALL_CABINET_NAME_DATA_CORE";
 const GET_ALL_CABINET_NAME_DATA_ERRORS_CORE = "GET_ALL_CABINET_NAME_DATA_ERRORS_CORE";
 
+const SET_CLEANER_DATA_MEMORY_CORE = "SET_CLEANER_DATA_MEMORY_CORE";
 
 //lanzamiento de payload de casos
 export default function CoreReducer(state = initialState, action) {
@@ -139,7 +140,7 @@ export default function CoreReducer(state = initialState, action) {
     //busquedas globales
     case GET_ALL_CABINET_NAME_DATA_CORE:
     case GET_ALL_CABINET_NAME_DATA_ERRORS_CORE:
-
+    case SET_CLEANER_DATA_MEMORY_CORE:
       return action.payload;
     default:
       return state;
@@ -837,3 +838,25 @@ export const setFilterCabinetsByName = (name) => async (dispatch, getState) => {
   }
 }
 
+//Limpiar Memoria Global de Core por cierre de sesion
+export const setCleanerMemoryDataCore = () => async(dispatch, getState) => {
+  const { core } = getState();
+  dispatch({
+    type: SET_CLEANER_DATA_MEMORY_CORE,
+    payload: { ...core, 
+      groups: [],
+      cabinets: [],
+      foldersCore: [],
+      files: [],
+      IndexAllCabinet: [],
+      IndexCabinetGetAllName: [],
+      foldersAllCabinet: [],
+      IndexByCabinet: [],
+      SelectedFile: null,
+      SelectedUrlFile: "",
+      SearchCabinet: [],
+      elementError: null,
+      RespuestaServer: ""
+    }
+  })
+} 

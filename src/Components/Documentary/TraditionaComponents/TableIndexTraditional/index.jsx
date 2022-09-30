@@ -404,7 +404,6 @@ const TableIndexTraditional = () => {
             },
           }}
         />
-        ;
       </div>
     </>
   );

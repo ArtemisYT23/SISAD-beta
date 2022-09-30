@@ -41,6 +41,7 @@ const SET_OPEN_MENUCONTEXT_FILE = "SET_OPEN_MENUCONTEXT_FILE";
 const SET_OPEN_MENUCONTEXT_OPTIONS_META = "SET_OPEN_MENUCONTEXT_OPTIONS_META";
 const OPEN_MODAL_LOGIN_USER_CORE = "OPEN_MODAL_LOGIN_USER_CORE";
 const LOGIN_SUCCESS_SYSTEM = "LOGIN_SUCCESS_SYSTEM";
+const CLOSE_LOGIN_SYSTEM = "CLOSE_LOGIN_SYSTEM";
 
 const SET_CLOSE_MENUCONTEXT_FOLDER = "SET_CLOSE_MENUCONTEXT_FOLDER";
 const SET_CLOSE_MENUCONTEXT_DOCUMENT = "SET_CLOSE_MENUCONTEXT_DOCUMENT";
@@ -72,6 +73,7 @@ export default function ModalCoreReducer(state = initialState, action) {
         case SET_OPEN_MENUCONTEXT_OPTIONS_META:
         case OPEN_MODAL_LOGIN_USER_CORE:
         case LOGIN_SUCCESS_SYSTEM:
+        case CLOSE_LOGIN_SYSTEM:
 
         case SET_CLOSE_MENUCONTEXT_FOLDER:
         case SET_CLOSE_MENUCONTEXT_DOCUMENT:
@@ -350,6 +352,14 @@ export const LoginSuccessCore = () => (dispatch, getState) => {
     });
 }
 
+export const CloseSesionCore = () => (dispatch, getState) => {
+    const { modalCore } = getState();
+    dispatch({
+        type: CLOSE_LOGIN_SYSTEM,
+        payload: { ...modalCore, Selection: ""}
+    })
+}
+
 
 //cerrar todo los menu contextuales (cambio de vista)
 
@@ -362,7 +372,6 @@ export const setCloseModalContextGlobal = () => async(dispatch, getState) => {
             ContextFolder: false,
             ContextDocument: false,
             ContextFile: false,
-            Selection: ""
         }
     })
 }

@@ -29,8 +29,9 @@ const useStyless = makeStyles((theme) => ({
 const ChangeFoto = () => {
   const dispatch = useDispatch();
   const styless = useStyless();
-  const { modalSecurity } = useSelector((store) => store);
+  const { modalSecurity, sesion } = useSelector((store) => store);
   const { FotoEditing } = modalSecurity;
+  const { DataUser } = sesion;
 
   const headerFoto = (
     <div className={styless.FotoEditing}>
@@ -48,12 +49,14 @@ const ChangeFoto = () => {
         <div className="espacio-line"/>
         <br />
         <div className="Container-Foto">
-        <img className="AvatarFoto" src={avatar} />
+        <img className="AvatarFoto" src={DataUser?.photoUrl} alt="Cargando"/>
         </div>
         <br />
         <br />
         <div className="Container-button">
-          <input className="btn-SubirFoto" type="file" />
+          <button className="btn-CancelarFoto">Subir</button>
+          
+          {/* <input className="btn-SubirFoto" type="file" /> */}
           <button
             className="btn-CancelarFoto"
             onClick={() => OpenModalChangeFoto()}

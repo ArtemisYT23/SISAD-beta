@@ -71,6 +71,7 @@ const GET_ALL_FOLDERS_NAME_DATA_ERRORS_CORE = "GET_ALL_FOLDERS_NAME_DATA_ERRORS_
 const SAVE_DATA_BY_METADATA_DOCU = "SAVE_DATA_BY_METADATA_DOCU";
 const SAVE_CLEAR_DATA_METADATA_DOCU = "SAVE_CLEAR_DATA_METADATA_DOCU";
 const FILTER_DATA_METADATA_DOCU = "FILTER_DATA_METADATA_DOCU";
+const SET_CLEAR_MEMORY_DATA_DOCU = "SET_CLEAR_MEMORY_DATA_DOCU";
 
 //lanzamiento de payload de casos
 export default function DocumentaryReducer(state = initialState, action) {
@@ -106,6 +107,7 @@ export default function DocumentaryReducer(state = initialState, action) {
         case SAVE_DATA_BY_METADATA_DOCU:
         case SAVE_CLEAR_DATA_METADATA_DOCU:
         case FILTER_DATA_METADATA_DOCU:
+        case SET_CLEAR_MEMORY_DATA_DOCU:
             return action.payload;
         default:
             return state;
@@ -638,4 +640,29 @@ export const setFilterMetadataValueDocu = (text) => async (dispatch, getState) =
             })
         }
     });
+}
+
+//Limpiar memoria de datos para cierre de sesion 
+export const setClearDataMemoryDocu = () => async (dispatch, getState) => {
+    const { documentary } = getState();
+    dispatch({
+        type: SET_CLEAR_MEMORY_DATA_DOCU,
+        payload: {
+            ...documentary,
+            documents: [],
+            IndexCabinetConsul: [],
+            MetadataIndex: [],
+            DocumentFolder: [],
+            SelectedDocument: null,
+            MetadataFolder: [],
+            MetadataLog: [],
+            MetaFolderSelected: "",
+            FileByDocument: [],
+            selectedDocu: "",
+            elementError: null,
+            SearchFolder: [],
+            MetaValueDocu: [],
+            FilterMetaValue: []
+        }
+    })
 }

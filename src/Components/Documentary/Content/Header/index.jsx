@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { HeaderContainer } from "../../../../Styles/Documentary";
 import { setClearTockenInvalidate } from "../../../../Store/SecurityLogin";
-import { setCloseModalLoginCore, setCloseModalContextGlobal } from "../../../../Store/ModalCore";
+import {
+  setCloseModalLoginCore,
+  setCloseModalContextGlobal,
+  CloseSesionCore
+} from "../../../../Store/ModalCore";
+import { setCleanerMemoryDataCore } from "../../../../Store/Core";
+import { setClearDataMemoryDocu } from "../../../../Store/Documentary";
+import { setClearMemoryDataViewCore } from "../../../../Store/ViewCore";
 import {
   Avatar,
   HeaderDOWN,
@@ -24,8 +31,9 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { modalCore } = useSelector((store) => store);
+  const { modalCore, sesion } = useSelector((store) => store);
   const { NameGlobalSelected } = modalCore;
+  const { RolSesion } = sesion;
 
   const ActiveMenu = () => {
     setShowMenu(!showMenu);
@@ -35,17 +43,29 @@ const Header = () => {
     dispatch(setClearTockenInvalidate());
     dispatch(setCloseModalLoginCore(false));
     dispatch(setCloseModalContextGlobal(false));
+    dispatch(setCleanerMemoryDataCore());
+    dispatch(setClearDataMemoryDocu());
+    dispatch(setClearMemoryDataViewCore());
+    dispatch(CloseSesionCore());
     navigate("/");
   };
 
+  const changeStateDrop = () => {
+    if (showMenu == true) {
+      setShowMenu(false);
+    }
+  };
+
   return (
-    <HeaderContainer>
+    <HeaderContainer onClick={() => changeStateDrop()}>
       {showMenu && (
         <div className="dropdown">
           <div className="dropdown-content-second">
             <div className="dropdown-item">Configuracion</div>
             <hr></hr>
-            <div className="dropdown-item" onClick={() => CerrarSesion()}>Cerrar Sesion</div>
+            <div className="dropdown-item" onClick={() => CerrarSesion()}>
+              Cerrar Sesion
+            </div>
           </div>
         </div>
       )}
@@ -68,7 +88,7 @@ const Header = () => {
             <Avatar src={avatar} />
             <Avatar src={logo} />
           </Perfiles>
-          <TextUser>ASALAZAR</TextUser>
+          <TextUser>{RolSesion[1]}</TextUser>
           <div onClick={() => ActiveMenu()}>
             <OptionsIcon />
           </div>
