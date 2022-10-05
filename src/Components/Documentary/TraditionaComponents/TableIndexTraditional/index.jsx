@@ -45,13 +45,15 @@ import FileDownload from "../../Modern/ModalesDocumentary/FileDownload";
 
 const TableIndexTraditional = () => {
   const dispatch = useDispatch();
-  const { documentary, core, modalCore, actionCore } = useSelector(
+  const [ isTrue, setIsTrue] = useState(true);
+  const { documentary, core, modalCore, actionCore, sesion } = useSelector(
     (store) => store
   );
   const { MetadataFolder, MetaFolderSelected } = documentary;
   const { IndexByCabinet } = core;
   const { SelectedCabinet } = actionCore;
   const { ContextOptionMeta } = modalCore;
+  const { RolSesion, TockenUser } = sesion;
 
   const id = "de5d8cf4-69c2-4e49-bde4-a804e26cb55c";
 
@@ -59,18 +61,33 @@ const TableIndexTraditional = () => {
     IndexByCabinet.length === 0 && dispatch(setIndexbyCabinetCore(id));
   }, []);
 
+  useEffect(() => {
+    if (RolSesion[2] == "Administrator") {
+      setIsTrue(false);
+    }if (RolSesion[2] == "Writer"){
+      setIsTrue(false);
+    }
+  }, [RolSesion]);
+
   const [Active, setActive] = useState(false);
 
   const downloadExcel = (MetaFolderSelected) => {
-    axios
-      .get(`${DocumentServer}exportalltoexcel/${MetaFolderSelected}`)
+    toast.loading("Descargando Archivo");
+    axios({
+      url: `${DocumentServer}exportalltoexcel/${MetaFolderSelected}`,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TockenUser?.token}`,
+      },
+    })
       .then(function (response) {
         const res = response.data;
-        // console.log(res);
+        // console.log(response);
         const url =
           "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
           res;
         saveAsExcelFile(url, "Metadata");
+        toast.success("Reporte Descargado");
       })
       .catch(function (error) {
         console.log(error);
@@ -171,10 +188,10 @@ const TableIndexTraditional = () => {
       const ob1 = {
         docum: meta.documentId,
         cod: meta.values[0],
-        value: meta.values[1]
+        value: meta.values[1],
       };
       nameValue.push(ob1);
-    })
+    });
     dispatch(setSaveDataValuebyMetadata(nameValue));
     setNameValue([]);
   };
@@ -198,6 +215,7 @@ const TableIndexTraditional = () => {
           <Button
             type="button"
             icon="pi pi-plus"
+            disabled={isTrue}
             className="p-button-warning mr-2"
             title="AGREGAR"
             onClick={() => OpenModalCreatedDocument()}
@@ -212,6 +230,7 @@ const TableIndexTraditional = () => {
           icon="pi pi-pencil"
           className="p-button-info mr-2"
           title="EDITAR"
+          disabled={isTrue}
         />
 
         {/* <Button
@@ -228,6 +247,7 @@ const TableIndexTraditional = () => {
           className="p-button-success mr-2"
           data-pr-tooltip="XLS"
           title="EXPORTAR EXCEL"
+          disabled={isTrue}
         />
 
         <Button
@@ -255,10 +275,11 @@ const TableIndexTraditional = () => {
           icon="pi pi-download"
           className="p-button-success mr-2"
           title="DESCARGAR"
+          disabled={isTrue}
           onClick={() => {
             dispatch(setOpenModalFileDownload()),
               dispatch(getTypeFileByFolderFolder(MetaFolderSelected)),
-              AggMetadataForValues()
+              AggMetadataForValues();
           }}
         />
 

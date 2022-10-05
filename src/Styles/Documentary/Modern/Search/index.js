@@ -62,7 +62,8 @@ export const Docum = styled.div`
 `;
 
 export const Name = styled.span`
-    font-size: 0.83rem;
+    font-size: .9rem;
+    padding: .3rem;
   `;
 
 export const Rec = styled.div`

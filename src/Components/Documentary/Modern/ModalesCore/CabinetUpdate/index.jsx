@@ -42,10 +42,6 @@ const CabinetUpdate = ({ id, name, description, groupId }) => {
   const { SelectedGroup } = actionCore;
   const { FilesCabinets, FilesNoCabinets } = configDocument;
 
-  //   useEffect(() => {
-  //     groups.length == 0 && dispatch(getAllGroupsCore());
-  // },[]);
-
   const [gabi, setGabi] = useState({
     id,
     name: "",
@@ -164,10 +160,7 @@ const CabinetUpdate = ({ id, name, description, groupId }) => {
           className="Selected"
           onChange={(e) => handleChange(e)}
         >
-          {SelectedGroup && (
-            <option value={groupId}>{SelectedGroup.name}</option>
-          )}
-          <option className="defaultOption" value="null">
+          <option className="defaultOption" hidden>
             Ninguno
           </option>
           {groups ? (

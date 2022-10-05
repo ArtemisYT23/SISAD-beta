@@ -61,7 +61,7 @@ const FileUploaderUpdate = ({
     dispatch(setGetDescriptionFileDocu(SelectedFile.description));
     dispatch(setGetFileTypeFileDocu(SelectedFile.fileTypeId));
     dispatch(setDocumentFileDocu(SelectedFile.documentId));
-  },[FileUpdate])
+  },[FileUpdate]);
 
   const setFile = (e) => {
     const file = e.target.files[0];

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const GridElemmentContainer = styled.div`
   display: inline-flex;
   width: 10rem;
-  height: 10.5rem;
+  height: 10rem;
   border-radius: 2rem;
   background-color: rgba(254, 206, 100, 0.35);
   margin: 2rem 0 0 2rem;
@@ -119,8 +119,6 @@ export const ContainerCeldaAggDocument = styled.div`
   padding: .5rem;
   display: flex;
   justify-content: center;
-  background-color: #F68A20;
-  color: #fff;
   font-weight: bold;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 `;
@@ -140,7 +138,32 @@ export const InputSearch = styled.input`
   }
 `;
 
-export const AggButton = styled.span`
+ export const AggButtonDocument = styled.button`
+    width: 100%;
+    height: 2.2rem;
+    background-color: #f68a20;
+    text-align: center;
+    font-size: .8rem;
+    border: 1px solid #f68a20;
+    color: #fff;
+    cursor: pointer;
+
+    &:disabled{
+    color: white;
+    background-color: #f4993eb3;
+    }
+ `;
+
+
+export const AggButton = styled.button`
+  width: 100%;
+  height: 2.2rem;
+  background-color: #f68a20;
   text-align: center;
   font-size: .8rem;
+  cursor: pointer;
+`;
+
+export const ContainerIconCabinet = styled.div`
+  padding: 1rem;
 `;

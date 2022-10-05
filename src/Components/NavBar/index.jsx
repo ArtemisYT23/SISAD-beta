@@ -15,7 +15,11 @@ import logotipo from "../../../assets/images/CentralFile.png";
 import isotipo from "../../../assets/images/icon.png";
 import { setCloseDetalleModal } from "../../Store/ModalDocumentary";
 import { getNameGlobalChangeCleaner } from "../../Store/ModalCore";
-import { getUserSesionSecurity, getUserInformationSecurity } from "../../Store/SecurityLogin";
+import { setClearElementBreak, setClearElementFolderBreak, setClearElementGroupBreak } from "../../Store/ActionCore";
+import {
+  getUserSesionSecurity,
+  getUserInformationSecurity,
+} from "../../Store/SecurityLogin";
 
 const NavBar = () => {
   const { sesion } = useSelector((store) => store);
@@ -52,6 +56,9 @@ const NavBar = () => {
 
   const ActiveDocu = () => {
     dispatch(setSelectedNullCore());
+    dispatch(setClearElementBreak());
+    dispatch(setClearElementFolderBreak());
+    dispatch(setClearElementGroupBreak());
     dispatch(setSelectedSearchNullCore());
     dispatch(setCloseDetalleModal(false));
     dispatch(getNameGlobalChangeCleaner());
@@ -72,13 +79,19 @@ const NavBar = () => {
         {isActive ? <NavLinkName>Dashboard</NavLinkName> : <></>}
       </NavLinkContainer>
 
-      {RolSesion[2] ==
-        "Administrator" && (
-          <NavLinkContainer to="managment" onClick={() => ActiveManag()}>
-            <NavBarIcon name="managment" configData={configData} />
-            {isActive ? <NavLinkName>Administración</NavLinkName> : <></>}
-          </NavLinkContainer>
-        )}
+      {RolSesion[2] == "Administrator" && (
+        <NavLinkContainer to="managment" onClick={() => ActiveManag()}>
+          <NavBarIcon name="managment" configData={configData} />
+          {isActive ? <NavLinkName>Administración</NavLinkName> : <></>}
+        </NavLinkContainer>
+      )}
+
+      {RolSesion[2] == "Writer" && (
+        <NavLinkContainer to="managment" onClick={() => ActiveManag()}>
+          <NavBarIcon name="managment" configData={configData} />
+          {isActive ? <NavLinkName>Administración</NavLinkName> : <></>}
+        </NavLinkContainer>
+      )}
 
       <NavLinkContainer to="documentary" onClick={() => ActiveDocu()}>
         <NavBarIcon name="documentary" documentary={documentary} />

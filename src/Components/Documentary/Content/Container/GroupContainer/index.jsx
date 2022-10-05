@@ -11,11 +11,14 @@ const GroupContainer = () => {
   const dispatch = useDispatch();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const { core, modalCore, viewCore, actionCore } = useSelector((store) => store);
+  const { core, modalCore, viewCore, actionCore, sesion } = useSelector(
+    (store) => store
+  );
   const { cabinets } = core;
   const { GroupsCabinet } = actionCore;
   const { selected, selectedView } = viewCore;
   const { ContextGroup } = modalCore;
+  const { RolSesion } = sesion;
 
   const handleClick = (e) => {
     dispatch(setOpenMenuContextGroup());
@@ -34,7 +37,17 @@ const GroupContainer = () => {
         contextMenuRightClick(e), handleClick(e);
       }}
     >
-      {ContextGroup ? <GroupMenu x={x} y={y} /> : <></>}
+      {RolSesion[2] == "Administrator" && ContextGroup ? (
+        <GroupMenu x={x} y={y} />
+      ) : (
+        <></>
+      )}
+
+      {RolSesion[2] == "Writer" && ContextGroup ? (
+        <GroupMenu x={x} y={y} />
+      ) : (
+        <></>
+      )}
 
       {selected === "group" && selectedView != "list" ? (
         GroupsCabinet.map(({ id, name, description, groupId }, index) => (
@@ -58,12 +71,13 @@ const GroupContainer = () => {
       )}
 
       {selected === "" && selectedView != "list" ? (
-        cabinets.map(({ id, name, description }, index) => (
+        cabinets.map(({ id, name, description, path }, index) => (
           <Gridgroup
             key={index}
             id={id}
             name={name}
             description={description}
+            path={path}
             element="cabinet"
           />
         ))
@@ -72,7 +86,7 @@ const GroupContainer = () => {
       )}
 
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           className: "",
           duration: 3000,

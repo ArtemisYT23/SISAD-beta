@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DocumentContainer } from "../../../../../Styles/Documentary";
-import {
-  setOpenContextFolder,
-} from "../../../../../Store/ModalCore";
+import { setOpenContextFolder } from "../../../../../Store/ModalCore";
 import Gridcabinet from "../../../Modern/GridsContent/Gridcabinet";
 import GridDefaultFolder from "../../../Modern/GridsContent/GridDefaultFolder";
 import FolderMenu from "../../MenuContext/FolderMenu";
@@ -13,10 +11,13 @@ const CabinetContainer = () => {
   const dispatch = useDispatch();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const { modalCore, actionCore, viewCore } = useSelector((store) => store);
+  const { modalCore, actionCore, viewCore, sesion } = useSelector(
+    (store) => store
+  );
   const { FoldersCabinet, SelectedCabinet } = actionCore;
   const { selected, selectedView } = viewCore;
   const { ContextFolder } = modalCore;
+  const { RolSesion } = sesion;
 
   const handleClick = (e) => {
     dispatch(setOpenContextFolder());
@@ -35,7 +36,13 @@ const CabinetContainer = () => {
         contextMenuRightClick(e), handleClick(e);
       }}
     >
-      {ContextFolder ? (
+      {RolSesion[2] == "Administrator" && ContextFolder ? (
+        <FolderMenu x={x} y={y} cabinetId={SelectedCabinet.id} />
+      ) : (
+        <></>
+      )}
+
+      {RolSesion[2] == "Writer" && ContextFolder ? (
         <FolderMenu x={x} y={y} cabinetId={SelectedCabinet.id} />
       ) : (
         <></>
@@ -63,7 +70,7 @@ const CabinetContainer = () => {
       )}
 
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           className: "",
           duration: 3000,

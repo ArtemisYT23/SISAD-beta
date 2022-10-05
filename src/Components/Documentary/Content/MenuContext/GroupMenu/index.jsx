@@ -1,6 +1,7 @@
 import { Line } from "../../../../../Styles/Documentary/MenuContext";
 import { useDispatch } from "react-redux";
-import { setOpenModalCabinetCreated, setOpenModalGroupCreated  } from "../../../../../Store/ModalCore";
+import { orderCabinetByAscCore } from "../../../../../Store/Core";
+import { setOpenModalCabinetCreated, setOpenModalGroupCreated, setOpenMenuContextGroup  } from "../../../../../Store/ModalCore";
 import CabinetCreated from "../../../Modern/ModalesCore/CabinetCreated";
 import GroupCreated from "../../../Modern/ModalesCore/GroupCreated";
 
@@ -33,6 +34,11 @@ const GroupMenu = ({ x, y }) => {
     dispatch(setOpenModalGroupCreated());
   };
 
+  const OrderCabinetCore = () => {
+    dispatch(orderCabinetByAscCore());
+    dispatch(setOpenMenuContextGroup());
+  }
+
   return (
     <div style={style()}>
       <div 
@@ -50,7 +56,7 @@ const GroupMenu = ({ x, y }) => {
       </div>
       <CabinetCreated />
       <Line />
-      <div style={styles.div}>Ordenar</div>
+      <div style={styles.div} onClick={() => OrderCabinetCore()}>Ordenar</div>
       <Line />
       <div style={styles.div}>Detalles</div>
     </div>

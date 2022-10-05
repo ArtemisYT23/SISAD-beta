@@ -2,9 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  setOpenModalUploaderUnirFile,
-} from "../../../../../Store/ModalDocumentary";
+import { setOpenModalUploaderUnirFile } from "../../../../../Store/ModalDocumentary";
 import { StyleDragArea } from "../../../../../Styles/Documentary/DragAreaFile";
 import "../../../../../Styles/Documentary/ModalStyle/modal.css";
 import "../../../../../Styles/Documentary/DragAreaFile/ModalUpload.css";
@@ -21,15 +19,13 @@ import {
   setCloseMenuContextOptionMeta,
   setCloseMenuContextFile,
 } from "../../../../../Store/ModalCore";
-import {
-  getTypeFileByFolder,
-} from "../../../../../Store/ConfigDocumentary";
+import { getTypeFileByFolder } from "../../../../../Store/ConfigDocumentary";
 
 const useStyless = makeStyles((theme) => ({
-    FileUploadUnit: {
+  FileUploadUnit: {
     position: "absolute",
     width: "500px",
-    height: "75%",
+    height: "80%",
     backgroundColor: "white",
     border: "2px solid white",
     boxShadow: theme.shadows[2],
@@ -58,6 +54,8 @@ const FileUploaderCreated = ({ documentId }) => {
   const { MetaFolderSelected } = documentary;
   const { SelectedFolder } = core;
   const { NameFile } = uploader;
+  const [fileCharged, setFileCharged] = useState({});
+  const [value, setValue] = useState(false);
 
   const [identify, setIdentify] = useState({
     id: uuidv4(),
@@ -66,6 +64,7 @@ const FileUploaderCreated = ({ documentId }) => {
   const setFile = (e) => {
     const file = e.target.files[0];
     dispatch(setGetFileFileDocu(file));
+    setValue(true);
   };
 
   const handleChange = (e) => {
@@ -121,7 +120,9 @@ const FileUploaderCreated = ({ documentId }) => {
         />
         <br />
         <br />
-
+          <label>
+            <input type="checkbox" checked={value} /> Archivo Cargado
+          </label>
         <div className="ContentFile">
           <br />
           <StyleDragArea>
@@ -130,7 +131,9 @@ const FileUploaderCreated = ({ documentId }) => {
                 type="file"
                 className="file-upload-input"
                 accept=".pdf, .doc, .rar, .txt"
-                onInput={(e) => setFile(e)}
+                onInput={(e) => {
+                  setFile(e), setFileCharged(e.target.file[0]);
+                }}
               />
             </div>
           </StyleDragArea>
@@ -149,6 +152,7 @@ const FileUploaderCreated = ({ documentId }) => {
     dispatch(setCloseMenuContextualDocument(false));
     dispatch(setCloseMenuContextFile(false));
     dispatch(setOpenModalUploaderUnirFile());
+    setValue(false);
   };
 
   return (

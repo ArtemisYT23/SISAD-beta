@@ -5,7 +5,6 @@ import {
   TitlePanel,
   SubTitlePanel,
   ContainerAvatar,
-  AvatarInfo,
   Avatar,
 } from "../../../../Styles/Dashboard/ContentDashboard/PanelConfigUser";
 import avatar from "../../../Managment/ContentManagment/HeaderManagment/avatar.png";
@@ -15,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserListSecurity } from "../../../../Store/SecurityLogin";
 import "./Security.css";
 import {
-  AddElement,
   EditElement,
   DeleteElement,
 } from "../../../../Styles/Managment/Modern/ElementList/Icons";
@@ -34,23 +32,30 @@ import { setClearTockenInvalidate } from "../../../../Store/SecurityLogin";
 import {
   setCloseModalLoginCore,
   setCloseModalContextGlobal,
-  CloseSesionCore
+  CloseSesionCore,
 } from "../../../../Store/ModalCore";
 import { setCleanerMemoryDataCore } from "../../../../Store/Core";
 import { setClearDataMemoryDocu } from "../../../../Store/Documentary";
 import { setClearMemoryDataViewCore } from "../../../../Store/ViewCore";
 import { OptionsIcon } from "../../../../Components/Documentary/Content/Header/Icons";
+import { SearchFilter } from "./Icons";
 
 const SecurityUsers = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const [term, setTerm] = useState("");
+  const { sesion } = useSelector((store) => store);
+  const { UserList, RolSesion } = sesion;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getAllUserListSecurity());
   }, []);
 
-  const { sesion } = useSelector((store) => store);
-  const { UserList, RolSesion } = sesion;
+  useEffect(() => {
+    setTableData(UserList);
+  }, [UserList]);
 
   const ActiveMenu = () => {
     setShowMenu(!showMenu);
@@ -80,12 +85,18 @@ const SecurityUsers = () => {
     dispatch(setUserSelectionSecurity(id));
     dispatch(setOpenModalDeleteUser());
   };
-  
+
   const changeStateDrop = () => {
     if (showMenu == true) {
       setShowMenu(false);
-    } 
+    }
   };
+
+  function searchingTerm(term) {
+    return function (x) {
+      return x.userName.includes(term) || !term;
+    };
+  }
 
   return (
     <SecurityPanelUser onClick={() => changeStateDrop()}>
@@ -123,33 +134,48 @@ const SecurityUsers = () => {
           <OptionsIcon />
         </ContainerAvatar>
       </UserHeaderContainer>
-      <div className="ContainerAgg">
-        <button className="ButtonNew" onClick={() => OpenCreatedUser()}>
-          Nuevo Usuario
-        </button>
+      <div className="Container-HeaderSecurity">
+        <div className="ContainerAgg">
+          <button className="ButtonNew" onClick={() => OpenCreatedUser()}>
+            Nuevo Usuario
+          </button>
+        </div>
+
+        {tableData && (
+          <div className="ContainerSearchUser">
+            <input
+              placeholder=" Buscar Usuario"
+              className="SearchUser"
+              onChange={(e) => setTerm(e.target.value)}
+            />
+            <button className="InputSearch">
+              <SearchFilter x={22} y={22} />
+            </button>
+          </div>
+        )}
       </div>
       <div className="ContainerTableUser">
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>UserName</th>
-              <th>email</th>
-              <th>Profile</th>
-              <th>Business</th>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>Perfil</th>
+              <th>Empresa</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {UserList ? (
-              UserList.map((use, index) => (
+            {tableData ? (
+              tableData.filter(searchingTerm(term)).map((use, index) => (
                 <tr>
                   <td>{index + 1}</td>
                   <td>{use.userName}</td>
                   <td>{use.email}</td>
-                  <td>{use.profileId}</td>
-                  <td>{use.businessId}</td>
+                  <td>{use.profileName}</td>
+                  <td>{use.businessName}</td>
                   <td>
                     <input type="checkbox" checked={use.opeationalState} />
                     <span>Activo</span>

@@ -11,7 +11,7 @@ const ItemCelda = ({ key, index, id, name, element }) => {
         const collection = document.getElementsByClassName("Celda");
         for (let i = 0; i < collection.length; i++){
             collection[i].style.backgroundColor = "white";
-            collection[i].style.color = "#c4c4c4";
+            collection[i].style.color = "#939393";
             if ( id === index) {
                 document.getElementById(index).style.backgroundColor = "#F68A20";
                 document.getElementById(index).style.color = "#e9e6e6";

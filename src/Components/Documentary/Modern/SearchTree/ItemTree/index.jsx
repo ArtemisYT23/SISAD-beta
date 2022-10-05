@@ -13,6 +13,8 @@ import {
 import {
   setSelectedCabinetCore,
   setFilterFoldersCore,
+  setSaveElementBreak,
+  setClearElementFolderBreak,
 } from "../../../../../Store/ActionCore";
 import ItemFolders from "./ItemFolders";
 import { getNameGlobalChange } from "../../../../../Store/ModalCore";
@@ -23,6 +25,8 @@ const ItemTree = ({ id, name }) => {
   const { SelectedCabinet, FoldersCabinet } = actionCore;
 
   const selectGab = (index, name) => {
+    dispatch(setSaveElementBreak(index));
+    dispatch(setClearElementFolderBreak());
     dispatch(setSelectedCabinetCore(index));
     dispatch(setFilterFoldersCore(index));
     dispatch(setIndexbyCabinetCore(index));

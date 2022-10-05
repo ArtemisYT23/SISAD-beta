@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DocumentContainer } from "../../../../../Styles/Documentary";
 import { useDispatch, useSelector } from "react-redux";
 import Gridfolder from "../../../Modern/GridsContent/Gridfolder";
@@ -5,8 +6,8 @@ import {
   ContainerThreeRegister,
   ContainerFilesSection,
   InputSearch,
-  AggButton,
-  ContainerCeldaAggDocument
+  ContainerCeldaAggDocument,
+  AggButtonDocument,
 } from "../../../../../Styles/Documentary/Modern/GridElement";
 import toast, { Toaster } from "react-hot-toast";
 import FileContainer from "../FileContainer";
@@ -15,24 +16,41 @@ import { setOpenModalDocumentCreated } from "../../../../../Store/ModalDocumenta
 
 const FolderContainer = () => {
   const dispatch = useDispatch();
-  const { actionCore, documentary, viewCore } = useSelector((store) => store);
+  const [isTrue, setIsTrue] = useState(true);
+  const { actionCore, documentary, viewCore, sesion } = useSelector(
+    (store) => store
+  );
   const { DocumentFolder } = documentary;
   const { SelectedCabinet, SelectedFolder } = actionCore;
   const { selected, selectedView } = viewCore;
+  const { RolSesion } = sesion;
+
+  useEffect(() => {
+    if (RolSesion[2] == "Administrator") {
+      setIsTrue(false);
+    }if (RolSesion[2] == "Writer"){
+      setIsTrue(false);
+    }
+  }, [RolSesion]);
 
   const OpenModalDocumentCreated = () => {
     dispatch(setOpenModalDocumentCreated());
-  }
+  };
 
   return (
     <DocumentContainer>
       <ContainerThreeRegister>
-        
         <ContainerCeldaAggDocument>
-          <AggButton onClick={() => OpenModalDocumentCreated()}>Nuevo Documento</AggButton>
-          <DocumentCreated folderId={SelectedFolder?.id}/>
+          <AggButtonDocument
+            disabled={isTrue}
+            onClick={() => OpenModalDocumentCreated()}
+          >
+            Nuevo Documento
+          </AggButtonDocument>
+          <DocumentCreated folderId={SelectedFolder?.id} />
         </ContainerCeldaAggDocument>
-        <InputSearch placeholder="Buscar" />
+        <br />
+        {/* <InputSearch placeholder="Buscar" /> */}
         {selected === "folder" && selectedView === "grid" ? (
           DocumentFolder.map(({ id, folderId, sequentialId }, index) => (
             <Gridfolder
@@ -54,7 +72,7 @@ const FolderContainer = () => {
       </ContainerFilesSection>
 
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           className: "",
           duration: 4000,

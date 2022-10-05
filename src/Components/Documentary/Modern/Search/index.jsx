@@ -15,6 +15,8 @@ import {
   setSelectedFolderCore,
   setFilterGroupsCore,
   setSelectedGroupCore,
+  setSaveElementBreak,
+  setSaveElementBreakGroup,
 } from "../../../../Store/ActionCore"
 
 import {
@@ -60,6 +62,7 @@ const Search = () => {
   }, []);
 
   const selectGroup = (index, name) => {
+    dispatch(setSaveElementBreakGroup(index));
     dispatch(setSelectedGroupCore(index));
     dispatch(setFilterGroupsCore(index));
     dispatch(setSelectedSearchTreeCore());
@@ -69,6 +72,7 @@ const Search = () => {
   };
 
   const selectGab = (index, name) => {
+    dispatch(setSaveElementBreak(index));
     dispatch(setSelectedCabinetCore(index));
     dispatch(setFilterFoldersCore(index));
     dispatch(setSelectedSearchTreeCore());

@@ -10,7 +10,6 @@ export const HeaderUP = styled.div`
 export const HeaderDOWN = styled.div`
   height: 10%;
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
 `;
 
@@ -62,9 +61,6 @@ export const Avatar = styled.img`
   }
 `;
 
-
-
-
 export const AvatarPlus = styled.div`
   width: 4rem;
   height: 4rem;
@@ -95,4 +91,19 @@ export const Log = styled.span`
 export const HeaderContainer = styled.div`
   height: 4.6rem;
   border-bottom: 1px solid var(--lineColor);
+`;
+
+export const LineBreack = styled.a`
+  color: #939393;
+  background-image: linear-gradient(90deg, #5B5B5B , #5B5B5B , #5B5B5B );
+  text-decoration: none;
+  font-family: var(--font-Global);
+  font-weight: 600;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: left bottom;
+  &:hover{
+    background-size: 100% 2px;
+  } 
 `;

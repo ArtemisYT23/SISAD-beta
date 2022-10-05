@@ -43,4 +43,6 @@ export const DocumentServer = 'https://localhost:7012/api/';
 export const SecurityServer  = 'http://localhost:4545/api/';
 
 //Production
-// export const SecurityServer  = 'https://192.168.2.195:446/api/';
+// export const SecurityServer  = 'http://192.168.2.195:9192/api/';
+// export const SecurityServer = 'http://192.168.70.201:9192/api/'
+// export const SecurityServer = 'https://192.168.2.195:446/api/'

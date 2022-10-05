@@ -113,7 +113,7 @@ export const sendFileDocumentaryDocu = (formFile, documentId, MetaFolderSelected
     console.log(formFile.get("FileTypeId"));
     console.log(formFile.get("DocumentId"));
     const { sesion } = getState();
-    const { TockenUser } = sesion();
+    const { TockenUser } = sesion;
     toast.loading('Subiendo Archivo');
     axios({
         url: `${DocumentServer}file`,
@@ -145,7 +145,7 @@ export const sendFileDocumentaryDocu = (formFile, documentId, MetaFolderSelected
 }
 
 //Actualizar file subida de archivo
-export const updateFileDocumentaryDocu = ( id, formFile, documentId, MetaFolderSelected) => async (dispatch, getState) => {
+export const updateFileDocumentaryDocu = (id, formFile, documentId, MetaFolderSelected) => async (dispatch, getState) => {
     console.log(MetaFolderSelected);
     console.log(formFile.get("Id"));
     console.log(formFile.get("Name"));
@@ -166,21 +166,17 @@ export const updateFileDocumentaryDocu = ( id, formFile, documentId, MetaFolderS
             Authorization: `Bearer ${TockenUser?.token}`
         },
     })
-    .then(function (response) {
-        console.log(response);
-        if (response.status == 200){
-            dispatch(getFileAllDocument(documentId))
-            {
-                MetaFolderSelected != "" && (
-                    dispatch(getMetadataByFolder(MetaFolderSelected)),
-                    dispatch(getFilesByDocument(documentId))
-                )
+        .then(function (response) {
+            console.log(response);
+            if (response.status == 200) {
+                dispatch(getFileAllDocument(documentId))
+                dispatch(getMetadataByFolder(MetaFolderSelected)),
+                dispatch(getFilesByDocument(documentId))
+                toast.success('Archivo Actualizado Correctamente');
             }
-            toast.success('Archivo Actualizado Correctamente');
-        }
-    })
-    .catch( function (error) {
-        console.log(error);
-        toast.error('Error Archivo no Subido');
-    })
+        })
+        .catch(function (error) {
+            console.log(error);
+            toast.error('Error Archivo no Subido');
+        })
 }

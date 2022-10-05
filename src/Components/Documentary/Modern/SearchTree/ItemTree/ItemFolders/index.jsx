@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { ContainerFolders, ContentItem, ContainerIcons, ContainerTitle, TitleCap } from "../../../../../../Styles/Documentary/Modern/SearchTree";
 import { CarpIcons } from "../../../Search/Item/Icon";
-import { setSelectedFolderCore } from "../../../../../../Store/ActionCore";
+import { setSelectedFolderCore, setSaveElementBreakFolder } from "../../../../../../Store/ActionCore";
 import { setFilterDocumentDocu, AggFolderMetadataSelected, getMetadataByFolder, } from "../../../../../../Store/Documentary";
 import { getNameGlobalChange } from "../../../../../../Store/ModalCore";
  
@@ -10,6 +10,7 @@ const ItemFolders = ({ id, name, cabinetId}) => {
     const dispatch = useDispatch();
 
     const SelectedFolder = (index, cabinetId, name) => {
+        dispatch(setSaveElementBreakFolder(name));
         dispatch(setSelectedFolderCore(index));
         dispatch(setFilterDocumentDocu(index));
         dispatch(AggFolderMetadataSelected(index));

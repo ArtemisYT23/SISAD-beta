@@ -39,7 +39,7 @@ const IndexDefault = () => {
         />
       </ContentColumn>
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           className: "",
           duration: 4000,

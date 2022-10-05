@@ -10,10 +10,12 @@ const AllCabinetContainer = () => {
   const dispatch = useDispatch();
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const { core, modalCore, viewCore } = useSelector((store) => store);
+  const { core, modalCore, viewCore, sesion } = useSelector((store) => store);
   const { cabinets } = core;
   const { selected, selectedView } = viewCore;
   const { ContextGroup } = modalCore;
+  const { RolSesion } = sesion;
+
   const handleClick = (e) => {
     dispatch(setOpenMenuContextGroup());
   };
@@ -31,8 +33,17 @@ const AllCabinetContainer = () => {
         contextMenuRightClick(e), handleClick(e);
       }}
     >
+      {RolSesion[2] == "Administrator" && ContextGroup ? (
+        <GroupMenu x={x} y={y} />
+      ) : (
+        <></>
+      )}
 
-      {ContextGroup ? <GroupMenu x={x} y={y} /> : <></>}
+      {RolSesion[2] == "Writer" && ContextGroup ? (
+        <GroupMenu x={x} y={y} />
+      ) : (
+        <></>
+      )}
 
       {selected === "CabinetAll" && selectedView != "list" ? (
         cabinets.map(({ id, name, description, fileTypes }, index) => (
@@ -50,7 +61,7 @@ const AllCabinetContainer = () => {
       )}
 
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           className: "",
           duration: 3000,
@@ -60,7 +71,6 @@ const AllCabinetContainer = () => {
           },
         }}
       />
-      
     </DocumentContainer>
   );
 };

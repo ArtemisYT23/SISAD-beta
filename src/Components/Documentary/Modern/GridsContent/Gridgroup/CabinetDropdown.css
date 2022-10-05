@@ -126,3 +126,32 @@
   color: #faac1c;
   font-weight: 600;
 }
+
+.ContainerSearchUser{
+  width: 50%;
+  display: flex;
+}
+
+.InputSearch{
+  padding: .5rem;
+  width: 2.2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #f68a20;
+  background: none;
+}
+
+.SearchUser{
+  width: 45%;
+  height: 2rem;
+  outline: none;
+  border: 1px solid #f68a20;
+  color: #5d5c5c;
+}
+
+.Container-HeaderSecurity{
+  display: flex;
+  align-items: center;
+}

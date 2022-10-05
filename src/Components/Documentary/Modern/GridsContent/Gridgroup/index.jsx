@@ -3,41 +3,51 @@ import {
   ElementName,
   GridElemmentContainer,
   NumberOfElementChild,
+  ContainerIconCabinet,
   ContainerIcon,
 } from "../../../../../Styles/Documentary/Modern/GridElement";
 import { useDispatch, useSelector } from "react-redux";
 import ElementIcon from "../../../../../Styles/Documentary/Modern/GridContentIcon/Icons";
-import {
-  getIndexCabinetGetAllConfigFilter,
-} from "../../../../../Store/Core";
+import { getIndexCabinetGetAllConfigFilter } from "../../../../../Store/Core";
 import {
   setSelectedCabinetCore,
   setFilterFoldersCore,
   setSelectedCabinetCoreNotSelected,
+  setSaveElementBreak,
 } from "../../../../../Store/ActionCore";
 import { SelectedIndexConfig } from "../../../../../Store/ModalConfig";
 import {
   setOpenModalCabinetUpdate,
-  setOpenModalCabinetDelete, 
+  setOpenModalCabinetDelete,
   getNameGlobalChange,
 } from "../../../../../Store/ModalCore";
-import { getTypeFileByCabinetNoSelected, getTypeFileByCabinet } from "../../../../../Store/ConfigDocumentary";
+import {
+  getTypeFileByCabinetNoSelected,
+  getTypeFileByCabinet,
+} from "../../../../../Store/ConfigDocumentary";
 
 import { Options } from "./Icons";
 import "./CabinetDropdown.css";
 import CabinetUpdate from "../../ModalesCore/CabinetUpdate";
 import CabinetDelete from "../../ModalesCore/CabinetDelete";
 
-const Gridgroup = ({ element, name, description, groupId, id, fileTypes }) => {
+const Gridgroup = ({ element, name, description, groupId, id, fileTypes, path }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const { sesion } = useSelector((store) => store);
+  const { RolSesion } = sesion;
 
-  const envio = (index, name) => {
+  const Envio = (index, name) => {
     setShowMenu(false);
     dispatch(setSelectedCabinetCore(index));
     dispatch(setFilterFoldersCore(index));
     dispatch(getNameGlobalChange(name));
   };
+
+  const Enrutamiento = (path) => {
+    console.log(path);
+    dispatch(setSaveElementBreak(path));
+  }
 
   const dropdownCabinet = (index) => {
     setShowMenu(!showMenu);
@@ -65,16 +75,23 @@ const Gridgroup = ({ element, name, description, groupId, id, fileTypes }) => {
     dispatch(setSelectedCabinetCoreNotSelected(index));
   };
 
-  const AbrilModalIndexCabinetFilter = (name) => {
-    dispatch(getIndexCabinetGetAllConfigFilter(name));
+  const AbrilModalIndexCabinetFilter = (id) => {
+    dispatch(getIndexCabinetGetAllConfigFilter(id));
   };
 
   return (
-    <GridElemmentContainer id={id} onDoubleClick={() => envio(id, name)}>
+    <GridElemmentContainer id={id} onDoubleClick={() => {Envio(id, name), Enrutamiento(id)}}>
       {showMenu && (
         <div className="dropdown">
           <div className="dropdown-content">
-            <div className="dropdown-item" onClick={() => {AbrilModalIndexCreated(id), AbrilModalIndexCabinetFilter(name)}}>Configurar</div>
+            <div
+              className="dropdown-item"
+              onClick={() => {
+                AbrilModalIndexCreated(id), AbrilModalIndexCabinetFilter(name);
+              }}
+            >
+              Configurar
+            </div>
             <hr></hr>
             <div
               className="dropdown-item"
@@ -90,17 +107,40 @@ const Gridgroup = ({ element, name, description, groupId, id, fileTypes }) => {
               fileTypes={fileTypes}
             />
             <hr></hr>
-            <div className="dropdown-item" onClick={() =>AbrirModalEliminarCabinet()}>eliminar</div>
+            <div
+              className="dropdown-item"
+              onClick={() => AbrirModalEliminarCabinet()}
+            >
+              eliminar
+            </div>
             <CabinetDelete id={id} name={name} />
           </div>
         </div>
       )}
 
-      <ContainerIcon onClick={() => dropdownCabinet(id)}>
-        <Options x={20} y={20} fill={"#F68A20"} />
-      </ContainerIcon>
-      <ElementIcon element={element} />
-      <NumberOfElementChild>3 carpetas</NumberOfElementChild>
+      {RolSesion[2] == "Administrator" && (
+        <ContainerIcon onClick={() => dropdownCabinet(id)}>
+          <Options x={20} y={20} fill={"#F68A20"} />
+        </ContainerIcon>
+      )}
+
+      {RolSesion[2] == "Writer" && (
+        <ContainerIcon onClick={() => dropdownCabinet(id)}>
+          <Options x={20} y={20} fill={"#F68A20"} />
+        </ContainerIcon>
+      )}
+
+      {RolSesion[2] == "Administrator" ? (
+        <ElementIcon element={element} />
+      ) : (
+        <></>
+      )}
+
+      {RolSesion[2] == "Writer" ? <ElementIcon element={element} /> : <></>}
+
+      {RolSesion[2] == "Reader" ? <ElementIcon element={element} /> : <></>}
+
+      {/* <NumberOfElementChild>3 carpetas</NumberOfElementChild> */}
       <ElementName>{name}</ElementName>
     </GridElemmentContainer>
   );

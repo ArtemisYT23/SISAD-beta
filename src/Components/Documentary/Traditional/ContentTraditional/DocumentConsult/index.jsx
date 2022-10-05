@@ -16,7 +16,7 @@ const DocumentConsult = () => {
 };
 
 <Toaster
-  position="top-right"
+  position="bottom-right"
   toastOptions={{
     className: "",
     duration: 3000,

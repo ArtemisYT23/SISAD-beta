@@ -1,17 +1,32 @@
-import { AggIconFiles, SaveIconFile, DeleteIconFile } from "../../../../TraditionaComponents/TableIndexTraditional/Icons";
+import {
+  AggIconFiles,
+  SaveIconFile,
+  DeleteIconFile,
+} from "../../../../TraditionaComponents/TableIndexTraditional/Icons";
 import "../../../../../../Styles/Documentary/ModalStyle/modal.css";
-import { DeleteFilesViewTraditionalDocu, getFilesUnitbyIdDocu } from "../../../../../../Store/Documentary";
+import {
+  DeleteFilesViewTraditionalDocu,
+  getFilesUnitbyIdDocu,
+} from "../../../../../../Store/Documentary";
 import { useDispatch, useSelector } from "react-redux";
 
-
-const ItemModalFile = ({ id, name, description, extension, file, index, documentId, fileTypeId, fileTypeName}) => {
-
+const ItemModalFile = ({
+  id,
+  name,
+  description,
+  extension,
+  file,
+  index,
+  documentId,
+  fileTypeId,
+  fileTypeName,
+}) => {
   const dispatch = useDispatch();
+  const { sesion } = useSelector((store) => store);
+  const { RolSesion } = sesion;
 
   const OpenDocumentView = (file) => {
-    window.open(
-      file
-    );
+    window.open(file);
   };
 
   const DeleteDocumentFile = (id, documentId) => {
@@ -19,7 +34,7 @@ const ItemModalFile = ({ id, name, description, extension, file, index, document
   };
 
   const DownloadFileById = (index) => {
-    dispatch(getFilesUnitbyIdDocu(index))
+    dispatch(getFilesUnitbyIdDocu(index));
   };
 
   return (
@@ -30,17 +45,31 @@ const ItemModalFile = ({ id, name, description, extension, file, index, document
       <td>{extension}</td>
       <td>
         <div className="Container-IconFile">
-          <div className="Content-IconFile" onClick={(e) => OpenDocumentView(file)}>
+          <div
+            className="Content-IconFile"
+            onClick={(e) => OpenDocumentView(file)}
+          >
             <AggIconFiles x={27} y={25} />
           </div>
 
-          <div className="Content-IconFile" onClick={(e) => DownloadFileById(id)}>
-            <SaveIconFile x={21} y={25} />
-          </div>
+          {RolSesion[2] == "Administrator" && (
+            <div
+              className="Content-IconFile"
+              onClick={(e) => DownloadFileById(id)}
+            >
+              <SaveIconFile x={21} y={25} />
+            </div>
+          )}
 
-          <div className="Content-IconFile" onClick={(e) => DeleteDocumentFile(id, documentId)}>
-            <DeleteIconFile x={23} y={25} />
-          </div>
+          {RolSesion[2] == "Administrator" && (
+            <div
+              className="Content-IconFile"
+              onClick={(e) => DeleteDocumentFile(id, documentId)}
+            >
+              <DeleteIconFile x={23} y={25} />
+            </div>
+          )}
+          
         </div>
       </td>
     </tr>

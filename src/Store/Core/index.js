@@ -90,6 +90,7 @@ const GET_ALL_CABINET_NAME_DATA_CORE = "GET_ALL_CABINET_NAME_DATA_CORE";
 const GET_ALL_CABINET_NAME_DATA_ERRORS_CORE = "GET_ALL_CABINET_NAME_DATA_ERRORS_CORE";
 
 const SET_CLEANER_DATA_MEMORY_CORE = "SET_CLEANER_DATA_MEMORY_CORE";
+const ORDER_CABINET_BY_ASC_CORE = "ORDER_CABINET_BY_ASC_CORE";
 
 //lanzamiento de payload de casos
 export default function CoreReducer(state = initialState, action) {
@@ -133,6 +134,7 @@ export default function CoreReducer(state = initialState, action) {
     case FILTER_CREATED_FOLDER_CORE:
     case SET_FILTER_FILES_BY_NAME_CORE:
     case GET_INDEX_DATA_CABINET_CORE:
+    case ORDER_CABINET_BY_ASC_CORE:
 
     //Limpiar estado de selected de metadata 
     case SELECTED_URLFILE_CORE:
@@ -837,6 +839,21 @@ export const setFilterCabinetsByName = (name) => async (dispatch, getState) => {
     });
   }
 }
+
+//Realizar ordenado de datos en orden ascendete para gabinetes
+export const orderCabinetByAscCore = () => async(dispatch, getState) => {
+  const { core } = getState();
+  const { cabinets } = core;
+  dispatch({
+    type: ORDER_CABINET_BY_ASC_CORE,
+    payload: { ...core, cabinet: cabinets.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      }
+    })}
+  })
+}
+
 
 //Limpiar Memoria Global de Core por cierre de sesion
 export const setCleanerMemoryDataCore = () => async(dispatch, getState) => {

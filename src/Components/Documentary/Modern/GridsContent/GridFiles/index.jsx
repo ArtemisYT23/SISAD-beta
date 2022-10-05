@@ -33,18 +33,19 @@ const GridFiles = ({
   fileTypeId,
   documentId,
   file,
-  fileTypeName
+  fileTypeName,
 }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const { actionCore } = useSelector((store) => store);
+  const { actionCore, sesion } = useSelector((store) => store);
   const { SelectedCabinet } = actionCore;
+  const { RolSesion } = sesion;
 
   const EntrarDetalle = (id, cabinetId, documentId, file) => {
     dispatch(setCloseDetalleModal(true));
     dispatch(setSelectedUrlFileCore(file));
     dispatch(setSelectedFileDocumentary(id));
-    dispatch(getMetadataByDocumentDocu(cabinetId ,documentId));
+    dispatch(getMetadataByDocumentDocu(cabinetId, documentId));
     dispatch(getIndexAllCabinetConfigNotSelect(cabinetId));
   };
 
@@ -62,38 +63,47 @@ const GridFiles = ({
 
   const DeleteFile = () => {
     dispatch(setOpenModalDeleteFile());
-  }
+  };
 
   return (
     <>
-    <GridDocContainer
-      onClick={() => EntrarDetalle(id, SelectedCabinet?.id, documentId, file)}
-    >
-      {showMenu && (
-        <div className="dropdown">
-          <div className="dropdown-content">
-            <div className="dropdown-item" onClick={() => DeleteFile()}>Eliminar</div>
+      <GridDocContainer
+        onClick={() => EntrarDetalle(id, SelectedCabinet?.id, documentId, file)}
+      >
+        {showMenu && (
+          <div className="dropdown">
+            <div className="dropdown-content">
+              <div className="dropdown-item" onClick={() => DeleteFile()}>
+                Eliminar
+              </div>
+            </div>
+            <FileUploaderDelete id={id} name={name} documentId={documentId} />
           </div>
-          <FileUploaderDelete id={id} name={name} documentId={documentId}/>
-        </div>
-      )}
-      <ContainerIcon onClick={() => dropdownCabinet(id)}>
-        <Options x={20} y={20} fill={"#F68A20"}/>
-      </ContainerIcon>
+        )}
+        {RolSesion[2] == "Administrator" && (
+          <ContainerIcon onClick={() => dropdownCabinet(id)}>
+            <Options x={20} y={20} fill={"#F68A20"} />
+          </ContainerIcon>
+        )}
 
-      <ElementIcon element={element} />
-      
-      <ContainerDistint>
-      <DistintivoPDF>
-      <TypeFile>{extension}</TypeFile>
-      </DistintivoPDF>
-      </ContainerDistint>
-      
-      <NumberOfElementChild>{fileTypeName}</NumberOfElementChild>
+        {RolSesion[2] == "Writer" && (
+          <ContainerIcon onClick={() => dropdownCabinet(id)}>
+            <Options x={20} y={20} fill={"#F68A20"} />
+          </ContainerIcon>
+        )}
 
-      <ElementNameDoc>{name}</ElementNameDoc>
+        <ElementIcon element={element} />
 
-    </GridDocContainer>
+        <ContainerDistint>
+          <DistintivoPDF>
+            <TypeFile>{extension}</TypeFile>
+          </DistintivoPDF>
+        </ContainerDistint>
+
+        <NumberOfElementChild>{fileTypeName}</NumberOfElementChild>
+
+        <ElementNameDoc>{name}</ElementNameDoc>
+      </GridDocContainer>
     </>
   );
 };

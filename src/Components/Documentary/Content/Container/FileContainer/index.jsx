@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DocumentContainer,
@@ -23,10 +23,12 @@ import { setOpenModalUploadFile } from "../../../../../Store/ModalDocumentary";
 const FileContainer = () => {
   const dispatch = useDispatch();
   const [Open, setOpen] = useState(false);
-  const [ActiveText, setActiveText] = useState("");
-  const { core, modalCore, documentary } = useSelector((store) => store);
+  const [isTrue, setIsTrue] = useState(true);
+  const [activeText, setActiveText] = useState("");
+  const { core, modalCore, documentary, sesion } = useSelector((store) => store);
   const { selected, files, selectedView } = core;
   const { SelectedDocument } = documentary;
+  const { RolSesion } = sesion;
 
   const handleClick = (e) => {
     dispatch(setOpenMenuContextFile());
@@ -48,6 +50,20 @@ const FileContainer = () => {
     dispatch(setOpenModalUploadFile());
   };
 
+  useEffect(() => {
+    if (RolSesion[2] == "Administrator") {
+      setIsTrue(false);
+    }if (RolSesion[2] == "Writer"){
+      setIsTrue(false);
+    }
+  }, [RolSesion]);
+
+  function searchingTerm(term){
+    return function(x){
+      return x.name.toLowerCase().includes(term) || !term;
+    }
+  }
+
   return (
     <>
       <ContainerSearchFiles>
@@ -67,47 +83,21 @@ const FileContainer = () => {
         {Open && (
           <InputSearch
             type="text"
-            value={ActiveText}
             placeholder="Buscar Archivo"
             onChange={(e) => {
-              setActiveText(e.target.value), handleChange(e.target.value);
+              setActiveText(e.target.value);
             }}
           />
-        )}
-
-        {ActiveText != "" && SelectedDocument != "" ? (
-          <ButtonClearSearch
-            onClick={() => {
-              getAllFilesDocument(SelectedDocument?.id), setActiveText("");
-            }}
-          >
-            X
-          </ButtonClearSearch>
-        ) : (
-          <></>
-        )}
-
-        {ActiveText != "" && SelectedDocument != "" ? (
-          <Button
-            type="button"
-            icon="pi pi-sync"
-            className="p-button-rounded p-button-success"
-            title="ACTUALIZAR"
-            onClick={() => {
-              getAllFilesDocument(SelectedDocument?.id), setActiveText("");
-            }}
-          />
-        ) : (
-          <></>
         )}
 
         <SpaceLine />
-
+          
         <Button
           type="button"
           icon="pi pi-plus"
           className="p-button-rounded p-button-success"
           title="AGREGAR"
+          disabled={isTrue}
           onClick={() => OpenModalFileUploader()}
         />
 
@@ -119,7 +109,7 @@ const FileContainer = () => {
       >
 
         {selectedView != "list" ? (
-          files.map(
+          files.filter(searchingTerm(activeText)).map(
             (
               {
                 id,
@@ -154,7 +144,7 @@ const FileContainer = () => {
         {files == "" ? <GridFilesDefault /> : <></>}
 
         <Toaster
-          position="top-right"
+          position="bottom-right"
           toastOptions={{
             className: "",
             duration: 4000,
